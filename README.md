@@ -1,2 +1,2 @@
-# b.w.a.t.
+# B.W.A.T.
 Bogazici Web Annotation Tool
