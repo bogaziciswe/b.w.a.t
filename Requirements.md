@@ -11,6 +11,9 @@
 
  2.2. **Public Annotations** can be seen by anyone.
 
- ⋅⋅3. **Private Annotations** can only be seen by user itself.
+ 2.3. **Private Annotations** can only be seen by user itself.
 
- ⋅⋅4. Creating a group of users and allowing them to read each-other's annotations is an *optional* requirement.
+ 2.4. Creating a group of users and allowing them to read each-other's annotations is an *optional* requirement.
+
+3. Content Scope
+ ..* Only *html text* and *images* are in the *scope* of annotation selecting. Any text in the *selected region* will become *annotation body*. Selecting partial image or any other online content like *pdf*,*video*..etc are out of the scope.
