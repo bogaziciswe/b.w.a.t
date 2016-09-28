@@ -1,6 +1,7 @@
 # PROJECT REQUIREMENTS
 
 1. User Authentication
+
  1.1. Specification of user auth. method is not clear. We have [an issue](https://github.com/bogaziciswe/b.w.a.t/issues/9) to keep track of that.
 
  1.2. User is **required** to authenticate in order to annotate.
