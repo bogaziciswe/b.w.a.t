@@ -32,6 +32,8 @@
  
  5.2. Annotations can be stored in any database in any format. However, back-end should always follow standarts specified in [w3 Documentation](https://www.w3.org/TR/annotation-model/) when serving them.
  
+ 5.3 Annotation character limit is not yet specified. Follow [this issue](https://github.com/bogaziciswe/b.w.a.t/issues/10) for further clarifications.
+ 
 6. User UI Control
 
  6.1. User should be able to *disable* seeing annotations.
