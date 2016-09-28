@@ -20,7 +20,7 @@
 
  3.1. Only *html text* and *images* are in the *scope* of annotation selecting. Any text in the *selected region* will become *annotation body*. Selecting partial image or any other online content like *pdf*,*video*..etc are out of the scope.
 
- 3.2. It is assumed that no web resource is going to change. So no annotation versioning is **not** required.
+ 3.2. It is assumed that no web resource is going to change. So annotation versioning is **not** required.
  
 4. Annotation JSON Object
 
