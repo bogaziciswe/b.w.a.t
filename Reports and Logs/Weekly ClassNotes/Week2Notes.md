@@ -1,0 +1,3 @@
+1. Starting from next week, each group will have 1 hour to present its state of work, ask questions etc. Next week, our group will be 1st to have presentation and afterwards groups flip-flop.
+1. Requirements are gathered more clearly and noted in [Our Requirements Document](https://github.com/bogaziciswe/b.w.a.t/blob/master/Requirements.md)
+1. We will have a session to present mock-up images of our work to display our understanding of the task as well as acquiring if it fits what Customer wants.
