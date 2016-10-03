@@ -1,2 +1,2 @@
 ### Week1 Personal Logs
-####  Researched about web annotation
+####  Research about web annotation
