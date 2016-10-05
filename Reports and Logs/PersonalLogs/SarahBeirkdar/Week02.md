@@ -1,4 +1,4 @@
-### Week1 Personal Logs
+### Week2 Personal Logs
 |               | Estimated Time| Actual Time   |
 | ------------- | ------------- |----------------|
 | Design new mockups  | 3 hours  |3 hours|
