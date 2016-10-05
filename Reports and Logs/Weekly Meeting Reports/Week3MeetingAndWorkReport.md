@@ -15,9 +15,9 @@
 2. Task allocation for week4
 
 ## Decisions Made
-1. Documentation and development will go on parallel.  
-2. We need to start design specification.
-3. Tasks coming from instructor feedbacks need to be completed due to next week. 
+1. Documentation and development will go on parallel.    
+2. We need to start design specification.   
+3. Tasks coming from instructor feedbacks need to be completed due to next week.   
 
 ## Action Items
 1. User authentication of Server Side / Anil / 10.10.2016   
