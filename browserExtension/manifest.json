@@ -1,0 +1,35 @@
+{
+  "description": "Allows Annotating Web Sources.",
+  "manifest_version": 2,
+  "name": "B.W.A.T",
+  "version": "1.0",
+  "homepage_url": "https://github.com/bogaziciswe/b.w.a.t",
+  "icons": {
+    "48": "icons/bwatLogo-48.png"
+  },
+  "applications": {
+    "gecko": {
+      "id": "gokhan.ozgozen@gmail.com",
+      "strict_min_version": "45.0"
+    }
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "jquery.js"
+      ]
+    }
+  ],
+  "browser_action": {
+    "default_icon": "icons/bwatLogo-32.png",
+    "default_title": "B.W.A.T",
+    "default_popup": "popup/annotationLanding.html"
+  },
+  "web_accessible_resources": [
+    "bogazici_universitesi_logo_small.png"
+  ]
+}
