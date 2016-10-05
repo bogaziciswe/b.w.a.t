@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/bogaziciswe/b.w.a.t.svg?branch=master)](https://travis-ci.org/bogaziciswe/b.w.a.t)
+
 # B.W.A.T.
 ## Bogazici Web Annotation Tool
 
