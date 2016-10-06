@@ -4,13 +4,15 @@ jdk:
 script: sh -c "cd bwat-server && mvn test"
 notifications:
   email:
-    recipients:
-      - anil.surmeli@gmail.com
-      - mahmutaliozkuran@gmail.com
-      - gokhan.ozgozen@gmail.com
-      - ozlem.akbas@boun.edu.tr
-      - sarah.beirkdar@gmail.com
-      - ugurhicyilmam@gmail.com
+    - anil.surmeli@gmail.com
+    - mahmutaliozkuran@gmail.com
+    - gokhan.ozgozen@gmail.com
+    - ozlem.akbas@boun.edu.tr
+    - sarah.beirkdar@gmail.com
+    - ugurhicyilmam@gmail.com
   slack:
     rooms:
       - swe574:KDnFR0ClyhedICwgylVMFmj8#general
+cache:
+  directories:
+    - $HOME/.m2
