@@ -10,7 +10,7 @@ notifications:
       - gokhan.ozgozen@gmail.com
       - ozlem.akbas@boun.edu.tr
       - sarah.beirkdar@gmail.com
-      - ugur.hicyilmam@boun.edu.tr
+      - ugurhicyilmam@gmail.com
   slack:
     rooms:
       - swe574:KDnFR0ClyhedICwgylVMFmj8#general
