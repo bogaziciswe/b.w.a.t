@@ -2,3 +2,15 @@ language: java
 jdk:
   - oraclejdk8
 script: sh -c "cd bwat-server && mvn test"
+notification:
+  email:
+    recipients:
+      - anil.surmeli@gmail.com
+      - mahmutaliozkuran@gmail.com
+      - gokhan.ozgozen@gmail.com
+      - ozlem.akbas@boun.edu.tr
+      - sarah.beirkdar@gmail.com
+      - ugur.hicyilmam@boun.edu.tr
+  slack:
+    rooms:
+      - swe574:KDnFR0ClyhedICwgylVMFmj8#general
