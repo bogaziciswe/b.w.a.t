@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.security.Principal;
 
-/**
- * Created by ugur.hicyilmam on 6.10.2016.
- */
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
