@@ -34,7 +34,7 @@ public class User implements UserDetails {
 
     public User() {
         super();
-        this.enabled = false;
+        this.enabled = true;
         this.accountNonExpired = true;
         this.credentialsNonExpired = true;
         this.accountNonLocked = true;
