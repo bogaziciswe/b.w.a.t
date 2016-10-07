@@ -1,14 +1,12 @@
 package com.bwat.core.request;
 
+import com.bwat.core.validation.UniqueMail;
 import lombok.Data;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Size;
 
-/**
- * Created by ugur.hicyilmam on 6.10.2016.
- */
 @Data
 public class RegisterReq {
 
@@ -23,6 +21,7 @@ public class RegisterReq {
     private String password;
     @NotEmpty
     @Email
+    @UniqueMail
     @Size(min = 1, max = 60)
     private String mail;
 }

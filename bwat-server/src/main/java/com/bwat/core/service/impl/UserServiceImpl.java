@@ -11,9 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-/**
- * Created by ugur.hicyilmam on 6.10.2016.
- */
 @Service
 public class UserServiceImpl implements UserService {
 
