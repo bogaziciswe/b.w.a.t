@@ -5,7 +5,7 @@ script: sh -c "cd bwat-server && mvn test"
 notifications:
   email:
     - anil.surmeli@gmail.com
-    - mahmutaliozkuran@gmail.com
+    - ozkuran@gmail.com
     - gokhan.ozgozen@gmail.com
     - ozlem.akbas@boun.edu.tr
     - sarah.beirkdar@gmail.com
