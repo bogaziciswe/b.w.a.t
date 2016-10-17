@@ -6,9 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-/**
- * Created by ugur.hicyilmam on 17.10.2016.
- */
 @Entity
 public class Annotation {
 
