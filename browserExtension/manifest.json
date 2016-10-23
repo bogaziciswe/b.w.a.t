@@ -27,7 +27,7 @@
   "browser_action": {
     "default_icon": "icons/bwatLogo-32.png",
     "default_title": "B.W.A.T",
-    "default_popup": "popup/annotationLanding.html"
+    "default_popup": "/login/login.html"
   },
   "web_accessible_resources": [
     "bogazici_universitesi_logo_small.png"
