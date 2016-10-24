@@ -1,0 +1,1 @@
+1. Annotation library integration research ( Estimated: 6 hours, took 1 week )
