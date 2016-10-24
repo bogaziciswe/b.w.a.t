@@ -21,13 +21,7 @@ function preProcess() {
 }
 
 
-function startAnnotation(data) {
-
-    if (!window.jQuery) {
-        alert("JQ does NOT work");
-    }
-    //
-
+function startAnnotationDrawing() {
     if ($('#selectionBox').length) {
         alert("Please select an area to annotate");
     } else {
@@ -73,6 +67,26 @@ function startAnnotation(data) {
             get_elements(start_pos_x, start_pos_y, end_pos_x, end_pos_y);
         });
     });
+}
+function startAnnotatorJS() {
+    var app = new annotator.App();
+    app.include(annotator.ui.main);
+    app.include(annotator.storage.http);
+    app.start();
+    if (app != null) {
+        alert("Please select something and click on annotate Icon");
+    } else {
+        alert("Something is wrong with annotation selector");
+    }
+}
+function startAnnotation(data) {
+
+    if (!window.jQuery) {
+        alert("JQ does NOT work");
+    }
+    startAnnotatorJS();
+
+    //startAnnotationDrawing();
 
     function draw(x1, y1, x2, y2) {
         // console.log("Drawing top:" + x1 + ", left:" + x2 + ", width:" + (x2 - x1) + ", height:" + (y2 - y1));
