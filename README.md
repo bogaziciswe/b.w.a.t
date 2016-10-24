@@ -34,3 +34,13 @@ For more detailed information about the project, please refer to [Wiki](https://
 * [Firefox Web Extension API](https://developer.mozilla.org/en-US/Add-ons/WebExtensions) to develop and make use of external *Javascript* libraries.
 
 * [Mockflow](https://mockflow.com/) to express ideas and UI principles.
+
+### Loading Client Extension Module on Firefox
+
+1. Clone [client-side code base](https://github.com/bogaziciswe/b.w.a.t/tree/master/browserExtension) on your local hard-drive.
+
+1. Open up Firefox and type **about:debugging** as url.
+
+1. Click on *Load Temporary Addon* button, select any-file , preferably [manifest.json](https://github.com/bogaziciswe/b.w.a.t/blob/master/browserExtension/manifest.json), to load up.
+
+1. Extension should be loaded. Notice that in order to use extension navigate into any website.
