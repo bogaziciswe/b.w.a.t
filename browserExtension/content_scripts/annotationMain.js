@@ -69,15 +69,42 @@ function startAnnotationDrawing() {
     });
 }
 function startAnnotatorJS() {
-    var app = new annotator.App();
-    app.include(annotator.ui.main);
-    app.include(annotator.storage.http);
-    app.start();
-    if (app != null) {
-        alert("Please select something and click on annotate Icon");
-    } else {
-        alert("Something is wrong with annotation selector");
+    //var app = new annotator.App();
+    //app.include(annotator.ui.main);
+    //app.include(annotator.storage.http);
+    //app.start();
+    //if (app != null) {
+    //    alert("Please select something and click on annotate Icon");
+    //} else {
+    //    alert("Something is wrong with annotation selector");
+    //}
+
+    var username = "gokhan";
+    var password = "bwat";
+
+    function make_base_auth(user, password) {
+        var tok = user + ':' + password;
+        var hash = btoa(tok);
+        return "Basic " + hash;
     }
+
+    $.ajax
+    ({
+        type: "GET",
+        url: "http://192.168.0.103:8080/healthTracker/auth",
+        dataType: 'json',
+        async: false,
+        data: '{}',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', make_base_auth(username, password));
+        },
+        success: function () {
+            alert('Thanks for your comment!');
+        },
+        error: function (err) {
+            alert("La hilla heeeyy" + err.message + " , " + err);
+        }
+    });
 }
 function startAnnotation(data) {
 
