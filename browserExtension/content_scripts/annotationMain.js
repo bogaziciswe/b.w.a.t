@@ -1,9 +1,13 @@
 //Definitions
 var protocol = "http://";
-var serverRootUrl = "192.168.0.103";
-var loginPostUri = ":8080/healthTracker/auth";
-var registerPostUri = ":8080/healthTracker//registerAuth";
-var annotationStorePostUri = ":8080/healthTracker";
+var serverRootUrl = "46.196.100.145";
+//var serverRootUrl = "192.168.0.103";
+//var loginPostUri = ":8080/healthTracker/auth";
+var loginPostUri = "/healthTracker/auth";
+//var registerPostUri = ":8080/healthTracker//registerAuth";
+var registerPostUri = "/healthTracker//registerAuth";
+//var annotationStorePostUri = ":8080/healthTracker";
+var annotationStorePostUri = "/healthTracker";
 
 /**
  * Hardcoded annotation store options

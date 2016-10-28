@@ -19,7 +19,9 @@
     "http://localhost:8080/",
     "http://localhost:8080/healthTracker",
     "http://192.168.0.103/",
-    "http://192.168.0.103:8080/"
+    "http://192.168.0.103:8080/",
+    "http://46.196.100.145/healthTracker/",
+    "http://46.196.100.145/"
   ],
   "content_scripts": [
     {
