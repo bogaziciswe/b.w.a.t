@@ -1,7 +1,30 @@
+//Definitions
+var protocol = "http://";
+var serverRootUrl = "192.168.0.103";
+var loginPostUri = ":8080/healthTracker/auth";
+var registerPostUri = ":8080/healthTracker//registerAuth";
+
+var userAuthToken = "DEFAULT"; // leave this as DEFAULT
+
+
 function processRequest(request, sender, sendResponse) {
     preProcess();
     startAnnotation(request.data);
     chrome.runtime.onMessage.removeListener(processRequest);
+}
+
+function ServiceResponse(errorMessage, data) {
+    this.errMsg = errorMessage;
+    if (this.errMsg != null && this.errMsg.length > 0) {
+        this.success = false;
+        this.data = null;
+    } else {
+        this.success = true;
+        this.data = data;
+    }
+    this.getErrorPrompt = function () {
+        return "Failed to process your request:" + this.errMsg;
+    }
 }
 
 
@@ -18,6 +41,73 @@ function preProcess() {
     // selectDiv.class = 'selectionBox';
     // selectDiv.style = 'position: absolute; top: 0; left: 0; height: 300; width: 300; border: 1px solid red;';
     // document.body.appendChild(selectDiv);
+}
+
+function make_base_auth(user, password) {
+    var tok = user + ':' + password;
+    var hash = btoa(tok);
+    return "Basic " + hash;
+}
+
+function loginUser(username, password, callback) {
+    try {
+        $.ajax
+        ({
+            type: "POST",
+            url: protocol + serverRootUrl + loginPostUri,
+            dataType: 'json',
+            async: false,
+            data: '{}',
+            beforeSend: function (xhr) {
+                userAuthToken = make_base_auth(username, password);
+                xhr.setRequestHeader('Authorization', userAuthToken);
+            },
+            success: function (data) {
+                callback(new ServiceResponse(null, data));
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                callback(new ServiceResponse("BWAT001 => " + thrownError, null));
+                console.log(xhr.responseText);
+            }
+        });
+    } catch (err) {
+        callback(new ServiceResponse("BWAT002 => " + err.message, null));
+    }
+}
+
+function registerUser(name, lName, pw, mail, callback) {
+    try {
+        var userPostData = {
+            firstName: name,
+            lastName: lName,
+            email: mail,
+            password: "**********"
+        };
+        console.log(JSON.stringify(userPostData));
+        userPostData.password = pw;
+        $.ajax
+        ({
+            type: "POST",
+            url: protocol + serverRootUrl + registerPostUri,
+            dataType: 'json',
+            contentType: "application/json; charset=utf8",
+            async: false,
+            data: JSON.stringify(userPostData),
+            beforeSend: function (xhr) {
+                userAuthToken = make_base_auth(userPostData.email, userPostData.password);
+                xhr.setRequestHeader('Authorization', userAuthToken);
+            },
+            success: function (data) {
+                callback(new ServiceResponse(null, data));
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                callback(new ServiceResponse("BWAT003 => " + thrownError, null));
+                console.log(xhr.responseText);
+            }
+        });
+    } catch (err) {
+        callback(new ServiceResponse("BWAT004 => " + err.message, null));
+    }
 }
 
 
@@ -79,32 +169,28 @@ function startAnnotatorJS() {
     //    alert("Something is wrong with annotation selector");
     //}
 
-    var username = "gokhan";
-    var password = "bwat";
+    //var username = "gokhan";
+    //var password = "bwat";
+    //
 
-    function make_base_auth(user, password) {
-        var tok = user + ':' + password;
-        var hash = btoa(tok);
-        return "Basic " + hash;
-    }
-
-    $.ajax
-    ({
-        type: "GET",
-        url: "http://192.168.0.103:8080/healthTracker/auth",
-        dataType: 'json',
-        async: false,
-        data: '{}',
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader('Authorization', make_base_auth(username, password));
-        },
-        success: function () {
-            alert('Thanks for your comment!');
-        },
-        error: function (err) {
-            alert("La hilla heeeyy" + err.message + " , " + err);
-        }
-    });
+    //
+    //$.ajax
+    //({
+    //    type: "GET",
+    //    url: "http://192.168.0.103:8080/healthTracker/auth",
+    //    dataType: 'json',
+    //    async: false,
+    //    data: '{}',
+    //    beforeSend: function (xhr) {
+    //        xhr.setRequestHeader('Authorization', make_base_auth(username, password));
+    //    },
+    //    success: function () {
+    //        alert('Thanks for your comment!');
+    //    },
+    //    error: function (err) {
+    //        alert("La hilla heeeyy" + err.message + " , " + err);
+    //    }
+    //});
 }
 function startAnnotation(data) {
 
