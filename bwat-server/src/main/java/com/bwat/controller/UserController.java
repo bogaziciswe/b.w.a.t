@@ -27,7 +27,7 @@ public class UserController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public SuccessMessage login(Principal user) {
         if (user == null) {
             throw new AuthenticationFailed();
