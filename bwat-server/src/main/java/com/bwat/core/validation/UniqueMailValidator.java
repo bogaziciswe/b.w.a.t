@@ -1,6 +1,5 @@
 package com.bwat.core.validation;
 
-import com.bwat.core.domain.User;
 import com.bwat.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -29,7 +29,7 @@ public class UserController {
 
     @RequestMapping(value = "/login")
     public SuccessMessage login(Principal user) {
-        if(user == null) {
+        if (user == null) {
             throw new AuthenticationFailed();
         }
         return new SuccessResponse(userService.findByMail(user.getName()));
@@ -53,4 +53,6 @@ public class UserController {
     public SuccessMessage logout() {
         return new SuccessResponse("Hint: The server works stateless. To logout, remove authentication header on client.");
     }
+
+
 }

@@ -23,10 +23,12 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="bwat-ld-db" />
+        <module name="ld-db" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="bwat-ld-db" target="1.8" />
+      <module name="ld-db" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
