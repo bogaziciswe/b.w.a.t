@@ -77,7 +77,7 @@ function loginUser(username, password, callback) {
     try {
         $.ajax
         ({
-            type: "POST",
+            type: "GET",
             url: protocol + serverRootUrl + loginPostUri,
             dataType: 'json',
             async: false,
@@ -99,41 +99,6 @@ function loginUser(username, password, callback) {
     }
 }
 
-function registerUser(name, lName, pw, mail, callback) {
-    try {
-        var userPostData = {
-            firstName: name,
-            lastName: lName,
-            email: mail,
-            password: "**********"
-        };
-        console.log(JSON.stringify(userPostData));
-        userPostData.password = pw;
-        $.ajax
-        ({
-            type: "POST",
-            url: protocol + serverRootUrl + registerPostUri,
-            dataType: 'json',
-            contentType: "application/json; charset=utf8",
-            async: false,
-            data: JSON.stringify(userPostData),
-            beforeSend: function (xhr) {
-                userAuthToken = make_base_auth(userPostData.email, userPostData.password);
-                xhr.setRequestHeader('Authorization', userAuthToken);
-            },
-            success: function (data) {
-                callback(new ServiceResponse(null, data));
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                callback(new ServiceResponse("BWAT003 => " + thrownError, null));
-                console.log(xhr.responseText);
-            }
-        });
-    } catch (err) {
-        callback(new ServiceResponse("BWAT004 => " + err.message, null));
-    }
-}
-
 function startAnnotatorJS() {
     var app = new annotator.App();
     app.include(annotator.ui.main);
@@ -149,6 +114,41 @@ function startAnnotatorJS() {
         alert("Something is wrong with annotation selector");
     }
 
+}
+
+function registerUser(name, lName, pw, mail, callback) {
+    try {
+        var userPostData = {
+            firstName: name,
+            lastName: lName,
+            mail: mail,
+            password: "**********"
+        };
+        console.log(JSON.stringify(userPostData));
+        userPostData.password = pw;
+        $.ajax
+        ({
+            type: "POST",
+            url: protocol + serverRootUrl + registerPostUri,
+            dataType: 'json',
+            contentType: "application/json; charset=utf8",
+            async: false,
+            data: JSON.stringify(userPostData),
+            beforeSend: function (xhr) {
+                //userAuthToken = make_base_auth(userPostData.email, userPostData.password);
+                //xhr.setRequestHeader('Authorization', userAuthToken);
+            },
+            success: function (data) {
+                callback(new ServiceResponse(null, data));
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                callback(new ServiceResponse("BWAT003 => " + thrownError, null));
+                console.log(xhr.responseText);
+            }
+        });
+    } catch (err) {
+        callback(new ServiceResponse("BWAT004 => " + err.message, null));
+    }
 }
 
 chrome.runtime.onMessage.addListener(processRequest);
