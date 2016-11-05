@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<div id="main-popup">
+<div id="main-popup" style="height:800px; width:400px">
     <div class="container-fluid">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -17,34 +17,25 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-xs-4">
-                            <label>Firstname</label>
-                            <input type="text" placeholder="firstname" id="firstname"/>
+                            <label>Username</label>
+                            <input type="text" placeholder="username" id="username"/>
                         </div>
-                        <div class="col-xs-4">
-                            <label>Lastname</label>
-                            <input type="text" placeholder="lastname" id="lastname"/>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-xs-4">
                             <label>Password</label>
                             <input type="password" placeholder="password" id="password"/>
-                        </div>
-                        <div class="col-xs-4">
-                            <label>Email</label>
-                            <input type="text" placeholder="email" id="email"/>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="panel-footer">
+                <button class="btn btn-primary btn-sm" id="loginButton">Login</button>
                 <button class="btn btn-primary btn-sm" id="registerButton">Register</button>
             </div>
         </div>
     </div>
 </div>
 </body>
-<script src="/jquery.js"></script>
-<script src="/content_scripts/annotationMain.js"></script>
-<script src="register.js"></script>
+<script src="/scripts/jquery.js"></script>
+<script src="/scripts/annotationMain.js"></script>
+<script src="/scripts/login.js"></script>
 </html>

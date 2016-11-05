@@ -19,7 +19,7 @@ document.addEventListener("click", function (e) {
     }
 
     if (e.target.id == "registerButton") {
-        window.location.href = "/register/register.html";
-        chrome.browserAction.setPopup({popup: "/register/register.html"});
+        window.location.href = "/html/register.html";
+        chrome.browserAction.setPopup({popup: "/html/register.html"});
     }
 });

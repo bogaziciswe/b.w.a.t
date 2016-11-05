@@ -3,7 +3,7 @@ document.addEventListener("click", function(e) {
 
     if (e.target.id == "newAnnotationButton") {
         chrome.tabs.executeScript(null, {
-            file: "/content_scripts/annotationMain.js"
+            file: "/scripts/annotationMain.js"
         });
 
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -12,8 +12,8 @@ document.addEventListener("click", function(e) {
     }
 
     if (e.target.id == "logoutButton") {
-        window.location.href = "/login/login.html";
-        chrome.browserAction.setPopup({popup: "/login/login.html"});
+        window.location.href = "/html/login.html";
+        chrome.browserAction.setPopup({popup: "/html/login.html"});
     }
 
 });
