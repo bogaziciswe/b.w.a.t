@@ -4,8 +4,8 @@
 function processServiceLoginResponse(serviceResponse) {
     if (serviceResponse.success) {
         alert(JSON.stringify(serviceResponse.data));
-        //window.location.href = "/popup/annotationLanding.html";
-        //chrome.browserAction.setPopup({popup: "/popup/annotationLanding.html"});
+        //window.location.href = "/html/annotationLanding.html";
+        //chrome.browserAction.setPopup({popup: "/html/annotationLanding.html"});
     } else {
         alert(serviceResponse.getErrorPrompt());
     }
