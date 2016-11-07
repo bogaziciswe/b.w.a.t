@@ -26,7 +26,7 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(RequestNotValidException.class)
     @ResponseBody
     public ErrorMessage processRequestNotValidError(RequestNotValidException ex) {
-        return new ErrorResponse<>("An error occurred");
+        return new ErrorResponse<>(ex.getMessage());
     }
 }
 

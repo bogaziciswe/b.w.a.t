@@ -4,9 +4,13 @@ import com.bwat.core.service.ApiService;
 import com.bwat.exceptions.RequestNotValidException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import retrofit2.Response;
 
 import java.io.IOException;
@@ -19,24 +23,12 @@ public class AnnotationController {
 
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ApiService apiService;
 
-    @Autowired
-    ApiService apiService;
-
+//    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "", method = POST)
+    @ResponseStatus(HttpStatus.CREATED)
     public Object addAnnotation(@RequestBody Object object) {
-        System.out.println("request sent");
-
-        try {
-            Response<Object> response = apiService.addAnnotation(object).execute();
-            if (response.isSuccessful()) {
-                return response.body();
-            } else {
-                return objectMapper.readValue(response.errorBody().string(), Object.class);
-            }
-        } catch (IOException e) {
-            throw new RequestNotValidException();
-        }
+        return apiService.createAnnotation(object);
     }
 }
