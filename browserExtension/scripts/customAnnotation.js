@@ -34,7 +34,7 @@ window.onload = function () {
                         current.quote = annotation.quote;
                         current.comment = annotation.text;
                         json.push(current);
-                        sendCreatedAnnnotation(current.quote, current.text);
+                        sendCreatedAnnnotation(current.comment, annotation.ranges[0]);
                         console.log(JSON.stringify(json));
                     })
                     .subscribe("annotationUpdated", function (annotation) {

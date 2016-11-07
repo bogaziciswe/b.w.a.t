@@ -1,6 +1,6 @@
 //Definitions
 var protocol = "http://";
-var serverRootUrl = "ec2-35-162-70-40.us-west-2.compute.amazonaws.com";
+var serverRootUrl = "localhost:8080";
 var loginPostUri = "/api/users/login";
 var registerPostUri = "/api/users";
 var annotationStorePostUri = "/api/annotation";
@@ -157,19 +157,37 @@ function registerUser(name, lName, pw, mail, callback) {
 }
 
 
-function sendCreatedAnnnotation(annotationValue, commentValue) {
+function sendCreatedAnnnotation(commentValue, xpathSelectorData) {
+
+    var tabUrl = window.location.href;
 
     try {
         var annotationPostData = {
             "@context": "http://www.w3.org/ns/anno.jsonld",
-            "id": "http://www.milliyet.com.tr/feto-jandarmada-nasil-yapilandi--siyaset-ydetay-2340536/anno1",
+            "id": tabUrl,
             "type": "Annotation",
-            "body": {
-                "type": annotationValue,
-                "value": commentValue,
-                "format": "text/plain"
-            },
-            "target": "http://www.milliyet.com.tr/feto-jandarmada-nasil-yapilandi--siyaset-ydetay-2340536"
+            "body": commentValue,
+            "target": {
+                "source": "http://example.org/page1.html",
+                "selector": [
+                    {
+                    "type": "RangeSelector",
+                    "startSelector": {
+                        "type": "XPathSelector",
+                        "value": xpathSelectorData.start
+                    },
+                    "endSelector": {
+                        "type": "XPathSelector",
+                        "value": xpathSelectorData.end
+                    }
+                    },
+                    {
+                        "type": "DataPositionSelector",
+                        "start": xpathSelectorData.startOffset,
+                        "end": xpathSelectorData.endOffset
+                    }
+                ]
+            }
         };
         console.log(JSON.stringify(annotationPostData));
         $.ajax
