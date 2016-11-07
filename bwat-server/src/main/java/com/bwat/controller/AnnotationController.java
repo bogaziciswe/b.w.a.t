@@ -25,7 +25,7 @@ public class AnnotationController {
     @Autowired
     private ApiService apiService;
 
-//    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "", method = POST)
     @ResponseStatus(HttpStatus.CREATED)
     public Object addAnnotation(@RequestBody Object object) {
