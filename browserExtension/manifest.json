@@ -5,7 +5,7 @@
   "version": "1.0",
   "homepage_url": "https://github.com/bogaziciswe/b.w.a.t",
   "icons": {
-    "48": "icons/bwatLogo-48.png"
+    "48": "/images/icons/bwatLogo-48.png"
   },
   "applications": {
     "gecko": {
@@ -29,15 +29,15 @@
         "<all_urls>"
       ],
       "js": [
-        "jquery.js",
-        "annotator.js"
+        "/scripts/jquery.js",
+        "/scripts/annotator.js"
       ]
     }
   ],
   "browser_action": {
-    "default_icon": "icons/bwatLogo-32.png",
+    "default_icon": "/images/icons/bwatLogo-32.png",
     "default_title": "B.W.A.T",
-    "default_popup": "/login/login.html"
+    "default_popup": "/html/index.html"
   },
   "web_accessible_resources": [
     "bogazici_universitesi_logo_small.png"

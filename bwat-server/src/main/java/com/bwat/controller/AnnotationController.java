@@ -27,6 +27,7 @@ public class AnnotationController {
     @RequestMapping(value = "", method = POST)
     public Object addAnnotation(@RequestBody Object object) {
         System.out.println("request sent");
+
         try {
             Response<Object> response = apiService.addAnnotation(object).execute();
             if (response.isSuccessful()) {

@@ -1,0 +1,15 @@
+body {
+    width: 400px;
+    height: 800px;
+    background-color: WhiteSmoke;
+}
+
+#main-popup{
+     position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 50px; /* height of thumbs (if not required set to 0) */
+    height: auto; /* optionally add !important for WP version */
+    width: auto;
+}
