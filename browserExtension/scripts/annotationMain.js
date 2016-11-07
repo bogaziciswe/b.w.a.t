@@ -37,10 +37,6 @@ function processRequest(request, sender, sendResponse) {
     chrome.runtime.onMessage.removeListener(processRequest);
 }
 
-function sayHello(){
-    alert("Hello");
-}
-
 function ServiceResponse(errorMessage, data) {
     this.errMsg = errorMessage;
     if (this.errMsg != null && this.errMsg.length > 0) {
@@ -159,6 +155,48 @@ function registerUser(name, lName, pw, mail, callback) {
         callback(new ServiceResponse("BWAT004 => " + err.message, null));
     }
 }
+
+
+function sendCreatedAnnnotation(annotationValue, commentValue) {
+
+    try {
+        var annotationPostData = {
+            "@context": "http://www.w3.org/ns/anno.jsonld",
+            "id": "http://www.milliyet.com.tr/feto-jandarmada-nasil-yapilandi--siyaset-ydetay-2340536/anno1",
+            "type": "Annotation",
+            "body": {
+                "type": annotationValue,
+                "value": commentValue,
+                "format": "text/plain"
+            },
+            "target": "http://www.milliyet.com.tr/feto-jandarmada-nasil-yapilandi--siyaset-ydetay-2340536"
+        };
+        console.log(JSON.stringify(annotationPostData));
+        $.ajax
+        ({
+            type: "POST",
+            url: protocol + serverRootUrl + annotationStorePostUri,
+            dataType: 'json',
+            contentType: "application/json; charset=utf8",
+            async: false,
+            data: JSON.stringify(annotationPostData),
+            beforeSend: function (xhr) {
+                userAuthToken = make_base_auth("abc@gmail.com", "123456");
+                xhr.setRequestHeader('Authorization', userAuthToken);
+            },
+            success: function (data) {
+                callback(new ServiceResponse(null, data));
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                callback(new ServiceResponse("BWAT003 => " + thrownError, null));
+                console.log(xhr.responseText);
+            }
+        });
+    } catch (err) {
+        callback(new ServiceResponse("BWAT004 => " + err.message, null));
+    }
+}
+
 
 chrome.runtime.onMessage.addListener(processRequest);
 

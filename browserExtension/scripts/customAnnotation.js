@@ -3,7 +3,6 @@ window.onload = function () {
     console.log('Content script loaded and started');
     var json = [];
 
-    sayHello();
 
     function findAnnotation(startOffset, endOffset) {
         for (var i = 0; i < json.length; i++) {
@@ -35,6 +34,7 @@ window.onload = function () {
                         current.quote = annotation.quote;
                         current.comment = annotation.text;
                         json.push(current);
+                        sendCreatedAnnnotation(current.quote, current.text);
                         console.log(JSON.stringify(json));
                     })
                     .subscribe("annotationUpdated", function (annotation) {
