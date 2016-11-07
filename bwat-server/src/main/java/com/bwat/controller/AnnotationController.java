@@ -15,6 +15,7 @@ import retrofit2.Response;
 
 import java.io.IOException;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
@@ -30,5 +31,12 @@ public class AnnotationController {
     @ResponseStatus(HttpStatus.CREATED)
     public Object addAnnotation(@RequestBody Object object) {
         return apiService.createAnnotation(object);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "", method = GET)
+    @ResponseStatus(HttpStatus.CREATED)
+    public Object getAnnotations() {
+        return apiService.getAnnotations();
     }
 }

@@ -17,4 +17,9 @@ public class ApiServiceImpl implements ApiService {
     public Object createAnnotation(Object object) {
         return rest.postForObject(annotationServer+"/annotation", object, Object.class);
     }
+
+    @Override
+    public Object getAnnotations() {
+        return rest.getForObject(annotationServer + "/annotation", Object.class);
+    }
 }
