@@ -168,7 +168,6 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData) {
             "type": "Annotation",
             "body": commentValue,
             "target": {
-                "source": "http://example.org/page1.html",
                 "selector": [
                     {
                     "type": "RangeSelector",
