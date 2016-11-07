@@ -39,7 +39,8 @@
       "js": [
         "/scripts/jquery.js",
         "/scripts/annotator.js",
-        "/scripts/customAnnotation.js"
+        "/scripts/customAnnotation.js",
+        "/scripts/annotationMain.js"
       ],
       "run_at": "document_start",
       "all_frames" : true

@@ -37,6 +37,10 @@ function processRequest(request, sender, sendResponse) {
     chrome.runtime.onMessage.removeListener(processRequest);
 }
 
+function sayHello(){
+    alert("Hello");
+}
+
 function ServiceResponse(errorMessage, data) {
     this.errMsg = errorMessage;
     if (this.errMsg != null && this.errMsg.length > 0) {
@@ -108,7 +112,7 @@ function startAnnotatorJS() {
     var app = new annotator.App();
     app.include(annotator.ui.main);
     app.include(annotator.storage.http, {
-        prefix: protocol + serverRootUrl + annotationStorePostUri
+        prefix: protocol + "46.196.100.145" + "/healthTracker"
     });
     app.start().then(function () {
         app.annotations.load();
