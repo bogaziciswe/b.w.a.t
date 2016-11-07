@@ -23,7 +23,6 @@ public class AnnotationController {
     @RequestMapping(value = "/annotation", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
     public @ResponseBody void addAnnotation(@RequestBody Object object) {
-        System.out.println(Objects.toString(object));
         LinkedHashMap annotation = validator.validateAndExtractRawAnnotation(object);
         AnnotationDocument s = new AnnotationDocument();
         repository.save(s.load(annotation));
