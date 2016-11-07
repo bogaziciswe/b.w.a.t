@@ -21,17 +21,28 @@
     "http://192.168.0.103/",
     "http://192.168.0.103:8080/",
     "http://46.196.100.145/healthTracker/",
-    "http://46.196.100.145/"
+    "http://46.196.100.145/",
+    "tabs",
+    "http://*/*",
+    "https://*/*"
   ],
   "content_scripts": [
     {
       "matches": [
-        "<all_urls>"
+        "<all_urls>",
+        "https://*/*",
+        "http://*/*"
+      ],
+      "css": [
+        "/css/annotator.min.css"
       ],
       "js": [
         "/scripts/jquery.js",
-        "/scripts/annotator.js"
-      ]
+        "/scripts/annotator.js",
+        "/scripts/customAnnotation.js"
+      ],
+      "run_at": "document_start",
+      "all_frames" : true
     }
   ],
   "browser_action": {
