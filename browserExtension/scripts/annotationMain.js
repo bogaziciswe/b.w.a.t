@@ -1,6 +1,6 @@
 //Definitions
 var protocol = "http://";
-var serverRootUrl = "localhost:8080";
+var serverRootUrl = "ec2-35-162-70-40.us-west-2.compute.amazonaws.com";
 var loginPostUri = "/api/users/login";
 var registerPostUri = "/api/users";
 var annotationStorePostUri = "/api/annotation";
