@@ -3,9 +3,9 @@
  */
 function processServiceLoginResponse(serviceResponse) {
     if (serviceResponse.success) {
-        alert(JSON.stringify(serviceResponse.data));
-        //window.location.href = "/html/annotationLanding.html";
-        //chrome.browserAction.setPopup({popup: "/html/annotationLanding.html"});
+        alert(JSON.stringify(serviceResponse.data)); //TODO Remove this line after bugfix period. gokhan
+        window.location.href = "/html/annotationLanding.html";
+        chrome.browserAction.setPopup({popup: "/html/annotationLanding.html"});
     } else {
         alert(serviceResponse.getErrorPrompt());
     }
