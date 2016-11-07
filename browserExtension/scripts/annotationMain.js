@@ -1,6 +1,6 @@
 //Definitions
 var protocol = "http://";
-var serverRootUrl = "localhost:8080";
+var serverRootUrl = "ec2-35-162-70-40.us-west-2.compute.amazonaws.com";
 var loginPostUri = "/api/users/login";
 var registerPostUri = "/api/users";
 var annotationStorePostUri = "/api/annotation";
@@ -28,10 +28,10 @@ var userAuthToken = "DEFAULT"; // leave this as DEFAULT
 
 
 function processRequest(request, sender, sendResponse) {
-    preProcess();
-    if (!window.jQuery) {
-        alert("JQ does NOT work");
-    }
+
+    console.log("Processing request");
+    //preProcess();
+
     startAnnotatorJS();
 
     chrome.runtime.onMessage.removeListener(processRequest);
@@ -100,6 +100,11 @@ function loginUser(username, password, callback) {
 }
 
 function startAnnotatorJS() {
+    console.log("Processing annotation request");
+    if (!window.jQuery) {
+        alert("JQ does NOT work!!");
+    }
+    console.log("Starting annotations...");
     var app = new annotator.App();
     app.include(annotator.ui.main);
     app.include(annotator.storage.http, {
@@ -152,3 +157,4 @@ function registerUser(name, lName, pw, mail, callback) {
 }
 
 chrome.runtime.onMessage.addListener(processRequest);
+

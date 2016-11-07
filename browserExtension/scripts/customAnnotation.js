@@ -10,7 +10,7 @@ window.onload = function () {
             }
         }
         return null;
-    };
+    }
 
 
 
@@ -26,7 +26,7 @@ window.onload = function () {
             pluginInit: function () {
                 this.annotator
                     .subscribe("annotationCreated", function (annotation) {
-                        console.info("The annotation: %o has just been created!", annotation)
+                        console.info("The annotation: %o has just been created!", annotation);
                         var current = $.extend(true, {}, singleAnnotation);
                         current.startOffset = annotation.ranges[0].startOffset;
                         current.endOffset = annotation.ranges[0].endOffset;
@@ -36,7 +36,7 @@ window.onload = function () {
                         console.log(JSON.stringify(json));
                     })
                     .subscribe("annotationUpdated", function (annotation) {
-                        console.info("The annotation: %o has just been updated!", annotation)
+                        console.info("The annotation: %o has just been updated!", annotation);
                         var offset = findAnnotation(annotation.ranges[0].startOffset, annotation.ranges[0].endOffset);
                         if (offset !== null) {
                             json[offset].comment = annotation.text;
@@ -44,7 +44,7 @@ window.onload = function () {
                         console.log(JSON.stringify(json));
                     })
                     .subscribe("annotationDeleted", function (annotation) {
-                        console.info("The annotation: %o has just been deleted!", annotation)
+                        console.info("The annotation: %o has just been deleted!", annotation);
                         var offset = findAnnotation(annotation.ranges[0].startOffset, annotation.ranges[0].endOffset);
                         if (offset !== null) {
                             json.splice(offset, 1);

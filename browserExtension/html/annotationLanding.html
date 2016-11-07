@@ -2,33 +2,36 @@
 
 <html>
 <head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
-         <link rel="stylesheet" type="text/css" href="../css/popup.css" >
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/popup.css">
 </head>
 <body>
 <div id="main-popup">
-  <div class="container-fluid">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <button class="btn btn-default btn-sm" id="logoutButton">
-          <span class="glyphicon glyphicon-log-out"></span>
-        </button>
-        <button class="btn btn-default btn-sm" id="accountInfoButton">
-          <span>Account Info</span>
-        </button>
-        <div class="panel-body">
-          <div class="row">
-            <span>Annotation List</span>
-          </div>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <button class="btn btn-default btn-sm" id="logoutButton">
+                    <span class="glyphicon glyphicon-log-out"></span>
+                </button>
+                <button class="btn btn-default btn-sm" id="accountInfoButton">
+                    <span>Account Info</span>
+                </button>
+                <div class="panel-body">
+                    <div class="row">
+                        <span>Annotation List</span>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-primary btn-sm" id="newAnnotationButton">Lets Annotate</button>
+                </div>
+            </div>
         </div>
-        <div class="panel-footer">
-          <button class="btn btn-primary btn-sm" id="newAnnotationButton">Lets Annotate</button>
-        </div>
-      </div>
     </div>
-  </div>
-      </div>
+</div>
 </body>
+<script src="/scripts/jquery.js"></script>
+<script src="/scripts/annotator.min.js"></script>
+<script src="/scripts/annotationMain.js"></script>
 <script src="/scripts/doAnnotation.js"></script>
 </html>

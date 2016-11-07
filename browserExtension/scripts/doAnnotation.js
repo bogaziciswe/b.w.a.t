@@ -1,12 +1,16 @@
-
-document.addEventListener("click", function(e) {
+document.addEventListener("click", function (e) {
 
     if (e.target.id == "newAnnotationButton") {
-        chrome.tabs.executeScript(null, {
-            file: "/scripts/annotationMain.js"
+        console.log("new Annotation Button pressed");
+        //chrome.tabs.executeScript(null, {
+        //    file: "/scripts/annotationMain.js"
+        //});
+        chrome.tabs.executeScript(null, {file: "/scripts/jquery.js"}, function () {
+            chrome.tabs.executeScript(null, {file: "/scripts/annotator.min.js"}, function () {
+                chrome.tabs.executeScript(null, {file: "/scripts/annotationMain.js"});
+            });
         });
-
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
             chrome.tabs.sendMessage(tabs[0].id, {data: 'testData'});
         });
     }
