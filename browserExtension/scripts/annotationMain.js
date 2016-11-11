@@ -1,5 +1,6 @@
 //Definitions
 var protocol = "http://";
+//var serverRootUrl = "localhost:8080";
 var serverRootUrl = "ec2-35-162-70-40.us-west-2.compute.amazonaws.com";
 var loginPostUri = "/api/users/login";
 var registerPostUri = "/api/users";
@@ -166,8 +167,13 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData) {
             "@context": "http://www.w3.org/ns/anno.jsonld",
             "id": tabUrl,
             "type": "Annotation",
-            "body": commentValue,
+            "body": {
+                "type": "TextualBody",
+                "value": "commentValue",
+                "format": "text/plain"
+            },
             "target": {
+                "source": "http://example.org/page1.html",
                 "selector": [
                     {
                     "type": "RangeSelector",
