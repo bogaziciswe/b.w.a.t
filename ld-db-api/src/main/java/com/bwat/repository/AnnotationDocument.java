@@ -12,8 +12,7 @@ import java.util.LinkedHashMap;
 @Data
 public class AnnotationDocument {
     @Id
-    public ObjectId documentId;
-    public String id;
+    public ObjectId id;
     public Date createdAt;
     public Date updatedAt;
     public Object type;
@@ -22,10 +21,9 @@ public class AnnotationDocument {
 
 
     public AnnotationDocument load(LinkedHashMap rawAnnotation){
-        documentId = new ObjectId();
         createdAt = new Date();
         updatedAt = new Date();
-        id = rawAnnotation.get("id").toString();
+        id = new ObjectId();
         type = rawAnnotation.get("type");
         target = rawAnnotation.get("target");
         body = rawAnnotation.get("body");

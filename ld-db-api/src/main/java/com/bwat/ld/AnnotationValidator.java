@@ -5,6 +5,7 @@ import com.github.jsonldjava.core.JsonLdError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -31,10 +32,12 @@ public class AnnotationValidator{
 
     private void validateAnnotation(LinkedHashMap processedAnnotation) {
         List<String> mustFields = new ArrayList<>();
-        mustFields.addAll(Arrays.asList("id", "type", "target"));
+
+        //Check for must fields
+        mustFields.addAll(Arrays.asList("type", "target"));
 
         mustFields.forEach(field -> {
-            if (processedAnnotation.get(field) == null){
+            if (processedAnnotation.get(field) == null) {
                 throw new MissingMustFieldException(field);
             }
         });
