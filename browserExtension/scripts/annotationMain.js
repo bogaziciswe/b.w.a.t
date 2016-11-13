@@ -6,6 +6,18 @@ var loginPostUri = "/api/users/login";
 var registerPostUri = "/api/users";
 var annotationStorePostUri = "/api/annotation";
 
+
+function setCredentials(username, password) {
+    //FIXME Storing user credentials locally is not secure.
+    var credentials = {
+        username: username,
+        password: password
+    };
+    chrome.storage.sync.set(credentials, function () {
+        alert('Credentials are saved');
+    });
+}
+
 //old address 
 //var protocol = "http://";
 //var serverRootUrl = "46.196.100.145";
@@ -139,6 +151,7 @@ function make_base_auth(user, password) {
 }
 
 function loginUser(username, password, callback) {
+    setCredentials(username, password);
     try {
         $.ajax
         ({

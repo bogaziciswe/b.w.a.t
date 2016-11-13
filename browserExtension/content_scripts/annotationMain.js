@@ -5,6 +5,7 @@ var loginPostUri = "/api/users/login";
 var registerPostUri = "/api/users";
 var annotationStorePostUri = "/api/annotation";
 
+
 //old address 
 //var protocol = "http://";
 //var serverRootUrl = "46.196.100.145";

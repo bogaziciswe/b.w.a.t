@@ -24,7 +24,8 @@
     "http://46.196.100.145/",
     "tabs",
     "http://*/*",
-    "https://*/*"
+    "https://*/*",
+    "storage"
   ],
   "content_scripts": [
     {
@@ -43,7 +44,7 @@
         "/scripts/annotationMain.js"
       ],
       "run_at": "document_start",
-      "all_frames" : true
+      "all_frames": true
     }
   ],
   "browser_action": {
