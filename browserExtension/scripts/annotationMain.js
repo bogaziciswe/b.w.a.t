@@ -174,15 +174,35 @@ function loginUser(username, password, callback) {
                 xhr.setRequestHeader('Authorization', userAuthToken);
             },
             success: function (data) {
-                callback(new ServiceResponse(null, data));
+                console.log("Login response:" + JSON.stringify(data));
+                if (data.data) {
+                    var respData = data.data;
+                    if (respData.enabled) {
+                        setCredentials(username, password);
+                        callback(new ServiceResponse(null, data));
+                    } else {
+                        callback(new ServiceResponse("BWAT012: User disabled.", null));
+                    }
+                } else {
+                    callback(new ServiceResponse("BWAT011: Invalid server response", null));
+                }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                callback(new ServiceResponse("BWAT001 => " + thrownError, null));
-                console.log(xhr.responseText);
+                console.log("Login failed:" + xhr.responseText);
+                try {
+                    var errorMsg = JSON.parse(xhr.responseText);
+                    if (errorMsg) {
+                        callback(new ServiceResponse("BWAT014: " + errorMsg.message, null));
+                    } else {
+                        callback(new ServiceResponse("BWAT013: Login failed.", null));
+                    }
+                } catch (err) {
+                    callback(new ServiceResponse("BWAT001: " + thrownError, null));
+                }
             }
         });
     } catch (err) {
-        callback(new ServiceResponse("BWAT002 => " + err.message, null));
+        callback(new ServiceResponse("BWAT002: " + err.message, null));
     }
 }
 
@@ -221,8 +241,8 @@ $(document).ready(function () {
                     navbarLink.html("Logout");
                     navbarLink.attr("href", "#");
                     navbarLink.click(function () {
-                        var credentialData = ["username","password"];
-                        chrome.storage.sync.remove(credentialData,logUserOut);
+                        var credentialData = ["username", "password"];
+                        chrome.storage.sync.remove(credentialData, logUserOut);
                     });
                 }
                 var navbarUsername = $('#navbarUsername');
@@ -232,16 +252,16 @@ $(document).ready(function () {
             }
         }
     }
+
     var storageParams = ["username", "password"];
     chrome.storage.sync.get(storageParams, applyStorageParams);
 });
 
-function logUserOut(){
+function logUserOut() {
     //reloading page with default html settings.
     window.location.href = "/html/index.html";
     chrome.browserAction.setPopup({popup: "/html/index.html"});
 }
-
 
 
 function registerUser(name, lName, pw, mail, callback) {

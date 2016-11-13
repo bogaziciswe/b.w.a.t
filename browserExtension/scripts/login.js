@@ -3,9 +3,8 @@
  */
 function processServiceLoginResponse(serviceResponse) {
     if (serviceResponse.success) {
-        alert(JSON.stringify(serviceResponse.data)); //TODO Remove this line after bugfix period. gokhan
-        window.location.href = "/html/annotationLanding.html";
-        chrome.browserAction.setPopup({popup: "/html/annotationLanding.html"});
+        window.location.href = "/html/index.html";
+        chrome.browserAction.setPopup({popup: "/html/index.html"});
     } else {
         alert(serviceResponse.getErrorPrompt());
     }
