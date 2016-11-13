@@ -3,7 +3,7 @@ window.onload = function () {
     console.log('Content script loaded and started');
     var json = [];
 
-    testGettingAnnotationsForUrl();
+    readCredentials();
     function findAnnotation(startOffset, endOffset) {
         for (var i = 0; i < json.length; i++) {
             if (json[i].startOffset == startOffset && json[i].endOffset == endOffset) {

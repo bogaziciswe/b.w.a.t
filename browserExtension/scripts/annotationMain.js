@@ -14,7 +14,7 @@ function setCredentials(username, password) {
         password: password
     };
     chrome.storage.sync.set(credentials, function () {
-        alert('Credentials are saved');
+        console.log('Credentials are saved');
     });
 }
 
@@ -60,7 +60,7 @@ function ServiceResponse(errorMessage, data) {
         this.data = data;
     }
     this.getErrorPrompt = function () {
-        return "Failed to process your request:" + this.errMsg;
+        return "ErrorCode -> " + this.errMsg;
     }
 }
 
@@ -150,8 +150,17 @@ function make_base_auth(user, password) {
     return "Basic " + hash;
 }
 
+function readCredentials() {
+    var keys = ["username", "password"];
+
+    function storedCredentials(items) {
+        console.log("Stored Stuff : " + JSON.stringify(items));
+    }
+
+    chrome.storage.sync.get(keys, storedCredentials);
+}
+
 function loginUser(username, password, callback) {
-    setCredentials(username, password);
     try {
         $.ajax
         ({
@@ -196,8 +205,44 @@ function startAnnotatorJS() {
     } else {
         alert("Something is wrong with annotation selector");
     }
-
 }
+
+$(document).ready(function () {
+    function applyStorageParams(params) {
+        if (params != null) {
+            if (params.username) {
+                var registerDiv = $('#registerDiv');
+                if (registerDiv) {
+                    registerDiv.show();
+                    console.log("Showing registerDiv");
+                }
+                var navbarLink = $('#navbarLink');
+                if (navbarLink) {
+                    navbarLink.html("Logout");
+                    navbarLink.attr("href", "#");
+                    navbarLink.click(function () {
+                        var credentialData = ["username","password"];
+                        chrome.storage.sync.remove(credentialData,logUserOut);
+                    });
+                }
+                var navbarUsername = $('#navbarUsername');
+                if (navbarUsername) {
+                    navbarUsername.html(params.username);
+                }
+            }
+        }
+    }
+    var storageParams = ["username", "password"];
+    chrome.storage.sync.get(storageParams, applyStorageParams);
+});
+
+function logUserOut(){
+    //reloading page with default html settings.
+    window.location.href = "/html/index.html";
+    chrome.browserAction.setPopup({popup: "/html/index.html"});
+}
+
+
 
 function registerUser(name, lName, pw, mail, callback) {
     try {
@@ -222,15 +267,35 @@ function registerUser(name, lName, pw, mail, callback) {
                 //xhr.setRequestHeader('Authorization', userAuthToken);
             },
             success: function (data) {
-                callback(new ServiceResponse(null, data));
+                if (data == null) {
+                    callback(new ServiceResponse("BWAT009: " + "No response from server"), null);
+                } else if (data.error) {
+                    callback(new ServiceResponse("BWAT007: " + data.error.fieldErrors[0].message, null));
+                } else if (data.data.enabled) {
+                    console.log("Register success for username:" + mail);
+                    setCredentials(mail, password);
+                    callback(new ServiceResponse(null, data));
+                } else {
+                    console.log("Unknown problem, response:" + JSON.stringify(data));
+                    callback(new ServiceResponse("BWAT008: server response can not be identified"), null)
+                }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                callback(new ServiceResponse("BWAT003 => " + thrownError, null));
-                console.log(xhr.responseText);
+                console.log("Error Response: " + xhr.responseText);
+                try {
+                    var errorMsg = JSON.parse(xhr.responseText);
+                    if (errorMsg.error.fieldErrors[0].message != null && errorMsg.error.fieldErrors[0].message.length > 0) {
+                        callback(new ServiceResponse("BWAT011: " + errorMsg.error.fieldErrors[0].message, null));
+                    } else {
+                        callback(new ServiceResponse("BWAT010: Failed to register. Please try again later.", null));
+                    }
+                } catch (err) {
+                    callback(new ServiceResponse("BWAT003: Failed to register. Please try again later.", null));
+                }
             }
         });
     } catch (err) {
-        callback(new ServiceResponse("BWAT004 => " + err.message, null));
+        callback(new ServiceResponse("BWAT004: " + err.message, null));
     }
 }
 
@@ -288,12 +353,12 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData) {
                 callback(new ServiceResponse(null, data));
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                callback(new ServiceResponse("BWAT003 => " + thrownError, null));
+                callback(new ServiceResponse("BWAT005 => " + thrownError, null));
                 console.log(xhr.responseText);
             }
         });
     } catch (err) {
-        callback(new ServiceResponse("BWAT004 => " + err.message, null));
+        callback(new ServiceResponse("BWAT006 => " + err.message, null));
     }
 }
 

@@ -4,8 +4,8 @@
 
 function processServiceRegisterResponse(serviceResponse) {
     if (serviceResponse.success) {
-        window.location.href = "/html/annotationLanding.html";
-        chrome.browserAction.setPopup({popup: "/html/annotationLanding.html"});
+        window.location.href = "/html/index.html";
+        chrome.browserAction.setPopup({popup: "/html/index.html"});
     } else {
         alert(serviceResponse.getErrorPrompt());
     }
