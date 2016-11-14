@@ -4,6 +4,7 @@ package com.bwat.advice;
 import com.bwat.exceptions.AuthenticationFailed;
 import com.bwat.transfer.ErrorMessage;
 import com.bwat.transfer.GenericError;
+import com.bwat.transfer.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,7 +19,7 @@ public class UserControllerAdvice {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(AuthenticationFailed.class)
     @ResponseBody
-    public ErrorMessage processLoginError(AuthenticationFailed ex) {
-        return new GenericError(401, "Wrong password or email");
+    public Response processLoginError(AuthenticationFailed ex) {
+        return Response.builder().status("error").error("Wrong password or email").build();
     }
 }

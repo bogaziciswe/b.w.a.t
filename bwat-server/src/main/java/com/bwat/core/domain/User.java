@@ -5,12 +5,10 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -31,6 +29,9 @@ public class User implements UserDetails {
     private boolean accountNonExpired;
     private boolean credentialsNonExpired;
     private boolean accountNonLocked;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<UserAnnotation> userAnnotations;
 
 
     public User() {
