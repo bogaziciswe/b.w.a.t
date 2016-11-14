@@ -329,13 +329,14 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData) {
             "@context": "http://www.w3.org/ns/anno.jsonld",
             "id": tabUrl,
             "type": "Annotation",
+            "creator": "http://example.org/user1",
             "body": {
                 "type": "TextualBody",
-                "value": "commentValue",
+                "value": commentValue,
                 "format": "text/plain"
             },
             "target": {
-                "source": "http://example.org/page1.html",
+                "source": tabUrl,
                 "selector": [
                     {
                         "type": "RangeSelector",
