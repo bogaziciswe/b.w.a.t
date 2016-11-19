@@ -62,42 +62,46 @@ window.onload = function () {
     contentAnnotatorBM.annotator('addPlugin', 'StoreLogger');
     console.log('test2');
     console.log(contentAnnotatorBM);
-
+    testGettingAnnotationsForUrl();
     function testGettingAnnotationsForUrl() {
-        // Example usage of getting Annotations from url.
-        var url = "http://www.milliyet.com/trump-mrump-birseyler.html";
-        var annotationListResponse = getAnnotationsForUrl(url); // This method never throws exception, fail-safe.
+        // Example usage of getting Annotations for current url.
+        getAnnotationsForCurrentUrl().then(function(response){
+            var annotationListResponse = response;
 
-        if (annotationListResponse.success) { // success = true if server responds with a valid JSON with annotations in it.
+            if (annotationListResponse.success) { // success = true if server responds with a valid JSON with annotations in it.
 
-            // Now we have responseObject , time to get annotationList.
-            var annotationList = annotationListResponse.annotations;
+                // Now we have responseObject , time to get annotationList.
+                var annotationList = annotationListResponse.annotations;
 
-            for (var i = 0; i < annotationList.length; i++) {
+                for (var i = 0; i < annotationList.length; i++) {
 
-                var currentAnnotation = annotationList[i];
-                //Every annotation object corresponds what we have as JSON-LD.
-                console.log("body = " + currentAnnotation.body);
-                console.log("target object = " + currentAnnotation.target);
-                console.log("type = " + currentAnnotation.type); // we reach each root variables like this.
+                    var currentAnnotation = annotationList[i];
+                    //Every annotation object corresponds what we have as JSON-LD.
+                    console.log("body = " + currentAnnotation.body);
+                    console.log("target object = " + currentAnnotation.target);
+                    console.log("type = " + currentAnnotation.type); // we reach each root variables like this.
 
-                //for sub types ( for instance selector )
-                console.log("selector object = " + currentAnnotation.target.selector);
-                console.log("selector[1].start = " + currentAnnotation.target.selector[1].start);
-                console.log("selector[0].startSelector.value = " + currentAnnotation.target.selector[0].startSelector.value); // anything relating to our JSON works.
+                    //for sub types ( for instance selector )
+                    console.log("selector object = " + currentAnnotation.target.selector);
+                    console.log("selector[1].start = " + currentAnnotation.target.selector[1].start);
+                    console.log("selector[0].startSelector.value = " + currentAnnotation.target.selector[0].startSelector.value); // anything relating to our JSON works.
 
-                //for geekModeString
+                    //for geekModeString
 
-                console.log("geek String:" + currentAnnotation.getGeekString());
+                    console.log("geek String:" + currentAnnotation.getGeekString());
 
-                break; // don't want to flood console : )
+                    break; // don't want to flood console : )
+                }
+
+            } else { // Any other errors cause success == false . Network error, empty response, timeout, invalid json etc...
+                var errorMessage = annotationListResponse.errorMsg; // if something bad happened, brief details will be stored as errorMsg. Remember to check console.log as well.
+                // TODO something to do with errorMessage, alert(errorMessage) may be.
+                console.log("ERROR ENCOUNTERED WHILE FETCHING ANNOTATIONS:" + errorMessage);
             }
-
-        } else { // Any other errors cause success == false . Network error, empty response, timeout, invalid json etc...
-            var errorMessage = annotationListResponse.errorMsg; // if something bad happened, brief details will be stored as errorMsg. Remember to check console.log as well.
-            // TODO something to do with errorMessage, alert(errorMessage) may be.
-            console.log("ERROR ENCOUNTERED WHILE FETCHING ANNOTATIONS:" + errorMessage);
-        }
-
+        });
+        //var url = "http://example.org/ebook1";
+        //getAnnotationsForUrl(url).then(function(response){
+        //
+        //});
     }
 };

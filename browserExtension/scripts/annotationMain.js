@@ -4,6 +4,7 @@ var protocol = "http://";
 var serverRootUrl = "ec2-35-162-70-40.us-west-2.compute.amazonaws.com";
 var loginPostUri = "/api/users/login";
 var registerPostUri = "/api/users";
+var getAnnotationBySourceUri = "/api/annotation/source";
 var annotationStorePostUri = "/api/annotation";
 
 
@@ -107,25 +108,87 @@ function testAnnotationListObjectCreation() {
 }
 
 /**
- * var annotationResponse = getAnnotationsForUrl("http://www.hurriyet.com/test.html");
- * var errorMsg = annotationResponse.errorMsg;
- * if(errorMsg == null ){
- *   // Your code goes here, succesfully fetched annotations
- * }else{
- *  // Something went wrong. check console.log() and see annotationResponse.errorMsg.
+ * Fetches annotations for current page.
+ * Example usage:
+ * getAnnotationsForCurrentUrl().then(function(response)){
+ *    var annotationResponse = response;
+ *    var errorMsg = annotationResponse.errorMsg;
+ *    if(errorMsg == null ){
+ *      // Your code goes here, successfully fetched annotations
+ *    }else{
+ *      // Something went wrong. check console.log() and see annotationResponse.errorMsg.
+ *    }
  * }
+ */
+function getAnnotationsForCurrentUrl() {
+    var fullUrl = window.location.href;
+    return getAnnotationsForUrl(fullUrl);
+}
+
+/**
+ * Example usage:
+ * getAnnotationsForUrl("http://www.hurriyet.com/test.html").then(function(response)){
+ *    var annotationResponse = response;
+ *    var errorMsg = annotationResponse.errorMsg;
+ *    if(errorMsg == null ){
+ *      // Your code goes here, successfully fetched annotations
+ *    }else{
+ *      // Something went wrong. check console.log() and see annotationResponse.errorMsg.
+ *    }
+ * }
+ *
  * @param pageUrl
  */
 function getAnnotationsForUrl(pageUrl) {
-    //TODO get annotations from server with pageUrl.
-    var testResponseString = getDummyAnnotationResponseString();
-    var resp;
-    try {
-        resp = new AnnotationListResponse(testResponseString, null);
-    } catch (err) {
-        resp = new AnnotationListResponse(null, err.message);
-    }
-    return resp;
+    return new Promise(function (resolve, reject) {
+        try {
+            var keys = ["username", "password"];
+
+            function readStoredCredentials(items) {
+                console.log("Making GET request to :" + protocol + serverRootUrl + getAnnotationBySourceUri + "?source=" + pageUrl);
+                $.ajax
+                ({
+                    type: "GET",
+                    url: protocol + serverRootUrl + getAnnotationBySourceUri + "?source=" + pageUrl,
+                    dataType: 'json',
+                    async: true,
+                    beforeSend: function (xhr) {
+                        //userAuthToken = make_base_auth(items.username, items.password);
+                        //xhr.setRequestHeader('Authorization', userAuthToken);
+                    },
+                    success: function (data) {
+                        console.log("Get annotation by source response:" + JSON.stringify(data));
+                        if (data.data && data.status == 'success') {
+                            resolve(new AnnotationListResponse(JSON.stringify(data.data), null));
+                        } else {
+                            if (data.status) {
+                                resolve(new AnnotationListResponse(null, data.status));
+                            } else {
+                                resolve(new AnnotationListResponse(null, "BWAT019 Failed to obtain valid response from server"));
+                            }
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log("Getting annotation by source failed, source:" + pageUrl + ", details:" + xhr.responseText);
+                        try {
+                            var errorMsg = JSON.parse(xhr.responseText);
+                            if (errorMsg) {
+                                resolve(new AnnotationListResponse(null, errorMsg.message));
+                            } else {
+                                resolve(new AnnotationListResponse(null, "BWAT020: Request failed while fetching annotations by source"));
+                            }
+                        } catch (err) {
+                            resolve(new AnnotationListResponse(null, "BWAT021: " + thrownError));
+                        }
+                    }
+                });
+            }
+
+            chrome.storage.sync.get(keys, readStoredCredentials);
+        } catch (err) {
+            resolve(new AnnotationListResponse(null, err.message));
+        }
+    });
 }
 
 
