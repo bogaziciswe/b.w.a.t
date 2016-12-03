@@ -386,40 +386,63 @@ function registerUser(name, lName, pw, mail, callback) {
 function sendCreatedAnnnotation(commentValue, xpathSelectorData) {
 
     var tabUrl = window.location.href;
-
     try {
-        var annotationPostData = {
-            "@context": "http://www.w3.org/ns/anno.jsonld",
-            "id": tabUrl,
-            "type": "Annotation",
-            "creator": "http://example.org/user1",
-            "body": {
-                "type": "TextualBody",
-                "value": commentValue,
-                "format": "text/plain"
-            },
-            "target": {
-                "source": tabUrl,
-                "selector": [
-                    {
-                        "type": "RangeSelector",
-                        "startSelector": {
-                            "type": "XPathSelector",
-                            "value": xpathSelectorData.start
+        if(xpathSelectorData.hasOwnProperty('type')){
+            var annotationPostData = {
+                "@context": "http://www.w3.org/ns/anno.jsonld",
+                "id": tabUrl,
+                "type": "Annotation",
+                "creator": "http://example.org/user1",
+                "body": {
+                    "type": "TextualBody",
+                    "value": commentValue,
+                    "format": "text/plain"
+                },
+                "target": {
+                    "source": tabUrl,
+                    "id": "".concat("http://example.com/image1#xywh=",xpathSelectorData.geometry.height,",",xpathSelectorData.geometry.width,",",xpathSelectorData.geometry.x,",",xpathSelectorData.geometry.y),
+                    "type": "Image",
+                    "format": "image/jpeg"
+                }
+            };
+
+        }
+        else{
+            var annotationPostData = {
+                "@context": "http://www.w3.org/ns/anno.jsonld",
+                "id": tabUrl,
+                "type": "Annotation",
+                "creator": "http://example.org/user1",
+                "body": {
+                    "type": "TextualBody",
+                    "value": commentValue,
+                    "format": "text/plain"
+                },
+                "target": {
+                    "source": tabUrl,
+                    "selector": [
+                        {
+                            "type": "RangeSelector",
+                            "startSelector": {
+                                "type": "XPathSelector",
+                                "value": xpathSelectorData.start
+                            },
+                            "endSelector": {
+                                "type": "XPathSelector",
+                                "value": xpathSelectorData.end
+                            }
                         },
-                        "endSelector": {
-                            "type": "XPathSelector",
-                            "value": xpathSelectorData.end
+                        {
+                            "type": "DataPositionSelector",
+                            "start": xpathSelectorData.startOffset,
+                            "end": xpathSelectorData.endOffset
                         }
-                    },
-                    {
-                        "type": "DataPositionSelector",
-                        "start": xpathSelectorData.startOffset,
-                        "end": xpathSelectorData.endOffset
-                    }
-                ]
-            }
-        };
+                    ]
+                }
+            };
+
+        }
+
         console.log(JSON.stringify(annotationPostData));
         $.ajax({
             type: "POST",
