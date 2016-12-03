@@ -1,12 +1,11 @@
 package com.bwat.controller;
 
 import com.bwat.core.domain.User;
-import com.bwat.core.domain.UserAnnotation;
 import com.bwat.core.request.RegisterReq;
 import com.bwat.core.service.ApiService;
 import com.bwat.core.service.UserService;
 import com.bwat.exceptions.AuthenticationFailed;
-import com.bwat.transfer.AnnotationTransfer;
+import com.bwat.transfer.AnnotationRaw;
 import com.bwat.transfer.Response;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -80,7 +78,7 @@ public class UserController {
     @RequestMapping(value = "/annotations", method = RequestMethod.GET)
     public Response getUserAnnotation(Principal principal) {
         User user = userService.findByMail(principal.getName());
-        List<AnnotationTransfer> annotationTransferList = user.getUserAnnotations().stream().map(annotation -> apiService.findById(annotation.getAnnotationId())).collect(Collectors.toList());
-        return Response.builder().data(annotationTransferList).status("success").build();
+        List<AnnotationRaw> annotationRawList = user.getUserAnnotations().stream().map(annotation -> apiService.findById(annotation.getAnnotationId())).collect(Collectors.toList());
+        return Response.builder().data(annotationRawList).status("success").build();
     }
 }

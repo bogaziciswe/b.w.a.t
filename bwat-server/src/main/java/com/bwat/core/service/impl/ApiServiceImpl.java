@@ -1,7 +1,7 @@
 package com.bwat.core.service.impl;
 
 import com.bwat.core.service.ApiService;
-import com.bwat.transfer.AnnotationTransfer;
+import com.bwat.transfer.AnnotationRaw;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -17,8 +17,8 @@ public class ApiServiceImpl implements ApiService {
     private static RestTemplate rest = new RestTemplate();
 
     @Override
-    public AnnotationTransfer createAnnotation(Object object) {
-        return rest.postForObject(annotationServer + "/annotation", object, AnnotationTransfer.class);
+    public AnnotationRaw createAnnotation(Object object) {
+        return rest.postForObject(annotationServer + "/annotation", object, AnnotationRaw.class);
     }
 
     @Override
@@ -27,12 +27,12 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public AnnotationTransfer findById(String id) {
-        return rest.getForObject(annotationServer + "/annotation/" + id, AnnotationTransfer.class);
+    public AnnotationRaw findById(String id) {
+        return rest.getForObject(annotationServer + "/annotation/" + id, AnnotationRaw.class);
     }
 
     @Override
-    public AnnotationTransfer[] findAll() {
-        return rest.getForObject(annotationServer + "/annotation/all", AnnotationTransfer[].class);
+    public AnnotationRaw[] findAll() {
+        return rest.getForObject(annotationServer + "/annotation/all", AnnotationRaw[].class);
     }
 }

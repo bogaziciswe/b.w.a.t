@@ -1,7 +1,7 @@
 package com.bwat.core.service.impl;
 
 import com.bwat.core.service.ApiService;
-import com.bwat.transfer.AnnotationTransfer;
+import com.bwat.transfer.AnnotationRaw;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -13,11 +13,11 @@ import java.io.InputStream;
 @Profile("test")
 public class ApiServiceTestImpl implements ApiService {
     @Override
-    public AnnotationTransfer createAnnotation(Object object) {
+    public AnnotationRaw createAnnotation(Object object) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            InputStream is = AnnotationTransfer.class.getResourceAsStream("/newAnnotation.json");
-            return mapper.readValue(is, AnnotationTransfer.class);
+            InputStream is = AnnotationRaw.class.getResourceAsStream("/newAnnotation.json");
+            return mapper.readValue(is, AnnotationRaw.class);
         } catch (IOException ignore) {
             //ignoring is bliss
         }
@@ -30,16 +30,16 @@ public class ApiServiceTestImpl implements ApiService {
     }
 
     @Override
-    public AnnotationTransfer findById(String id) {
+    public AnnotationRaw findById(String id) {
         return null;
     }
 
     @Override
-    public AnnotationTransfer[] findAll() {
+    public AnnotationRaw[] findAll() {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            InputStream is = AnnotationTransfer.class.getResourceAsStream("/allAnnotations.json");
-            return mapper.readValue(is, AnnotationTransfer[].class);
+            InputStream is = AnnotationRaw.class.getResourceAsStream("/allAnnotations.json");
+            return mapper.readValue(is, AnnotationRaw[].class);
         } catch (IOException ignore) {
             //ignoring is bliss
         }

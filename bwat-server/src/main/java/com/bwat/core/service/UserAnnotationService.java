@@ -10,4 +10,5 @@ public interface UserAnnotationService {
     List<UserAnnotation> findAll();
     List<UserAnnotation> publicAnnotations();
     List<UserAnnotation> userAnnotations(User user);
+    UserAnnotation findByAnnotationId(String annotationId);
 }

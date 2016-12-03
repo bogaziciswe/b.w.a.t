@@ -1,14 +1,14 @@
 package com.bwat.core.service;
 
-import com.bwat.transfer.AnnotationTransfer;
+import com.bwat.transfer.AnnotationRaw;
 
 public interface ApiService {
-    AnnotationTransfer createAnnotation(Object object);
+    AnnotationRaw createAnnotation(Object object);
 
     Object getAnnotations();
 
-    AnnotationTransfer findById(String id);
+    AnnotationRaw findById(String id);
 
-    AnnotationTransfer[] findAll();
+    AnnotationRaw[] findAll();
 
 }

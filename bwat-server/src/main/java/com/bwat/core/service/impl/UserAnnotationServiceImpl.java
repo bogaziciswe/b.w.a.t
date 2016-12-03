@@ -41,4 +41,9 @@ public class UserAnnotationServiceImpl implements UserAnnotationService {
         return userAnnotationRepository.findByUser(user);
     }
 
+    @Override
+    public UserAnnotation findByAnnotationId(String annotationId) {
+        return userAnnotationRepository.findByAnnotationId(annotationId);
+    }
+
 }

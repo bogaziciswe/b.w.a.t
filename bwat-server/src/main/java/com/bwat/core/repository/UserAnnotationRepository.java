@@ -10,6 +10,11 @@ import java.util.List;
 @Repository
 public interface UserAnnotationRepository extends CrudRepository<UserAnnotation, Long> {
     List<UserAnnotation> findAll();
+
     List<UserAnnotation> findByIsPublic(boolean isPublic);
+
     List<UserAnnotation> findByUser(User user);
+
+    UserAnnotation findByAnnotationId(String annotationId);
 }
+
