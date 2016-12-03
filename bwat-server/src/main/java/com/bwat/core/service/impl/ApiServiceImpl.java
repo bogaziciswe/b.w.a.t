@@ -3,12 +3,12 @@ package com.bwat.core.service.impl;
 import com.bwat.core.service.ApiService;
 import com.bwat.transfer.AnnotationTransfer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
-
 @Service
+@Profile({"default", "dev"})
 public class ApiServiceImpl implements ApiService {
 
     @Value("${app.config.annotation-server-base-url}")
@@ -18,7 +18,7 @@ public class ApiServiceImpl implements ApiService {
 
     @Override
     public AnnotationTransfer createAnnotation(Object object) {
-        return rest.postForObject(annotationServer+"/annotation", object, AnnotationTransfer.class);
+        return rest.postForObject(annotationServer + "/annotation", object, AnnotationTransfer.class);
     }
 
     @Override

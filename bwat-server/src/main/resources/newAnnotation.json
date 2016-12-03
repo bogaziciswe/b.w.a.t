@@ -1,0 +1,33 @@
+{
+  "id": "5842ccf08dbd90b9cc0099fd",
+  "annotationId": "http://example.com/5842ccf08dbd90b9cc0099fd",
+  "createdAt": 1480772848205,
+  "updatedAt": 1480772848205,
+  "type": "Annotation",
+  "target": {
+    "selector": [
+      {
+        "type": "RangeSelector",
+        "endSelector": {
+          "type": "XPathSelector",
+          "value": "//table[1]/tr[1]/td[4]"
+        },
+        "startSelector": {
+          "type": "XPathSelector",
+          "value": "//table[1]/tr[1]/td[2]"
+        }
+      },
+      {
+        "type": "TextPositionSelector",
+        "end": 795,
+        "start": 412
+      }
+    ],
+    "source": "http://example.org/ebook1"
+  },
+  "body": {
+    "type": "TextualBody",
+    "format": "text/plain",
+    "value": "Comment text"
+  }
+}
