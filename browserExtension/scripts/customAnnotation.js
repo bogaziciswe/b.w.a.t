@@ -66,14 +66,14 @@ window.onload = function () {
     testGettingAnnotationsForUrl();
     function testGettingAnnotationsForUrl() {
         // Example usage of getting Annotations for current url.
-        getAnnotationsForCurrentUrl().then(function(response){
+        getAnnotationsForCurrentUrl().then(function (response) {
             var annotationListResponse = response;
 
             if (annotationListResponse.success) { // success = true if server responds with a valid JSON with annotations in it.
 
                 // Now we have responseObject , time to get annotationList.
                 var annotationList = annotationListResponse.annotations;
-
+                console.log("AnnotationList:" + JSON.stringify(annotationList));
                 for (var i = 0; i < annotationList.length; i++) {
 
                     var currentAnnotation = annotationList[i];

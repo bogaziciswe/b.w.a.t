@@ -421,8 +421,7 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData) {
             }
         };
         console.log(JSON.stringify(annotationPostData));
-        $.ajax
-        ({
+        $.ajax({
             type: "POST",
             url: protocol + serverRootUrl + annotationStorePostUri,
             dataType: 'json',
@@ -434,10 +433,11 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData) {
                 xhr.setRequestHeader('Authorization', userAuthToken);
             },
             success: function (data) {
-                callback(new ServiceResponse(null, data));
+                //callback(new ServiceResponse(null, data));
+                console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                callback(new ServiceResponse("BWAT005 => " + thrownError, null));
+                //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
                 console.log(xhr.responseText);
             }
         });
