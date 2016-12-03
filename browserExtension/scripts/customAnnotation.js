@@ -21,7 +21,11 @@ window.onload = function () {
             endOffset: 0,
             quote: '',
             comment: '',
-            url: ''
+            url: '',
+            height: 0,
+            width:0,
+            x:0,
+            y:0
 
         };
         return {
@@ -33,6 +37,10 @@ window.onload = function () {
                         var current = $.extend(true, {}, singleAnnotation);
                         if (annotation.hasOwnProperty('src')){
                             current.url = annotation.src;
+                            current.height = annotation.shapes[0].height;
+                            current.width = annotation.shapes[0].width;
+                            current.x = annotation.shapes[0].x;
+                            current.y = annotation.shapes[0].y;
                         }
                         else{
                             current.startOffset = annotation.ranges[0].startOffset;
@@ -52,6 +60,7 @@ window.onload = function () {
                     .subscribe("annotationUpdated", function (annotation) {
                         console.info("The annotation: %o has just been updated!", annotation);
                         if (annotation.hasOwnProperty('src')){
+
                         }
                         else{
                             var offset = findAnnotation(annotation.ranges[0].startOffset, annotation.ranges[0].endOffset);
