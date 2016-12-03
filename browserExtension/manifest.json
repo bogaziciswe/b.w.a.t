@@ -41,7 +41,8 @@
         "/scripts/jquery.js",
         "/scripts/annotator.js",
         "/scripts/customAnnotation.js",
-        "/scripts/annotationMain.js"
+        "/scripts/annotationMain.js",
+        "/scripts/annotorious.okfn.js"
       ],
       "run_at": "document_start",
       "all_frames": true

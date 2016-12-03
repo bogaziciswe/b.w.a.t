@@ -60,6 +60,7 @@ window.onload = function () {
     console.log('test1');
     contentAnnotatorBM = $('body').annotator();
     contentAnnotatorBM.annotator('addPlugin', 'StoreLogger');
+    contentAnnotatorBM.annotator('addPlugin', 'AnnotoriousImagePlugin');
     console.log('test2');
     console.log(contentAnnotatorBM);
     testGettingAnnotationsForUrl();
