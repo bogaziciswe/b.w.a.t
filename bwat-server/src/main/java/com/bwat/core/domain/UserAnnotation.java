@@ -21,4 +21,6 @@ public class UserAnnotation {
     @ManyToOne
     @JsonIgnore
     private User user;
+
+    private boolean isPublic;
 }

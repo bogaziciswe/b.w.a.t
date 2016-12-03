@@ -1,6 +1,8 @@
 package com.bwat.controller;
 
 import com.bwat.core.domain.User;
+import com.bwat.core.domain.UserAnnotation;
+import com.bwat.core.request.AnnotationCreationReq;
 import com.bwat.core.service.ApiService;
 import com.bwat.core.service.UserAnnotationService;
 import com.bwat.core.service.UserService;
@@ -12,7 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Arrays;
+import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -20,7 +22,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RestController
 @RequestMapping("/api/annotation")
 public class AnnotationController {
-
 
     @Autowired
     private ApiService apiService;
@@ -34,12 +35,12 @@ public class AnnotationController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "", method = POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Object addAnnotation(@RequestBody Object object, Principal principal) {
-        AnnotationTransfer annotationTransfer = apiService.createAnnotation(object);
+    public Response addAnnotation(@RequestBody AnnotationCreationReq req, Principal principal) {
+        AnnotationTransfer annotationTransfer = apiService.createAnnotation(req.getAnnotation());
         User user = userService.findByMail(principal.getName());
         //save annotation id and user id to db.
-        userAnnotationService.create(user, annotationTransfer.getId());
-        return annotationTransfer;
+        userAnnotationService.create(user, annotationTransfer.getId(), req.isPublic());
+        return Response.builder().data(annotationTransfer).status("success").build();
     }
 
     @RequestMapping(value = "", method = GET)
@@ -49,10 +50,23 @@ public class AnnotationController {
     }
 
     @RequestMapping(value = "/source", method = RequestMethod.GET)
-    public Response findBySource(@RequestParam String source) {
+    public Response findBySource(@RequestParam String source, Principal principal) {
+        List<UserAnnotation> publicAnnotations = userAnnotationService.publicAnnotations();
+        List<UserAnnotation> userAnnotations = new ArrayList<>();
+        if(principal != null) {
+            User user = userService.findByMail(principal.getName());
+            userAnnotations = userAnnotationService.userAnnotations(user);
+        }
+        Set<String> validAnnotationIds = new HashSet<>();
+        publicAnnotations.forEach(publicAnnotation -> validAnnotationIds.add(publicAnnotation.getAnnotationId()));
+        userAnnotations.forEach(userAnnotation -> validAnnotationIds.add(userAnnotation.getAnnotationId()));
+
         AnnotationTransfer[] annotationTransfers = apiService.findAll();
-        Object[] objects = Arrays.stream(annotationTransfers).filter(annotationTransfer -> annotationTransfer.target.getSource().equals(source)).toArray();
+        Object[] objects = Arrays.stream(annotationTransfers)
+                .filter(annotationTransfer -> annotationTransfer.target.getSource().equals(source))
+                .filter(annotationTransfer -> !validAnnotationIds.contains(annotationTransfer.getId()))
+                .toArray();
+
         return Response.builder().data(objects).status("success").build();
     }
-
 }
