@@ -2,6 +2,7 @@ package com.bwat.controller;
 
 import com.bwat.core.domain.User;
 import com.bwat.core.domain.UserAnnotation;
+import com.bwat.core.repository.UserAnnotationRepository;
 import com.bwat.core.repository.UserRepository;
 import com.bwat.core.request.AnnotationCreationReq;
 import com.bwat.core.service.UserAnnotationService;
@@ -26,9 +27,12 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
+import static org.hamcrest.Matchers.is;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -49,11 +53,16 @@ public class AnnotationControllerTest {
     private UserAnnotationService userAnnotationService;
 
     @Autowired
+    private UserAnnotationRepository userAnnotationRepository;
+
+    @Autowired
     private ObjectMapper mapper;
 
     private MockMvc mockMvc;
 
-    private User savedUser;
+    private User johnDoe;
+
+    private User janeDoe;
 
 
     @Before
@@ -63,13 +72,63 @@ public class AnnotationControllerTest {
                 .apply(springSecurity())
                 .build();
 
-        savedUser = new User();
-        savedUser.setFirstName("John");
-        savedUser.setLastName("Doe");
-        savedUser.setPassword(passwordEncoder.encode("12345678"));
-        savedUser.setMail("john.doe@example.com");
-        userRepository.save(savedUser);
+        johnDoe = new User();
+        johnDoe.setFirstName("John");
+        johnDoe.setLastName("Doe");
+        johnDoe.setPassword(passwordEncoder.encode("12345678"));
+        johnDoe.setMail("john.doe@example.com");
+        userRepository.save(johnDoe);
 
+        janeDoe = new User();
+        janeDoe.setFirstName("Jane");
+        janeDoe.setLastName("Doe");
+        janeDoe.setPassword(passwordEncoder.encode("12345678"));
+        janeDoe.setMail("jane.doe@example.com");
+        userRepository.save(janeDoe);
+
+//      ##CREATE SOME ANNOTATIONS##
+//      public1
+        UserAnnotation userAnnotation = new UserAnnotation();
+        userAnnotation.setAnnotationId("public1");
+        userAnnotation.setUser(johnDoe);
+        userAnnotation.setPublic(true);
+        userAnnotationRepository.save(userAnnotation);
+//      public2
+        userAnnotation = new UserAnnotation();
+        userAnnotation.setAnnotationId("public2");
+        userAnnotation.setUser(johnDoe);
+        userAnnotation.setPublic(true);
+        userAnnotationRepository.save(userAnnotation);
+//      private1
+        userAnnotation = new UserAnnotation();
+        userAnnotation.setAnnotationId("private1");
+        userAnnotation.setUser(johnDoe);
+        userAnnotation.setPublic(false);
+        userAnnotationRepository.save(userAnnotation);
+//      private2
+        userAnnotation = new UserAnnotation();
+        userAnnotation.setAnnotationId("private2");
+        userAnnotation.setUser(johnDoe);
+        userAnnotation.setPublic(false);
+        userAnnotationRepository.save(userAnnotation);
+//      public1OtherUser
+        userAnnotation = new UserAnnotation();
+        userAnnotation.setAnnotationId("public1OtherUser");
+        userAnnotation.setUser(janeDoe);
+        userAnnotation.setPublic(true);
+        userAnnotationRepository.save(userAnnotation);
+//      public2OtherUser
+        userAnnotation = new UserAnnotation();
+        userAnnotation.setAnnotationId("public2OtherUser");
+        userAnnotation.setUser(janeDoe);
+        userAnnotation.setPublic(true);
+        userAnnotationRepository.save(userAnnotation);
+//      private1OtherUser
+        userAnnotation = new UserAnnotation();
+        userAnnotation.setAnnotationId("private1OtherUser");
+        userAnnotation.setUser(janeDoe);
+        userAnnotation.setPublic(false);
+        userAnnotationRepository.save(userAnnotation);
     }
 
     @After
@@ -86,28 +145,63 @@ public class AnnotationControllerTest {
         MvcResult result = mockMvc.perform(post("/api/annotation")
                 .content(mapper.writeValueAsString(req))
                 .contentType(MediaType.APPLICATION_JSON)
-                .with(user(savedUser.getMail())))
+                .with(user(johnDoe.getMail())))
                 .andExpect(status().is2xxSuccessful())
                 .andReturn();
         String jsonRes = result.getResponse().getContentAsString();
 
         //check if it is public
-        List<UserAnnotation> userAnnotations = userAnnotationService.userAnnotations(savedUser);
-        Assert.assertTrue(userAnnotations.get(0).isPublic());
+        List<UserAnnotation> userAnnotations = userAnnotationService.userAnnotations(johnDoe);
+        Assert.assertTrue(userAnnotations.get(4).isPublic());
 
         //check it's annotation id
         String annotationId = JsonPath.read(jsonRes, "$.data.id");
-        Assert.assertEquals(annotationId, userAnnotations.get(0).getAnnotationId());
+        Assert.assertEquals(annotationId, userAnnotations.get(4).getAnnotationId());
     }
 
     @Test
     public void getAnnotations() throws Exception {
 
+
     }
 
     @Test
-    public void findBySource() throws Exception {
+    public void findBySource_shouldReturnPublicAnnotationsWithNoAuth() throws Exception {
+        mockMvc.perform(get("/api/annotation/source?source=http://example.org/ebook")
+                .contentType(MediaType.APPLICATION_JSON))
+//                .with(user(johnDoe.getMail())))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.data[0].annotation.id", is("public1")))
+                .andExpect(jsonPath("$.data[0].user.mail", is(johnDoe.getMail())))
+                .andExpect(jsonPath("$.data[1].annotation.id", is("public2")))
+                .andExpect(jsonPath("$.data[1].user.mail", is(johnDoe.getMail())))
+                .andExpect(jsonPath("$.data[2].annotation.id", is("public1OtherUser")))
+                .andExpect(jsonPath("$.data[2].user.mail", is(janeDoe.getMail())))
+                .andExpect(jsonPath("$.data[3].annotation.id", is("public2OtherUser")))
+                .andExpect(jsonPath("$.data[3].user.mail", is(janeDoe.getMail())))
 
+                .andReturn();
+    }
+
+    @Test
+    public void findBySource_shouldReturnPublicAndPrivateAnnotationsOfUser() throws Exception {
+        mockMvc.perform(get("/api/annotation/source?source=http://example.org/ebook")
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(user(johnDoe.getMail())))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.data[0].annotation.id", is("public1")))
+                .andExpect(jsonPath("$.data[0].user.mail", is(johnDoe.getMail())))
+                .andExpect(jsonPath("$.data[1].annotation.id", is("public2")))
+                .andExpect(jsonPath("$.data[1].user.mail", is(johnDoe.getMail())))
+                .andExpect(jsonPath("$.data[2].annotation.id", is("private1")))
+                .andExpect(jsonPath("$.data[2].user.mail", is(johnDoe.getMail())))
+                .andExpect(jsonPath("$.data[3].annotation.id", is("private2")))
+                .andExpect(jsonPath("$.data[3].user.mail", is(johnDoe.getMail())))
+                .andExpect(jsonPath("$.data[4].annotation.id", is("public1OtherUser")))
+                .andExpect(jsonPath("$.data[4].user.mail", is(janeDoe.getMail())))
+                .andExpect(jsonPath("$.data[5].annotation.id", is("public2OtherUser")))
+                .andExpect(jsonPath("$.data[5].user.mail", is(janeDoe.getMail())))
+                .andReturn();
     }
 
 }
