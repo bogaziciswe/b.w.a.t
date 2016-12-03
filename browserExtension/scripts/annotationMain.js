@@ -383,7 +383,7 @@ function registerUser(name, lName, pw, mail, callback) {
 }
 
 
-function sendCreatedAnnnotation(commentValue, xpathSelectorData) {
+function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote) {
 
     var tabUrl = window.location.href;
     try {
@@ -437,6 +437,12 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData) {
                             "start": xpathSelectorData.startOffset,
                             "end": xpathSelectorData.endOffset
                         }
+                        ,
+                        {
+                            "type": "TextQuoteSelector",
+                            "exact": quote
+                        }
+
                     ]
                 }
             };

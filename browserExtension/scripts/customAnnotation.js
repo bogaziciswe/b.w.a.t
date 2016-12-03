@@ -50,10 +50,10 @@ window.onload = function () {
                         current.comment = annotation.text;
                         json.push(current);
                         if (annotation.hasOwnProperty('src')) {
-                            sendCreatedAnnnotation(current.comment, annotation.shapes[0]);
+                            sendCreatedAnnnotation(current.comment, annotation.shapes[0],"");
                         }
                         else{
-                            sendCreatedAnnnotation(current.comment, annotation.ranges[0]);
+                            sendCreatedAnnnotation(current.comment, annotation.ranges[0], current.quote);
                         }
                         console.log(JSON.stringify(json));
                     })
