@@ -126,12 +126,15 @@ function getAnnotationsForCurrentUrl() {
     var fullUrl = window.location.href;
     var isHttps = fullUrl.startsWith("https");
     if (isHttps && allowHttpsProtocol) {
+        console.log("Loading annotations for HTTPS protocol, page:" + fullUrl);
         return getAnnotationsForUrl(fullUrl); // if HTTPS protocol is enabled
     } else if (!isHttps) {
+        console.log("Loading annotations for HTTP protocol, page:" + fullUrl);
         return getAnnotationsForUrl(fullUrl); // currently supporting HTTP
     } else {
+        console.log("Disallowed protocol ( HTTPS ), no annotation can be loaded for url:" + fullUrl);
         return new Promise(function (resolve, reject) {
-            resolve(new AnnotationListResponse(JSON.stringify({}), null)); // default empty response
+            reject(new AnnotationListResponse(JSON.stringify({}), null)); // default empty response
         });
     }
 }
@@ -227,25 +230,30 @@ function loadAnnotationsForPage(contentAnnotatorBM) {
 
             // Now we have responseObject , time to get annotationList.
             var annotationList = annotationListResponse.annotations;
-
-            var annotationListLen = annotationList.length;
             if (annotationList != null && annotationList.length > 0) {
+                var annotationListLen = annotationList.length;
+                if (annotationList != null && annotationList.length > 0) {
 
-                for (var i = 0; i < annotationList.length; i++) {
-                    createFieldsForHighlighter(annotationList[i]);
+                    for (var i = 0; i < annotationList.length; i++) {
+                        createFieldsForHighlighter(annotationList[i]);
+                    }
+                    contentAnnotatorBM.annotator("loadAnnotations", annotationList);
+                    if (annotationList != null && annotationListLen > 0) {
+                        console.log("Loaded " + annotationListLen + " annotations.")
+                    } else {
+                        console.log("No annotations to show.");
+                    }
                 }
-                contentAnnotatorBM.annotator("loadAnnotations", annotationList);
-                if (annotationList != null && annotationListLen > 0) {
-                    console.log("Loaded " + annotationListLen + " annotations.")
-                } else {
-                    console.log("No annotations to show.");
-                }
+            } else {
+                console.log("No annotations to show.");
             }
         } else { // Any other errors cause success == false . Network error, empty response, timeout, invalid json etc...
             var errorMessage = annotationListResponse.errorMsg; // if something bad happened, brief details will be stored as errorMsg. Remember to check console.log as well.
             // TODO something to do with errorMessage, alert(errorMessage) may be.
-            //console.log("ERROR ENCOUNTERED WHILE FETCHING ANNOTATIONS:" + errorMessage);
+            console.log("ERROR ENCOUNTERED WHILE FETCHING ANNOTATIONS:" + errorMessage);
         }
+    }, function (rejection) {
+        //console.log("Protocol rejected.");
     });
 }
 
