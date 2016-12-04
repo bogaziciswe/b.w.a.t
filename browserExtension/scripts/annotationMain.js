@@ -200,7 +200,10 @@ function createFieldsForHighlighter(currentAnnotation) {
     };
     var ranges = [range];
     var text = currentAnnotation.body.value;
-    var quote = currentAnnotation.target.selector[2].exact;
+    var quote = '';
+    if(currentAnnotation.target.selector[2] != null && currentAnnotation.target.selector[2].exact){
+        quote = currentAnnotation.target.selector[2].exact;
+    }
     currentAnnotation.ranges = ranges;
     currentAnnotation.text = text;
     currentAnnotation.quote = quote;
