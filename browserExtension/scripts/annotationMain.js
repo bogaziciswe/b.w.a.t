@@ -157,7 +157,7 @@ function getAnnotationsForUrl(pageUrl) {
                         //xhr.setRequestHeader('Authorization', userAuthToken);
                     },
                     success: function (data) {
-                        console.log("Get annotation by source response:" + JSON.stringify(data));
+                        //console.log("Get annotation by source response:" + JSON.stringify(data));
                         if (data.data && data.status == 'success') {
                             resolve(new AnnotationListResponse(JSON.stringify(data.data), null));
                         } else {
@@ -187,6 +187,44 @@ function getAnnotationsForUrl(pageUrl) {
             chrome.storage.sync.get(keys, readStoredCredentials);
         } catch (err) {
             resolve(new AnnotationListResponse(null, err.message));
+        }
+    });
+}
+
+function createFieldsForHighlighter(currentAnnotation) {
+    var range = {
+        start: currentAnnotation.target.selector[0].startSelector.value,
+        end: currentAnnotation.target.selector[0].endSelector.value,
+        startOffset: currentAnnotation.target.selector[1].start,
+        endOffset: currentAnnotation.target.selector[1].end
+    };
+    var ranges = [range];
+    var text = currentAnnotation.body.value;
+    var quote = currentAnnotation.target.selector[2].exact;
+    currentAnnotation.ranges = ranges;
+    currentAnnotation.text = text;
+    currentAnnotation.quote = quote;
+}
+function loadAnnotationsForPage(contentAnnotatorBM) {
+    getAnnotationsForCurrentUrl().then(function (response) {
+        var annotationListResponse = response;
+
+        if (annotationListResponse.success) { // success = true if server responds with a valid JSON with annotations in it.
+
+            // Now we have responseObject , time to get annotationList.
+            var annotationList = annotationListResponse.annotations;
+
+            if (annotationList != null && annotationList.length > 0) {
+
+                for (var i = 0; i < annotationList.length; i++) {
+                    createFieldsForHighlighter(annotationList[i]);
+                }
+                contentAnnotatorBM.annotator("loadAnnotations", annotationList);
+            }
+        } else { // Any other errors cause success == false . Network error, empty response, timeout, invalid json etc...
+            var errorMessage = annotationListResponse.errorMsg; // if something bad happened, brief details will be stored as errorMsg. Remember to check console.log as well.
+            // TODO something to do with errorMessage, alert(errorMessage) may be.
+            //console.log("ERROR ENCOUNTERED WHILE FETCHING ANNOTATIONS:" + errorMessage);
         }
     });
 }
@@ -387,7 +425,7 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote) {
 
     var tabUrl = window.location.href;
     try {
-        if(xpathSelectorData.hasOwnProperty('type')){
+        if (xpathSelectorData.hasOwnProperty('type')) {
             var annotationPostData = {
                 "@context": "http://www.w3.org/ns/anno.jsonld",
                 "id": tabUrl,
@@ -407,14 +445,14 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote) {
                         "width": xpathSelectorData.geometry.width,
                         "x": xpathSelectorData.geometry.x,
                         "y": xpathSelectorData.geometry.y,
-                        "type":"Image",
-                        "format":"image/jpeg"
+                        "type": "Image",
+                        "format": "image/jpeg"
                     }
                 }
             };
 
         }
-        else{
+        else {
             var annotationPostData = {
                 "@context": "http://www.w3.org/ns/anno.jsonld",
                 "id": tabUrl,
