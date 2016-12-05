@@ -213,7 +213,7 @@ function loadAnnotationsForPage(contentAnnotatorBM) {
 
             // Now we have responseObject , time to get annotationList.
             var annotationList = annotationListResponse.annotations;
-
+            sarahSting = JSON.stringify(annotationList);
             if (annotationList != null && annotationList.length > 0) {
 
                 for (var i = 0; i < annotationList.length; i++) {
