@@ -7,6 +7,8 @@ var registerPostUri = "/api/users";
 var getAnnotationBySourceUri = "/api/annotation/source";
 var annotationStorePostUri = "/api/annotation";
 
+//config
+var allowHttpsProtocol = false; //SSL required
 
 function setCredentials(username, password) {
     //FIXME Storing user credentials locally is not secure.
@@ -122,7 +124,19 @@ function testAnnotationListObjectCreation() {
  */
 function getAnnotationsForCurrentUrl() {
     var fullUrl = window.location.href;
-    return getAnnotationsForUrl(fullUrl);
+    var isHttps = fullUrl.startsWith("https");
+    if (isHttps && allowHttpsProtocol) {
+        console.log("Loading annotations for HTTPS protocol, page:" + fullUrl);
+        return getAnnotationsForUrl(fullUrl); // if HTTPS protocol is enabled
+    } else if (!isHttps) {
+        console.log("Loading annotations for HTTP protocol, page:" + fullUrl);
+        return getAnnotationsForUrl(fullUrl); // currently supporting HTTP
+    } else {
+        console.log("Disallowed protocol ( HTTPS ), no annotation can be loaded for url:" + fullUrl);
+        return new Promise(function (resolve, reject) {
+            reject(new AnnotationListResponse(JSON.stringify({}), null)); // default empty response
+        });
+    }
 }
 
 /**
@@ -200,7 +214,10 @@ function createFieldsForHighlighter(currentAnnotation) {
     };
     var ranges = [range];
     var text = currentAnnotation.body.value;
-    var quote = currentAnnotation.target.selector[2].exact;
+    var quote = '';
+    if (currentAnnotation.target.selector[2] != null && currentAnnotation.target.selector[2].exact) {
+        quote = currentAnnotation.target.selector[2].exact;
+    }
     currentAnnotation.ranges = ranges;
     currentAnnotation.text = text;
     currentAnnotation.quote = quote;
@@ -215,17 +232,29 @@ function loadAnnotationsForPage(contentAnnotatorBM) {
             var annotationList = annotationListResponse.annotations;
             sarahSting = JSON.stringify(annotationList);
             if (annotationList != null && annotationList.length > 0) {
+                var annotationListLen = annotationList.length;
+                if (annotationList != null && annotationList.length > 0) {
 
-                for (var i = 0; i < annotationList.length; i++) {
-                    createFieldsForHighlighter(annotationList[i]);
+                    for (var i = 0; i < annotationList.length; i++) {
+                        createFieldsForHighlighter(annotationList[i]);
+                    }
+                    contentAnnotatorBM.annotator("loadAnnotations", annotationList);
+                    if (annotationList != null && annotationListLen > 0) {
+                        console.log("Loaded " + annotationListLen + " annotations.")
+                    } else {
+                        console.log("No annotations to show.");
+                    }
                 }
-                contentAnnotatorBM.annotator("loadAnnotations", annotationList);
+            } else {
+                console.log("No annotations to show.");
             }
         } else { // Any other errors cause success == false . Network error, empty response, timeout, invalid json etc...
             var errorMessage = annotationListResponse.errorMsg; // if something bad happened, brief details will be stored as errorMsg. Remember to check console.log as well.
             // TODO something to do with errorMessage, alert(errorMessage) may be.
-            //console.log("ERROR ENCOUNTERED WHILE FETCHING ANNOTATIONS:" + errorMessage);
+            console.log("ERROR ENCOUNTERED WHILE FETCHING ANNOTATIONS:" + errorMessage);
         }
+    }, function (rejection) {
+        //console.log("Protocol rejected.");
     });
 }
 
@@ -255,7 +284,7 @@ function readCredentials() {
     var keys = ["username", "password"];
 
     function storedCredentials(items) {
-        console.log("Stored Stuff : " + JSON.stringify(items));
+        //console.log("Stored Stuff : " + JSON.stringify(items));
     }
 
     chrome.storage.sync.get(keys, storedCredentials);

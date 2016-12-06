@@ -65,6 +65,8 @@ for (i = 0; i < myData.length; i++)
     //add selected text tag
     var divSelectedText = document.createElement('p');
     divSelectedText.innerHTML = dt.target.selector.exact;
+    console.log("something")
+    console.log(dt.target.selector.exact);
     divBody.appendChild(divSelectedText);
 
     //add Comment
