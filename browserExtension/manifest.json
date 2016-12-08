@@ -42,7 +42,8 @@
         "/scripts/annotator.js",
         "/scripts/customAnnotation.js",
         "/scripts/annotationMain.js",
-        "/scripts/annotorious.okfn.js"
+        "/scripts/annotorious.okfn.js",
+        "/scripts/popup/popupListeners.js"
       ],
       "run_at": "document_start",
       "all_frames": true

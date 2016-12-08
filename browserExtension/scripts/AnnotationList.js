@@ -39,7 +39,7 @@ var sarahSting = [];
 //     }
 
 
-var myData = JSON.parse(sarahSting);
+var myData = sarahSting;
 var cardsList  = document.getElementById('cards')
 for (i = 0; i < myData.length; i++)
 {
