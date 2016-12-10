@@ -17,6 +17,14 @@ function setDOMInfo(info) {
         cardAttr.value = 'panel panel-default';
         newCard.setAttributeNode(cardAttr);
 
+        //add date
+        var spanDate = document.createElement('span');
+        spanDate.innerHTML = dt.createdAt;
+        var spanAttr = document.createAttribute('class');
+        spanAttr.value = 'pull-right';
+        spanDate.setAttributeNode(spanAttr);
+        newCard.appendChild(spanDate);
+
         //add panel body
         var divBody = document.createElement('div');
         var bodyAttr = document.createAttribute('class');
