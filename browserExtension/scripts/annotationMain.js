@@ -206,7 +206,7 @@ function getAnnotationsForUrl(pageUrl) {
 }
 
 function createFieldsForHighlighter(currentAnnotation) {
-    if (!currentAnnotation.target.selector.hasOwnProperty('type')){
+    if (!currentAnnotation.target.selector.hasOwnProperty('type')) {
         var range = {
             start: currentAnnotation.target.selector[0].startSelector.value,
             end: currentAnnotation.target.selector[0].endSelector.value,
@@ -340,24 +340,24 @@ function loginUser(username, password, callback) {
 }
 
 function startAnnotatorJS() {
-    console.log("Processing annotation request");
-    if (!window.jQuery) {
-        alert("JQ does NOT work!!");
-    }
-    console.log("Starting annotations...");
-    var app = new annotator.App();
-    app.include(annotator.ui.main);
-    app.include(annotator.storage.http, {
-        prefix: protocol + "46.196.100.145" + "/healthTracker"
-    });
-    app.start().then(function () {
-        app.annotations.load();
-    });
-    if (app != null) {
-        alert("Please select something and click on annotate Icon");
-    } else {
-        alert("Something is wrong with annotation selector");
-    }
+    //console.log("Processing annotation request");
+    //if (!window.jQuery) {
+    //    alert("JQ does NOT work!!");
+    //}
+    //console.log("Starting annotations...");
+    //var app = new annotator.App();
+    //app.include(annotator.ui.main);
+    //app.include(annotator.storage.http, {
+    //    prefix: protocol + "46.196.100.145" + "/healthTracker"
+    //});
+    //app.start().then(function () {
+    //    app.annotations.load();
+    //});
+    //if (app != null) {
+    //    alert("Please select something and click on annotate Icon");
+    //} else {
+    //    alert("Something is wrong with annotation selector");
+    //}
 }
 
 $(document).ready(function () {
@@ -382,7 +382,11 @@ $(document).ready(function () {
                 if (navbarUsername) {
                     navbarUsername.html(params.username);
                 }
+            }else{
+                console.log("No client credentials have found - 2");
             }
+        } else {
+            console.log("No client credentials have found - 1");
         }
     }
 
@@ -470,7 +474,7 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote) {
                 },
                 "target": {
                     "source": tabUrl,
-                    "id": "http://example.com/image1#xywh="+xpathSelectorData.geometry.x+","+xpathSelectorData.geometry.y+","+xpathSelectorData.geometry.width+","+xpathSelectorData.geometry.height,
+                    "id": "http://example.com/image1#xywh=" + xpathSelectorData.geometry.x + "," + xpathSelectorData.geometry.y + "," + xpathSelectorData.geometry.width + "," + xpathSelectorData.geometry.height,
                     "selector": {
                         "type": xpathSelectorData.type,
                         "url": "http://example.com/image1",
