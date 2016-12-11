@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class AnnotationCreationReq {
     private Object annotation;
-    private boolean isPublic;
+    private boolean publicAnnotation;
 }

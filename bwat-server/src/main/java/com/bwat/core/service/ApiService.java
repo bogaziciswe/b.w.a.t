@@ -11,4 +11,7 @@ public interface ApiService {
 
     AnnotationRaw[] findAll();
 
+    void removeAnnotation(String annotationId);
+
+    void updateAnnotation(String annotationId, Object object);
 }
