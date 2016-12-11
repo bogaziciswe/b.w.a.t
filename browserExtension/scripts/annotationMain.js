@@ -206,21 +206,23 @@ function getAnnotationsForUrl(pageUrl) {
 }
 
 function createFieldsForHighlighter(currentAnnotation) {
-    var range = {
-        start: currentAnnotation.target.selector[0].startSelector.value,
-        end: currentAnnotation.target.selector[0].endSelector.value,
-        startOffset: currentAnnotation.target.selector[1].start,
-        endOffset: currentAnnotation.target.selector[1].end
-    };
-    var ranges = [range];
-    var text = currentAnnotation.body.value;
-    var quote = '';
-    if (currentAnnotation.target.selector[2] != null && currentAnnotation.target.selector[2].exact) {
-        quote = currentAnnotation.target.selector[2].exact;
+    if (!currentAnnotation.target.selector.hasOwnProperty('type')){
+        var range = {
+            start: currentAnnotation.target.selector[0].startSelector.value,
+            end: currentAnnotation.target.selector[0].endSelector.value,
+            startOffset: currentAnnotation.target.selector[1].start,
+            endOffset: currentAnnotation.target.selector[1].end
+        };
+        var ranges = [range];
+        var text = currentAnnotation.body.value;
+        var quote = '';
+        if (currentAnnotation.target.selector[2] != null && currentAnnotation.target.selector[2].exact) {
+            quote = currentAnnotation.target.selector[2].exact;
+        }
+        currentAnnotation.ranges = ranges;
+        currentAnnotation.text = text;
+        currentAnnotation.quote = quote;
     }
-    currentAnnotation.ranges = ranges;
-    currentAnnotation.text = text;
-    currentAnnotation.quote = quote;
 }
 function loadAnnotationsForPage(contentAnnotatorBM) {
     getAnnotationsForCurrentUrl().then(function (response) {
@@ -468,6 +470,7 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote) {
                 },
                 "target": {
                     "source": tabUrl,
+                    "id": "http://example.com/image1#xywh="+xpathSelectorData.geometry.x+","+xpathSelectorData.geometry.y+","+xpathSelectorData.geometry.width+","+xpathSelectorData.geometry.height,
                     "selector": {
                         "type": xpathSelectorData.type,
                         "url": "http://example.com/image1",
