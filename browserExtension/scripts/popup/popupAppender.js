@@ -39,14 +39,14 @@ function setDOMInfo(info) {
 
         //add selected text tag
         var divSelectedText = document.createElement('p');
-        divSelectedText.innerHTML = "<b>Annotation:</b> "+dt.target.selector[2].exact;
+        divSelectedText.innerHTML = "<b>Annotation:</b> "+dt.annotation.target.selector[2].exact;
         console.log("something")
-        console.log(dt.target.selector[2].exact);
+        console.log(dt.annotation.target.selector[2].exact);
         divBody.appendChild(divSelectedText);
 
         //add Comment
         var divComment = document.createElement('p');
-        divComment.innerHTML = "<b>Comment:</b> "+ dt.body.value;
+        divComment.innerHTML = "<b>Comment:</b> "+ dt.annotation.body.value;
         divBody.appendChild(divComment);
 
         cardsList.appendChild(newCard);
