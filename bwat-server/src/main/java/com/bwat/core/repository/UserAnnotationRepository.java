@@ -11,7 +11,7 @@ import java.util.List;
 public interface UserAnnotationRepository extends CrudRepository<UserAnnotation, Long> {
     List<UserAnnotation> findAll();
 
-    List<UserAnnotation> findByIsPublic(boolean isPublic);
+    List<UserAnnotation> findByPublicAnnotation(boolean isPublic);
 
     List<UserAnnotation> findByUser(User user);
 

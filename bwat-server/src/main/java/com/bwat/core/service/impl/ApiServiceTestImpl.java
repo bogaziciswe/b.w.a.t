@@ -45,4 +45,14 @@ public class ApiServiceTestImpl implements ApiService {
         }
         return null;
     }
+
+    @Override
+    public void removeAnnotation(String annotationId) {
+
+    }
+
+    @Override
+    public void updateAnnotation(String annotationId, Object object) {
+
+    }
 }

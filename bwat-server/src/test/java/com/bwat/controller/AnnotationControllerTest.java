@@ -91,43 +91,43 @@ public class AnnotationControllerTest {
         UserAnnotation userAnnotation = new UserAnnotation();
         userAnnotation.setAnnotationId("public1");
         userAnnotation.setUser(johnDoe);
-        userAnnotation.setPublic(true);
+        userAnnotation.setPublicAnnotation(true);
         userAnnotationRepository.save(userAnnotation);
 //      public2
         userAnnotation = new UserAnnotation();
         userAnnotation.setAnnotationId("public2");
         userAnnotation.setUser(johnDoe);
-        userAnnotation.setPublic(true);
+        userAnnotation.setPublicAnnotation(true);
         userAnnotationRepository.save(userAnnotation);
 //      private1
         userAnnotation = new UserAnnotation();
         userAnnotation.setAnnotationId("private1");
         userAnnotation.setUser(johnDoe);
-        userAnnotation.setPublic(false);
+        userAnnotation.setPublicAnnotation(false);
         userAnnotationRepository.save(userAnnotation);
 //      private2
         userAnnotation = new UserAnnotation();
         userAnnotation.setAnnotationId("private2");
         userAnnotation.setUser(johnDoe);
-        userAnnotation.setPublic(false);
+        userAnnotation.setPublicAnnotation(false);
         userAnnotationRepository.save(userAnnotation);
 //      public1OtherUser
         userAnnotation = new UserAnnotation();
         userAnnotation.setAnnotationId("public1OtherUser");
         userAnnotation.setUser(janeDoe);
-        userAnnotation.setPublic(true);
+        userAnnotation.setPublicAnnotation(true);
         userAnnotationRepository.save(userAnnotation);
 //      public2OtherUser
         userAnnotation = new UserAnnotation();
         userAnnotation.setAnnotationId("public2OtherUser");
         userAnnotation.setUser(janeDoe);
-        userAnnotation.setPublic(true);
+        userAnnotation.setPublicAnnotation(true);
         userAnnotationRepository.save(userAnnotation);
 //      private1OtherUser
         userAnnotation = new UserAnnotation();
         userAnnotation.setAnnotationId("private1OtherUser");
         userAnnotation.setUser(janeDoe);
-        userAnnotation.setPublic(false);
+        userAnnotation.setPublicAnnotation(false);
         userAnnotationRepository.save(userAnnotation);
     }
 
@@ -139,7 +139,7 @@ public class AnnotationControllerTest {
     @Test
     public void addAnnotation_shouldSetVisibility() throws Exception {
         AnnotationCreationReq req = new AnnotationCreationReq();
-        req.setPublic(true);
+        req.setPublicAnnotation(true);
         req.setAnnotation(null);
 
         MvcResult result = mockMvc.perform(post("/api/annotation")
@@ -152,7 +152,7 @@ public class AnnotationControllerTest {
 
         //check if it is public
         List<UserAnnotation> userAnnotations = userAnnotationService.userAnnotations(johnDoe);
-        Assert.assertTrue(userAnnotations.get(4).isPublic());
+        Assert.assertTrue(userAnnotations.get(4).isPublicAnnotation());
 
         //check it's annotation id
         String annotationId = JsonPath.read(jsonRes, "$.data.id");

@@ -7,7 +7,6 @@ import com.bwat.core.service.UserAnnotationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,7 +20,7 @@ public class UserAnnotationServiceImpl implements UserAnnotationService {
         UserAnnotation userAnnotation = new UserAnnotation();
         userAnnotation.setUser(user);
         userAnnotation.setAnnotationId(annotationId);
-        userAnnotation.setPublic(isPublic);
+        userAnnotation.setPublicAnnotation(isPublic);
         userAnnotationRepository.save(userAnnotation);
         return userAnnotation;
     }
@@ -33,7 +32,7 @@ public class UserAnnotationServiceImpl implements UserAnnotationService {
 
     @Override
     public List<UserAnnotation> publicAnnotations() {
-        return userAnnotationRepository.findByIsPublic(true);
+        return userAnnotationRepository.findByPublicAnnotation(true);
     }
 
     @Override
@@ -44,6 +43,11 @@ public class UserAnnotationServiceImpl implements UserAnnotationService {
     @Override
     public UserAnnotation findByAnnotationId(String annotationId) {
         return userAnnotationRepository.findByAnnotationId(annotationId);
+    }
+
+    @Override
+    public void update(UserAnnotation userAnnotation) {
+        userAnnotationRepository.save(userAnnotation);
     }
 
 }

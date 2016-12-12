@@ -30,4 +30,11 @@ public class AnnotationDocument {
 
         return this;
     }
+
+    public AnnotationDocument update(LinkedHashMap rawAnnotation) {
+        updatedAt = new Date();
+        type = rawAnnotation.get("type");
+        body = rawAnnotation.get("body");
+        return this;
+    }
 }

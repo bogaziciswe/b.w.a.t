@@ -43,7 +43,7 @@ public class AnnotationController {
         AnnotationRaw annotationRaw = apiService.createAnnotation(req.getAnnotation());
         User user = userService.findByMail(principal.getName());
         //save annotation id and user id to db.
-        userAnnotationService.create(user, annotationRaw.getId(), req.isPublic());
+        userAnnotationService.create(user, annotationRaw.getId(), req.isPublicAnnotation());
         return Response.builder().data(annotationRaw).status("success").build();
     }
 
@@ -84,5 +84,35 @@ public class AnnotationController {
         }
 
         return Response.builder().data(annotationTransferList).status("success").build();
+    }
+
+    @RequestMapping(value = "/{annotationId}/delete", method = RequestMethod.GET)
+    @PreAuthorize("isAuthenticated()")
+    public Response deleteAnnotation(@PathVariable String annotationId, Principal principal) {
+        //check if user is the creator of annotation, then send request
+        UserAnnotation userAnnotation = userAnnotationService.findByAnnotationId(annotationId);
+        User user = userService.findByMail(principal.getName());
+        if (userAnnotation != null && userAnnotation.getUser().getId() == user.getId()) {
+            apiService.removeAnnotation(annotationId);
+            return Response.builder().status("success").build();
+        }
+        return Response.builder().status("error").build();
+    }
+
+    @RequestMapping(value = "/{annotationId}/update", method = RequestMethod.POST)
+    @PreAuthorize("isAuthenticated()")
+    public Response updateAnnotation(@PathVariable String annotationId, @RequestBody AnnotationCreationReq req, Principal principal) {
+        //check if user is the creator of annotation, then send request
+        UserAnnotation userAnnotation = userAnnotationService.findByAnnotationId(annotationId);
+        User user = userService.findByMail(principal.getName());
+        if (userAnnotation != null && userAnnotation.getUser().getId() == user.getId()) {
+            apiService.updateAnnotation(annotationId, req.getAnnotation());
+            //update visibility
+            userAnnotation.setPublicAnnotation(req.isPublicAnnotation());
+            userAnnotationService.update(userAnnotation);
+            return Response.builder().status("success").build();
+        }
+
+        return Response.builder().status("error").build();
     }
 }

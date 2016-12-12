@@ -35,4 +35,14 @@ public class ApiServiceImpl implements ApiService {
     public AnnotationRaw[] findAll() {
         return rest.getForObject(annotationServer + "/annotation/all", AnnotationRaw[].class);
     }
+
+    @Override
+    public void removeAnnotation(String annotationId) {
+        rest.delete(annotationServer + "/annotation/" + annotationId);
+    }
+
+    @Override
+    public void updateAnnotation(String annotationId, Object object) {
+        rest.put(annotationServer + "/annotation/" + annotationId, object);
+    }
 }

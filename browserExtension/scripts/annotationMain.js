@@ -206,21 +206,23 @@ function getAnnotationsForUrl(pageUrl) {
 }
 
 function createFieldsForHighlighter(currentAnnotation) {
-    var range = {
-        start: currentAnnotation.target.selector[0].startSelector.value,
-        end: currentAnnotation.target.selector[0].endSelector.value,
-        startOffset: currentAnnotation.target.selector[1].start,
-        endOffset: currentAnnotation.target.selector[1].end
-    };
-    var ranges = [range];
-    var text = currentAnnotation.body.value;
-    var quote = '';
-    if (currentAnnotation.target.selector[2] != null && currentAnnotation.target.selector[2].exact) {
-        quote = currentAnnotation.target.selector[2].exact;
+    if (!currentAnnotation.target.selector.hasOwnProperty('type')) {
+        var range = {
+            start: currentAnnotation.target.selector[0].startSelector.value,
+            end: currentAnnotation.target.selector[0].endSelector.value,
+            startOffset: currentAnnotation.target.selector[1].start,
+            endOffset: currentAnnotation.target.selector[1].end
+        };
+        var ranges = [range];
+        var text = currentAnnotation.body.value;
+        var quote = '';
+        if (currentAnnotation.target.selector[2] != null && currentAnnotation.target.selector[2].exact) {
+            quote = currentAnnotation.target.selector[2].exact;
+        }
+        currentAnnotation.ranges = ranges;
+        currentAnnotation.text = text;
+        currentAnnotation.quote = quote;
     }
-    currentAnnotation.ranges = ranges;
-    currentAnnotation.text = text;
-    currentAnnotation.quote = quote;
 }
 function loadAnnotationsForPage(contentAnnotatorBM) {
     getAnnotationsForCurrentUrl().then(function (response) {
@@ -338,24 +340,24 @@ function loginUser(username, password, callback) {
 }
 
 function startAnnotatorJS() {
-    console.log("Processing annotation request");
-    if (!window.jQuery) {
-        alert("JQ does NOT work!!");
-    }
-    console.log("Starting annotations...");
-    var app = new annotator.App();
-    app.include(annotator.ui.main);
-    app.include(annotator.storage.http, {
-        prefix: protocol + "46.196.100.145" + "/healthTracker"
-    });
-    app.start().then(function () {
-        app.annotations.load();
-    });
-    if (app != null) {
-        alert("Please select something and click on annotate Icon");
-    } else {
-        alert("Something is wrong with annotation selector");
-    }
+    //console.log("Processing annotation request");
+    //if (!window.jQuery) {
+    //    alert("JQ does NOT work!!");
+    //}
+    //console.log("Starting annotations...");
+    //var app = new annotator.App();
+    //app.include(annotator.ui.main);
+    //app.include(annotator.storage.http, {
+    //    prefix: protocol + "46.196.100.145" + "/healthTracker"
+    //});
+    //app.start().then(function () {
+    //    app.annotations.load();
+    //});
+    //if (app != null) {
+    //    alert("Please select something and click on annotate Icon");
+    //} else {
+    //    alert("Something is wrong with annotation selector");
+    //}
 }
 
 $(document).ready(function () {
@@ -380,7 +382,11 @@ $(document).ready(function () {
                 if (navbarUsername) {
                     navbarUsername.html(params.username);
                 }
+            }else{
+                console.log("No client credentials have found - 2");
             }
+        } else {
+            console.log("No client credentials have found - 1");
         }
     }
 
@@ -468,6 +474,7 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote) {
                 },
                 "target": {
                     "source": tabUrl,
+                    "id": "http://example.com/image1#xywh=" + xpathSelectorData.geometry.x + "," + xpathSelectorData.geometry.y + "," + xpathSelectorData.geometry.width + "," + xpathSelectorData.geometry.height,
                     "selector": {
                         "type": xpathSelectorData.type,
                         "url": "http://example.com/image1",

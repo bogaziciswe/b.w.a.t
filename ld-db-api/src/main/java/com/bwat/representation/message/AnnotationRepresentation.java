@@ -7,13 +7,13 @@ import java.util.Date;
 
 @Data
 public class AnnotationRepresentation implements Response {
-    public String id;
-    public String annotationId;
-    public Date createdAt;
-    public Date updatedAt;
-    public Object type;
-    public Object target;
-    public Object body;
+    private String id;
+    private String annotationId;
+    private Date createdAt;
+    private Date updatedAt;
+    private Object type;
+    private Object target;
+    private Object body;
 
     public AnnotationRepresentation(AnnotationDocument document) {
         createdAt = document.createdAt;
