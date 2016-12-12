@@ -591,46 +591,48 @@ function sendUpdatedTextAnnnotation(updatedAnnotation) {
 
     try {
         var annotationPostData = {
-            "@context": "http://www.w3.org/ns/anno.jsonld",
-            "id": annotation.annotationId,
-            "type": annotation.type,
-            "body": {
-                "type": annotation.body.type,
-                "value": annotation.text,
-                "format": annotation.body.format
-            },
-            "target": {
-                "source": annotation.target.source,
-                "selector": [
-                    {
-                        "type": annotation.target.selector[0].type,
-                        "startSelector": {
-                            "type": annotation.target.selector[0].startSelector.type,
-                            "value": annotation.target.selector[0].startSelector.value,
+            "annotation": {
+                "@context": "http://www.w3.org/ns/anno.jsonld",
+                "id": annotation.annotationId,
+                "type": annotation.type,
+                "body": {
+                    "type": annotation.body.type,
+                    "value": annotation.text,
+                    "format": annotation.body.format
+                },
+                "target": {
+                    "source": annotation.target.source,
+                    "selector": [
+                        {
+                            "type": annotation.target.selector[0].type,
+                            "startSelector": {
+                                "type": annotation.target.selector[0].startSelector.type,
+                                "value": annotation.target.selector[0].startSelector.value,
+                            },
+                            "endSelector": {
+                                "type": annotation.target.selector[0].endSelector.type,
+                                "value": annotation.target.selector[0].endSelector.value,
+                            }
                         },
-                        "endSelector": {
-                            "type": annotation.target.selector[0].endSelector.type,
-                            "value": annotation.target.selector[0].endSelector.value,
+                        {
+                            "type": annotation.target.selector[1].type,
+                            "start": annotation.target.selector[1].start,
+                            "end": annotation.target.selector[1].end,
                         }
-                    },
-                    {
-                        "type": annotation.target.selector[1].type,
-                        "start": annotation.target.selector[1].start,
-                        "end": annotation.target.selector[1].end,
-                    }
-                    ,
-                    {
-                        "type": annotation.target.selector[2].type,
-                        "exact": annotation.target.selector[2].quote
-                    }
+                        ,
+                        {
+                            "type": annotation.target.selector[2].type,
+                            "exact": annotation.target.selector[2].quote
+                        }
 
-                ]
-            }
+                    ]
+                }
+            },
+            "publicAnnotation": true
         };
 
         console.log(JSON.stringify(annotationPostData));
-
-
+        
         $.ajax({
             type: "POST",
             url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/update",
