@@ -471,74 +471,81 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote) {
 
     var tabUrl = window.location.href;
     try {
+
+        // Todo: Defult public annotation
         if (xpathSelectorData.hasOwnProperty('type')) {
             var annotationPostData = {
-                "@context": "http://www.w3.org/ns/anno.jsonld",
-                "id": tabUrl,
-                "type": "Annotation",
-                "creator": "http://example.org/user1",
-                "body": {
-                    "type": "TextualBody",
-                    "value": commentValue,
-                    "format": "text/plain"
-                },
-                "target": {
-                    "source": tabUrl,
-                    "id": "http://example.com/image1#xywh=" + xpathSelectorData.geometry.x + "," + xpathSelectorData.geometry.y + "," + xpathSelectorData.geometry.width + "," + xpathSelectorData.geometry.height,
-                    "selector": {
-                        "type": xpathSelectorData.type,
-                        "url": "http://example.com/image1",
-                        "height": xpathSelectorData.geometry.height,
-                        "width": xpathSelectorData.geometry.width,
-                        "x": xpathSelectorData.geometry.x,
-                        "y": xpathSelectorData.geometry.y,
-                        "type": "Image",
-                        "format": "image/jpeg"
+                "annotation": {
+                    "@context": "http://www.w3.org/ns/anno.jsonld",
+                    "id": tabUrl,
+                    "type": "Annotation",
+                    "body": {
+                        "type": "TextualBody",
+                        "value": commentValue,
+                        "format": "text/plain"
+                    },
+                    "target": {
+                        "source": tabUrl,
+                        "id": "http://example.com/image1#xywh=" + xpathSelectorData.geometry.x + "," + xpathSelectorData.geometry.y + "," + xpathSelectorData.geometry.width + "," + xpathSelectorData.geometry.height,
+                        "selector": {
+                            "type": xpathSelectorData.type,
+                            "url": "http://example.com/image1",
+                            "height": xpathSelectorData.geometry.height,
+                            "width": xpathSelectorData.geometry.width,
+                            "x": xpathSelectorData.geometry.x,
+                            "y": xpathSelectorData.geometry.y,
+                            "type": "Image",
+                            "format": "image/jpeg"
+                        }
                     }
-                }
+                },
+                "publicAnnotation": true
             };
 
         }
+
+        // Todo: Defult public annotation
         else {
             var annotationPostData = {
-                "@context": "http://www.w3.org/ns/anno.jsonld",
-                "id": tabUrl,
-                "type": "Annotation",
-                "creator": "http://example.org/user1",
-                "body": {
-                    "type": "TextualBody",
-                    "value": commentValue,
-                    "format": "text/plain"
-                },
-                "target": {
-                    "source": tabUrl,
-                    "selector": [
-                        {
-                            "type": "RangeSelector",
-                            "startSelector": {
-                                "type": "XPathSelector",
-                                "value": xpathSelectorData.start
+                "annotation": {
+                    "@context": "http://www.w3.org/ns/anno.jsonld",
+                    "id": tabUrl,
+                    "type": "Annotation",
+                    "body": {
+                        "type": "TextualBody",
+                        "value": commentValue,
+                        "format": "text/plain"
+                    },
+                    "target": {
+                        "source": tabUrl,
+                        "selector": [
+                            {
+                                "type": "RangeSelector",
+                                "startSelector": {
+                                    "type": "XPathSelector",
+                                    "value": xpathSelectorData.start
+                                },
+                                "endSelector": {
+                                    "type": "XPathSelector",
+                                    "value": xpathSelectorData.end
+                                }
                             },
-                            "endSelector": {
-                                "type": "XPathSelector",
-                                "value": xpathSelectorData.end
+                            {
+                                "type": "DataPositionSelector",
+                                "start": xpathSelectorData.startOffset,
+                                "end": xpathSelectorData.endOffset
                             }
-                        },
-                        {
-                            "type": "DataPositionSelector",
-                            "start": xpathSelectorData.startOffset,
-                            "end": xpathSelectorData.endOffset
-                        }
-                        ,
-                        {
-                            "type": "TextQuoteSelector",
-                            "exact": quote
-                        }
+                            ,
+                            {
+                                "type": "TextQuoteSelector",
+                                "exact": quote
+                            }
 
-                    ]
-                }
+                        ]
+                    }
+                },
+                "publicAnnotation": true
             };
-
         }
 
         console.log(JSON.stringify(annotationPostData));
@@ -657,14 +664,13 @@ function sendDeletedTextAnnnotation(deletedAnnotation) {
 
     var annotation = findAnnotationInList(deletedAnnotation.ranges[0].startOffset, deletedAnnotation.ranges[0].endOffset);
 
-    /*
      $.ajax({
      type: "POST",
-     url: protocol + serverRootUrl + "/api/annotation/{" + annotation.id + "}/update",
+     url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/delete",
      dataType: 'json',
      contentType: "application/json; charset=utf8",
      async: true,
-     data: JSON.stringify(annotationPostData),
+     data: JSON.stringify(annotation.id),
      beforeSend: function (xhr) {
      userAuthToken = make_base_auth("abc@gmail.com", "123456");
      xhr.setRequestHeader('Authorization', userAuthToken);
@@ -678,7 +684,6 @@ function sendDeletedTextAnnnotation(deletedAnnotation) {
      console.log(xhr.responseText);
      }
      });
-     */
 }
 
 /*
