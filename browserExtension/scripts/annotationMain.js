@@ -648,6 +648,40 @@ function sendUpdatedTextAnnnotation(updatedAnnotation) {
 }
 
 /*
+ * post deleted text annotation to the server
+ * @param  {deletedAnnotation}
+ * @return {}
+ *
+ * */
+function sendDeletedTextAnnnotation(deletedAnnotation) {
+
+    var annotation = findAnnotationInList(deletedAnnotation.ranges[0].startOffset, deletedAnnotation.ranges[0].endOffset);
+
+    /*
+     $.ajax({
+     type: "POST",
+     url: protocol + serverRootUrl + "/api/annotation/{" + annotation.id + "}/update",
+     dataType: 'json',
+     contentType: "application/json; charset=utf8",
+     async: true,
+     data: JSON.stringify(annotationPostData),
+     beforeSend: function (xhr) {
+     userAuthToken = make_base_auth("abc@gmail.com", "123456");
+     xhr.setRequestHeader('Authorization', userAuthToken);
+     },
+     success: function (data) {
+     //callback(new ServiceResponse(null, data));
+     console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
+     },
+     error: function (xhr, ajaxOptions, thrownError) {
+     //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
+     console.log(xhr.responseText);
+     }
+     });
+     */
+}
+
+/*
  * find annotation from annotation list of the page for the update and delete operations
  * @param  {startOffset, endOffset}
  * @return {annotation}

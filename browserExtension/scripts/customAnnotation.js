@@ -63,7 +63,7 @@ window.onload = function () {
                         }
                         else {
 
-                            // ToDo: Ask this part
+                            // ToDo: Remove if it is not used
                             var offset = findAnnotation(annotation.ranges[0].startOffset, annotation.ranges[0].endOffset);
                             if (offset !== null) {
                                 json[offset].comment = annotation.text;
@@ -74,11 +74,19 @@ window.onload = function () {
                     })
                     .subscribe("annotationDeleted", function (annotation) {
                         console.info("The annotation: %o has just been deleted!", annotation);
-                        var offset = findAnnotation(annotation.ranges[0].startOffset, annotation.ranges[0].endOffset);
-                        if (offset !== null) {
-                            json.splice(offset, 1);
+                        if (annotation.hasOwnProperty('src')) {
+
                         }
-                        console.log(JSON.stringify(json));
+                        else {
+
+                            // ToDo: Remove if it is not used
+                            var offset = findAnnotation(annotation.ranges[0].startOffset, annotation.ranges[0].endOffset);
+                            if (offset !== null) {
+                                json[offset].comment = annotation.text;
+                            }
+
+                            sendDeletedTextAnnnotation(annotation);
+                        }
                     });
             }
         }
