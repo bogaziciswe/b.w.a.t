@@ -170,8 +170,8 @@ function getAnnotationsForUrl(pageUrl) {
                     dataType: 'json',
                     async: true,
                     beforeSend: function (xhr) {
-                        //userAuthToken = make_base_auth(items.username, items.password);
-                        //xhr.setRequestHeader('Authorization', userAuthToken);
+                        userAuthToken = make_base_auth(items.username, items.password);
+                        xhr.setRequestHeader('Authorization', userAuthToken);
                     },
                     success: function (data) {
                         //console.log("Get annotation by source response:" + JSON.stringify(data));
@@ -234,7 +234,11 @@ function loadAnnotationsForPage(contentAnnotatorBM) {
         if (annotationListResponse.success) { // success = true if server responds with a valid JSON with annotations in it.
 
             // Now we have responseObject , time to get annotationList.
-            var annotationList = annotationListResponse.annotations;
+            var annotationList = [];
+
+            for (anno in annotationListResponse.annotations){
+                annotationList.push(annotationListResponse.annotations[anno].annotation);
+            }
             var stringified = JSON.stringify(annotationListResponse.annotations);
             sarahString = stringified;
             if (annotationList != null && annotationList.length > 0) {
