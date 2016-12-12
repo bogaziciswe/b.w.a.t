@@ -461,7 +461,12 @@ function registerUser(name, lName, pw, mail, callback) {
     }
 }
 
-
+/*
+ * post updated text annotation to the server
+ * @param  {commentValue, xpathSelectorData, quote}
+ * @return {}
+ *
+ * */
 function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote) {
 
     var tabUrl = window.location.href;
@@ -551,6 +556,7 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote) {
             success: function (data) {
                 //callback(new ServiceResponse(null, data));
                 console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
+                annotationListOfPage.push(data);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
@@ -565,7 +571,7 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote) {
 /*
  * post updated text annotation to the server
  * @param  {updatedAnnotation}
- * @return {annotation}
+ * @return {}
  *
  * */
 function sendUpdatedTextAnnnotation(updatedAnnotation) {
@@ -649,7 +655,8 @@ function sendUpdatedTextAnnnotation(updatedAnnotation) {
  * */
 function findAnnotationInList(startOffset, endOffset) {
     for (var i = 0; i < annotationListOfPage.length; i++) {
-        if (annotationListOfPage[i].ranges[0].startOffset == startOffset && annotationListOfPage[i].ranges[0].endOffset == endOffset) {
+        if (annotationListOfPage[i].target.selector[1].start == startOffset &&
+            annotationListOfPage[i].target.selector[1].end == endOffset) {
             return annotationListOfPage[i];
         }
     }
