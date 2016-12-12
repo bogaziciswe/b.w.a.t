@@ -240,7 +240,7 @@ function loadAnnotationsForPage(contentAnnotatorBM) {
                 annotationList.push(annotationListResponse.annotations[anno].annotation);
             }
             var stringified = JSON.stringify(annotationListResponse.annotations);
-            sarahString = stringified;
+            cardsList = stringified;
             if (annotationList != null && annotationList.length > 0) {
                 // Annotation List for update and delete operations
                 annotationListOfPage = annotationList.slice(0);
