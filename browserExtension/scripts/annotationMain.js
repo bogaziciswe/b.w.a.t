@@ -231,6 +231,7 @@ function loadAnnotationsForPage(contentAnnotatorBM) {
             // Now we have responseObject , time to get annotationList.
             var annotationList = annotationListResponse.annotations;
             var stringified = JSON.stringify(annotationListResponse.annotations);
+            sarahString = stringified;
             if (annotationList != null && annotationList.length > 0) {
                 var annotationListLen = annotationList.length;
                 if (annotationList != null && annotationList.length > 0) {
@@ -241,7 +242,6 @@ function loadAnnotationsForPage(contentAnnotatorBM) {
                     contentAnnotatorBM.annotator("loadAnnotations", annotationList);
                     if (annotationList != null && annotationListLen > 0) {
                         console.log("Loaded " + annotationListLen + " annotations.")
-                        sarahString = stringified;
                     } else {
                         console.log("No annotations to show.");
                     }
