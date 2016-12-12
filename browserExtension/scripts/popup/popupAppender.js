@@ -34,7 +34,7 @@ function setDOMInfo(info) {
 
         //add author tag
         var divAuthor = document.createElement('h5');
-        divAuthor.innerHTML = "<b>Author: </b>sarah";//dt.authorName;
+        divAuthor.innerHTML = "<b>Author: </b>" + dt.user.firstName + " " + dt.user.lastName;//dt.authorName;
         divBody.appendChild(divAuthor);
 
         //add selected text tag
