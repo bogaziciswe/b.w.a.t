@@ -630,10 +630,10 @@ function sendUpdatedTextAnnnotation(updatedAnnotation) {
 
         console.log(JSON.stringify(annotationPostData));
 
-        /*
+
         $.ajax({
             type: "POST",
-            url: protocol + serverRootUrl + "/api/annotation/{" + annotation.id + "}/update",
+            url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/update",
             dataType: 'json',
             contentType: "application/json; charset=utf8",
             async: true,
@@ -651,7 +651,7 @@ function sendUpdatedTextAnnnotation(updatedAnnotation) {
                 console.log(xhr.responseText);
             }
         });
-        */
+
 
     } catch (err) {
         callback(new ServiceResponse("BWAT006 => " + err.message, null));
@@ -669,24 +669,22 @@ function sendDeletedTextAnnnotation(deletedAnnotation) {
     var annotation = findAnnotationInList(deletedAnnotation.ranges[0].startOffset, deletedAnnotation.ranges[0].endOffset);
 
      $.ajax({
-     type: "POST",
-     url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/delete",
-     dataType: 'json',
-     contentType: "application/json; charset=utf8",
-     async: true,
-     data: JSON.stringify(annotation.id),
-     beforeSend: function (xhr) {
-     userAuthToken = make_base_auth("abc@gmail.com", "123456");
-     xhr.setRequestHeader('Authorization', userAuthToken);
-     },
-     success: function (data) {
-     //callback(new ServiceResponse(null, data));
-     console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
-     },
-     error: function (xhr, ajaxOptions, thrownError) {
-     //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
-     console.log(xhr.responseText);
-     }
+         type: "GET",
+         url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/delete",
+         dataType: 'json',
+         async: true,
+         beforeSend: function (xhr) {
+         userAuthToken = make_base_auth("abc@gmail.com", "123456");
+         xhr.setRequestHeader('Authorization', userAuthToken);
+         },
+         success: function (data) {
+         //callback(new ServiceResponse(null, data));
+         console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
+         },
+         error: function (xhr, ajaxOptions, thrownError) {
+         //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
+         console.log(xhr.responseText);
+         }
      });
 }
 
