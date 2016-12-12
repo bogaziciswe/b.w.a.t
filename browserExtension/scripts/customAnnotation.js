@@ -62,12 +62,15 @@ window.onload = function () {
 
                         }
                         else {
+
+                            // ToDo: Ask this part
                             var offset = findAnnotation(annotation.ranges[0].startOffset, annotation.ranges[0].endOffset);
                             if (offset !== null) {
                                 json[offset].comment = annotation.text;
                             }
+
+                            sendUpdatedTextAnnnotation(annotation);
                         }
-                        console.log(JSON.stringify(json));
                     })
                     .subscribe("annotationDeleted", function (annotation) {
                         console.info("The annotation: %o has just been deleted!", annotation);

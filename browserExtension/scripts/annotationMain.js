@@ -10,6 +10,9 @@ var annotationStorePostUri = "/api/annotation";
 //config
 var allowHttpsProtocol = false; //SSL required
 
+// Annotation List for update and delete operations
+var annotationListOfPage = [];
+
 function setCredentials(username, password) {
     //FIXME Storing user credentials locally is not secure.
     var credentials = {
@@ -235,6 +238,8 @@ function loadAnnotationsForPage(contentAnnotatorBM) {
             var stringified = JSON.stringify(annotationListResponse.annotations);
             sarahString = stringified;
             if (annotationList != null && annotationList.length > 0) {
+                // Annotation List for update and delete operations
+                annotationListOfPage = annotationList.slice(0);
                 var annotationListLen = annotationList.length;
                 if (annotationList != null && annotationList.length > 0) {
 
@@ -557,6 +562,99 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote) {
     }
 }
 
+/*
+ * post updated text annotation to the server
+ * @param  {updatedAnnotation}
+ * @return {annotation}
+ *
+ * */
+function sendUpdatedTextAnnnotation(updatedAnnotation) {
+
+    var annotation = findAnnotationInList(updatedAnnotation.ranges[0].startOffset, updatedAnnotation.ranges[0].endOffset);
+
+    try {
+        var annotationPostData = {
+            "@context": "http://www.w3.org/ns/anno.jsonld",
+            "id": annotation.annotationId,
+            "type": annotation.type,
+            "body": {
+                "type": annotation.body.type,
+                "value": annotation.text,
+                "format": annotation.body.format
+            },
+            "target": {
+                "source": annotation.target.source,
+                "selector": [
+                    {
+                        "type": annotation.target.selector[0].type,
+                        "startSelector": {
+                            "type": annotation.target.selector[0].startSelector.type,
+                            "value": annotation.target.selector[0].startSelector.value,
+                        },
+                        "endSelector": {
+                            "type": annotation.target.selector[0].endSelector.type,
+                            "value": annotation.target.selector[0].endSelector.value,
+                        }
+                    },
+                    {
+                        "type": annotation.target.selector[1].type,
+                        "start": annotation.target.selector[1].start,
+                        "end": annotation.target.selector[1].end,
+                    }
+                    ,
+                    {
+                        "type": annotation.target.selector[2].type,
+                        "exact": annotation.target.selector[2].quote
+                    }
+
+                ]
+            }
+        };
+
+        console.log(JSON.stringify(annotationPostData));
+
+        /*
+        $.ajax({
+            type: "POST",
+            url: protocol + serverRootUrl + "/api/annotation/{" + annotation.id + "}/update",
+            dataType: 'json',
+            contentType: "application/json; charset=utf8",
+            async: true,
+            data: JSON.stringify(annotationPostData),
+            beforeSend: function (xhr) {
+                userAuthToken = make_base_auth("abc@gmail.com", "123456");
+                xhr.setRequestHeader('Authorization', userAuthToken);
+            },
+            success: function (data) {
+                //callback(new ServiceResponse(null, data));
+                console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
+                console.log(xhr.responseText);
+            }
+        });
+        */
+
+    } catch (err) {
+        callback(new ServiceResponse("BWAT006 => " + err.message, null));
+    }
+}
+
+/*
+ * find annotation from annotation list of the page for the update and delete operations
+ * @param  {startOffset, endOffset}
+ * @return {annotation}
+ *
+ * */
+function findAnnotationInList(startOffset, endOffset) {
+    for (var i = 0; i < annotationListOfPage.length; i++) {
+        if (annotationListOfPage[i].ranges[0].startOffset == startOffset && annotationListOfPage[i].ranges[0].endOffset == endOffset) {
+            return annotationListOfPage[i];
+        }
+    }
+    return null;
+}
 
 chrome.runtime.onMessage.addListener(processRequest);
 
