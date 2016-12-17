@@ -491,21 +491,12 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote) {
                     "target": {
                         "source": tabUrl,
                         "id": "http://example.com/image1#xywh=" + xpathSelectorData.geometry.x + "," + xpathSelectorData.geometry.y + "," + xpathSelectorData.geometry.width + "," + xpathSelectorData.geometry.height,
-                        "selector": {
-                            "type": xpathSelectorData.type,
-                            "url": "http://example.com/image1",
-                            "height": xpathSelectorData.geometry.height,
-                            "width": xpathSelectorData.geometry.width,
-                            "x": xpathSelectorData.geometry.x,
-                            "y": xpathSelectorData.geometry.y,
-                            "type": "Image",
-                            "format": "image/jpeg"
-                        }
+                        "type": "Image",
+                        "format": "image/jpeg"
                     }
                 },
                 "publicAnnotation": true
             };
-
         }
 
         // Todo: Defult public annotation
