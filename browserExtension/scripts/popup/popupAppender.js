@@ -21,7 +21,7 @@ function setDOMInfo(info) {
         var spanDate = document.createElement('span');
         var date = new Date(dt.annotation.createdAt);
         var day = date.getDate();
-        var month = date.getMonth();
+        var month = date.getMonth() +1;
         var year = date.getFullYear();
         var convertedDate =day+'/'+month+'/'+year;
         spanDate.innerHTML = convertedDate;
