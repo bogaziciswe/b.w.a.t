@@ -19,7 +19,7 @@ function setDOMInfo(info) {
 
         //add date
         var spanDate = document.createElement('span');
-        spanDate.innerHTML = dt.createdAt;
+        spanDate.innerHTML = dt.annotation.createdAt;
         var spanAttr = document.createAttribute('class');
         spanAttr.value = 'pull-right';
         spanDate.setAttributeNode(spanAttr);
