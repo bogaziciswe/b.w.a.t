@@ -1,9 +1,13 @@
 
-
+var globalInfo;
+var geekMode = false;
 function setDOMInfo(info) {
     console.log(info);
+    globalInfo = info;
+
     var myData = info;
     var cardsList  = document.getElementById('cards');
+    $('#cards').empty();
     if(myData == undefined) {
         return;
     }
@@ -45,7 +49,7 @@ function setDOMInfo(info) {
         //add selected text tag
         var divSelectedText = document.createElement('p');
         divSelectedText.innerHTML = "<b>Annotation:</b> "+dt.annotation.target.selector[2].exact;
-        console.log("something")
+        console.log("something");
         console.log(dt.annotation.target.selector[2].exact);
         divBody.appendChild(divSelectedText);
 
@@ -57,6 +61,55 @@ function setDOMInfo(info) {
         cardsList.appendChild(newCard);
     }
 }
+
+function setGeekMode(info) {
+    console.log(info);
+    var myData = info;
+
+    var cardsList  = document.getElementById('cards');
+    $('#cards').empty();
+    if(myData == undefined) {
+        return;
+    }
+
+    for (var i = 0; i < myData.length; i++)
+    {
+        var dt = myData[i];
+        //add main card
+        var newCard = document.createElement('div');
+        var cardAttr = document.createAttribute('class');
+        cardAttr.value = 'panel panel-default';
+        newCard.setAttributeNode(cardAttr);
+
+        //data
+        var jsonSpan =  document.createElement('span');
+        jsonSpan.innerHTML = JSON.stringify(dt.annotation);
+        newCard.appendChild(jsonSpan);
+
+        cardsList.appendChild(newCard);
+    }
+}
+
+function geekModeFun(el)
+{
+    if ( el.value === "Geek Mode" )
+    {  el.value = "User Mode";
+         setGeekMode(globalInfo);
+    }
+    else {
+        el.value = "Geek Mode";
+        setDOMInfo(globalInfo);
+    }
+}
+
+document.addEventListener("click", function (e) {
+
+    if (e.target.id == "geekModeLink") {
+        geekModeFun(e.target);
+    }
+
+
+});
 
 // Once the DOM is ready...
 window.addEventListener('DOMContentLoaded', function () {

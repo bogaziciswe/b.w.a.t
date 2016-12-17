@@ -1,6 +1,5 @@
 window.onload = function () {
 
-    //console.log('Content script loaded and started');
     var json = [];
 
     readCredentials();
@@ -93,11 +92,8 @@ window.onload = function () {
     };
 
     var contentAnnotatorBM;
-    //console.log('test1');
     contentAnnotatorBM = $('body').annotator();
     contentAnnotatorBM.annotator('addPlugin', 'StoreLogger');
     contentAnnotatorBM.annotator('addPlugin', 'AnnotoriousImagePlugin');
-    //console.log('test2');
-    //console.log(contentAnnotatorBM);
     loadAnnotationsForPage(contentAnnotatorBM);
 };
