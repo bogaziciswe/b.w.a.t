@@ -227,6 +227,17 @@ function createFieldsForHighlighter(currentAnnotation) {
         currentAnnotation.quote = quote;
     }
 }
+
+function loadAnnotationsForExtension() {
+    getAnnotationsForCurrentUrl().then(function (response) {
+        var annotationListResponse = response;
+        if (annotationListResponse.success) { // success = true if server responds with a valid JSON with annotations in it.
+            cardsList = JSON.stringify(annotationListResponse.annotations);
+        }
+    });
+
+}
+
 function loadAnnotationsForPage(contentAnnotatorBM) {
     getAnnotationsForCurrentUrl().then(function (response) {
         var annotationListResponse = response;
@@ -559,6 +570,7 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote) {
                 //callback(new ServiceResponse(null, data));
                 console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
                 annotationListOfPage.push(data);
+                loadAnnotationsForExtension();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
@@ -638,6 +650,7 @@ function sendUpdatedTextAnnnotation(updatedAnnotation) {
             success: function (data) {
                 //callback(new ServiceResponse(null, data));
                 console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
+                loadAnnotationsForExtension();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
@@ -673,6 +686,7 @@ function sendDeletedTextAnnnotation(deletedAnnotation) {
          success: function (data) {
          //callback(new ServiceResponse(null, data));
          console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
+             loadAnnotationsForExtension();
          },
          error: function (xhr, ajaxOptions, thrownError) {
          //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
