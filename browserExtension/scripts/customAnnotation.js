@@ -33,6 +33,8 @@ window.onload = function () {
                     .subscribe("annotationCreated", function (annotation) {
                         console.info("The annotation: %o has just been created!", JSON.stringify(annotation));
                         var current = $.extend(true, {}, singleAnnotation);
+                        var motivation = window.prompt("Could you define your motivation for this annotation?", "Stating my opinion");
+                        //current.motivation = motivation;
                         if (annotation.hasOwnProperty('src')) {
                             current.url = annotation.src;
                             current.height = annotation.shapes[0].height;
