@@ -15,9 +15,9 @@ var annotationListOfPage = [];
 
 /**
  * Stores user credentials
- * @ param {string} username
- * @ param {string} password
- * @ return {null}
+ * @param {string} username
+ * @param {string} password
+ * @return {null}
  */
 function setCredentials(username, password) {
     //FIXME Storing user credentials locally is not secure.
@@ -64,9 +64,9 @@ function processRequest(request, sender, sendResponse) {
 
 /**
  * Processes service response
- * @ param {string} errorMessage
- * @ param {string} data
- * @ return {string} response
+ * @param {string} errorMessage
+ * @param {string} data
+ * @return {string} response
  */
 function ServiceResponse(errorMessage, data) {
     this.errMsg = errorMessage;
@@ -86,9 +86,9 @@ function ServiceResponse(errorMessage, data) {
 /**
  * Processes Annotation List Response
  * Depending on the response returns error code or JSON of Annotation
- * @ param {string} serverResponse
- * @ param {string} data
- * @ return {string} response
+ * @param {string} serverResponse
+ * @param {string} data
+ * @return {string} response
  */
 function AnnotationListResponse(serverResponse, errorMsg) {
     this.errorMsg = errorMsg;
@@ -121,7 +121,7 @@ function AnnotationListResponse(serverResponse, errorMsg) {
 
 /**
  * Returns dummy annotation string
- * @ return {string} Dummy response string
+ * @return {string} Dummy response string
  */
 function getDummyAnnotationResponseString() {
     var dummyResponseString = "[{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}}]";
@@ -237,7 +237,7 @@ function getAnnotationsForUrl(pageUrl) {
 
 /**
  * Creates specifier fields in given Annotation for highlighter
- * @ param {string} currentAnnotation - The annotation specifier fields to be set
+ * @param {string} currentAnnotation - The annotation specifier fields to be set
  */
 function createFieldsForHighlighter(currentAnnotation) {
     if (!currentAnnotation.target.selector.hasOwnProperty('type')) {
@@ -276,7 +276,7 @@ function loadAnnotationsForExtension() {
 
 /**
  * Loads annotations for the current URL on to given object
- * @ param {string} contentAnnotatorBM
+ * @param {string} contentAnnotatorBM
  */
 function loadAnnotationsForPage(contentAnnotatorBM) {
     getAnnotationsForCurrentUrl().then(function (response) {
@@ -339,9 +339,9 @@ function preProcess() {
 
 /**
  * Creates and returns hash value for user and password tuple
- * @ param {string} user - Username as string
- * @ param {string} password - Password as string
- * @ return {string} hash of username and string
+ * @param {string} user - Username as string
+ * @param {string} password - Password as string
+ * @return {string} hash of username and string
  */
 function make_base_auth(user, password) {
     var tok = user + ':' + password;
@@ -366,9 +366,9 @@ function readCredentials() {
 
 /**
  * Logs user in with given parameters
- * @ param {string} username - Username as string
- * @ param {string} password - Password as string
- * @ param {string} callback
+ * @param {string} username - Username as string
+ * @param {string} password - Password as string
+ * @param {string} callback
  */
 function loginUser(username, password, callback) {
     try {
@@ -416,6 +416,7 @@ function loginUser(username, password, callback) {
     }
 }
 
+
 function startAnnotatorJS() {
     //console.log("Processing annotation request");
     //if (!window.jQuery) {
@@ -437,6 +438,10 @@ function startAnnotatorJS() {
     //}
 }
 
+
+/**
+ * Entrance point
+ */
 $(document).ready(function () {
     function applyStorageParams(params) {
         if (params != null) {
@@ -471,6 +476,10 @@ $(document).ready(function () {
     chrome.storage.sync.get(storageParams, applyStorageParams);
 });
 
+
+/**
+ * Logs current logged in user out
+ */
 function logUserOut() {
     //reloading page with default html settings.
     window.location.href = "/html/index.html";
@@ -478,6 +487,15 @@ function logUserOut() {
 }
 
 
+
+/**
+ * Registers user in with given parameters
+ * @param {string} name - name as string
+ * @param {string} lName - surname as string
+ * @param {string} pw - password as string
+ * @param {string} mail - E-mail as string
+ * @param {string} callback
+ */
 function registerUser(name, lName, pw, mail, callback) {
     try {
         var userPostData = {
@@ -533,12 +551,14 @@ function registerUser(name, lName, pw, mail, callback) {
     }
 }
 
-/*
- * post updated text annotation to the server
- * @param  {commentValue, xpathSelectorData, quote}
+/**
+ * Sends annotations to server
+ * @param  {commentValue} - Comments to be send
+ * @param  {xpathSelectorData} - Selector data
+ * @param  {quote} - Quote to be made
  * @return {}
  *
- * */
+ */
 function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote) {
 
     var tabUrl = window.location.href;
@@ -639,9 +659,9 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote) {
     }
 }
 
-/*
+/**
  * post updated text annotation to the server
- * @param  {updatedAnnotation}
+ * @param  {updatedAnnotation} - Annotation to be updated
  * @return {}
  *
  * */
@@ -721,7 +741,7 @@ function sendUpdatedTextAnnnotation(updatedAnnotation) {
     }
 }
 
-/*
+/**
  * post deleted text annotation to the server
  * @param  {deletedAnnotation}
  * @return {}
@@ -752,7 +772,7 @@ function sendDeletedTextAnnnotation(deletedAnnotation) {
      });
 }
 
-/*
+/**
  * find annotation from annotation list of the page for the update and delete operations
  * @param  {startOffset, endOffset}
  * @return {annotation}
