@@ -60,7 +60,7 @@ window.onload = function () {
                     .subscribe("annotationUpdated", function (annotation) {
                         console.info("The annotation: %o has just been updated!", annotation);
                         if (annotation.hasOwnProperty('src')) {
-
+                            sendUpdatedImageAnnnotation(annotation);
                         }
                         else {
 

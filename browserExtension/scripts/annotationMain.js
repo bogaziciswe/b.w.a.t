@@ -798,6 +798,67 @@ function sendDeletedTextAnnnotation(deletedAnnotation) {
 }
 
 /**
+ * post updated image annotation to the server
+ * @param  {updatedAnnotation} - Annotation to be updated
+ * @return {}
+ *
+ * */
+function sendUpdatedImageAnnnotation(updatedAnnotation) {
+
+    var annotation = findImageAnnotationInList(updatedAnnotation);
+
+    try {
+        var annotationPostData = {
+            "annotation": {
+                "@context": "http://www.w3.org/ns/anno.jsonld",
+                "id": annotation.annotationId,
+                "type": annotation.type,
+                "body": {
+                    "type": annotation.body.type,
+                    "value": annotation.text,
+                    "format": annotation.body.format
+                },
+                "target": {
+                    "source": annotation.target.source,
+                    "id": annotation.target.id,
+                    "type": annotation.target.type,
+                    "format": annotation.target.format
+                }
+            },
+            "publicAnnotation": true
+        };
+
+        console.log(JSON.stringify(annotationPostData));
+
+        $.ajax({
+            type: "POST",
+            url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/update",
+            dataType: 'json',
+            contentType: "application/json; charset=utf8",
+            async: true,
+            data: JSON.stringify(annotationPostData),
+            beforeSend: function (xhr) {
+                userAuthToken = make_base_auth("abc@gmail.com", "123456");
+                xhr.setRequestHeader('Authorization', userAuthToken);
+            },
+            success: function (data) {
+                //callback(new ServiceResponse(null, data));
+                console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
+                loadAnnotationsForExtension();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
+                console.log(xhr.responseText);
+            }
+        });
+
+
+    } catch (err) {
+        callback(new ServiceResponse("BWAT006 => " + err.message, null));
+    }
+}
+
+/**
  * post deleted image annotation to the server
  * @param  {deletedAnnotation}
  * @return {}
