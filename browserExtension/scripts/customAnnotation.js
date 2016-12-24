@@ -69,14 +69,13 @@ window.onload = function () {
                             if (offset !== null) {
                                 json[offset].comment = annotation.text;
                             }
-
                             sendUpdatedTextAnnnotation(annotation);
                         }
                     })
                     .subscribe("annotationDeleted", function (annotation) {
                         console.info("The annotation: %o has just been deleted!", annotation);
                         if (annotation.hasOwnProperty('src')) {
-
+                            sendDeletedImageAnnnotation(annotation);
                         }
                         else {
 

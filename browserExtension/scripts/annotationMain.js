@@ -798,6 +798,37 @@ function sendDeletedTextAnnnotation(deletedAnnotation) {
 }
 
 /**
+ * post deleted image annotation to the server
+ * @param  {deletedAnnotation}
+ * @return {}
+ *
+ * */
+function sendDeletedImageAnnnotation(deletedAnnotation) {
+
+    var annotation = findImageAnnotationInList(deletedAnnotation);
+
+    $.ajax({
+        type: "GET",
+        url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/delete",
+        dataType: 'json',
+        async: true,
+        beforeSend: function (xhr) {
+            userAuthToken = make_base_auth("abc@gmail.com", "123456");
+            xhr.setRequestHeader('Authorization', userAuthToken);
+        },
+        success: function (data) {
+            //callback(new ServiceResponse(null, data));
+            console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
+            loadAnnotationsForExtension();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
+            console.log(xhr.responseText);
+        }
+    });
+}
+
+/**
  * find annotation from annotation list of the page for the update and delete operations
  * @param  {startOffset, endOffset}
  * @return {annotation}
@@ -805,9 +836,36 @@ function sendDeletedTextAnnnotation(deletedAnnotation) {
  * */
 function findAnnotationInList(startOffset, endOffset) {
     for (var i = 0; i < annotationListOfPage.length; i++) {
-        if (annotationListOfPage[i].target.selector[1].start == startOffset &&
-            annotationListOfPage[i].target.selector[1].end == endOffset) {
-            return annotationListOfPage[i];
+        if(annotationListOfPage[i].target.hasOwnProperty('selector')){
+            if (annotationListOfPage[i].target.selector[1].start == startOffset &&
+                annotationListOfPage[i].target.selector[1].end == endOffset) {
+                return annotationListOfPage[i];
+            }
+        }
+    }
+    return null;
+}
+
+/**
+ * find image annotation from annotation list of the page for the update and delete operations
+ * @param  {deletedAnnotation}
+ * @return {annotation}
+ *
+ * */
+function findImageAnnotationInList(deletedAnnotation) {
+    for (var i = 0; i < annotationListOfPage.length; i++) {
+        if(annotationListOfPage[i].target.hasOwnProperty('id')){
+            var srcArray = annotationListOfPage[i].target.id.split('#');
+            var xywh = annotationListOfPage[i].target.id.split('=');
+            var xywharray = xywh[1].split(',');
+            var src = srcArray[0];
+
+            if (src == deletedAnnotation.src && parseInt(xywharray[0]) == deletedAnnotation.shapes[0].geometry.x &&
+                parseInt(xywharray[1]) == deletedAnnotation.shapes[0].geometry.y &&
+                parseInt(xywharray[2]) == deletedAnnotation.shapes[0].geometry.width &&
+                parseInt(xywharray[3]) == deletedAnnotation.shapes[0].geometry.height) {
+                return annotationListOfPage[i];
+            }
         }
     }
     return null;
