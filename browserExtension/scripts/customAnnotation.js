@@ -3,15 +3,6 @@ window.onload = function () {
     var json = [];
 
     readCredentials();
-    function findAnnotation(startOffset, endOffset) {
-        for (var i = 0; i < json.length; i++) {
-            if (json[i].startOffset == startOffset && json[i].endOffset == endOffset) {
-                return i;
-            }
-        }
-        return null;
-    }
-
 
     Annotator.Plugin.StoreLogger = function (element) {
         var singleAnnotation = {
@@ -63,12 +54,6 @@ window.onload = function () {
                             sendUpdatedImageAnnnotation(annotation);
                         }
                         else {
-
-                            // ToDo: Remove if it is not used
-                            var offset = findAnnotation(annotation.ranges[0].startOffset, annotation.ranges[0].endOffset);
-                            if (offset !== null) {
-                                json[offset].comment = annotation.text;
-                            }
                             sendUpdatedTextAnnnotation(annotation);
                         }
                     })
@@ -78,13 +63,6 @@ window.onload = function () {
                             sendDeletedImageAnnnotation(annotation);
                         }
                         else {
-
-                            // ToDo: Remove if it is not used
-                            var offset = findAnnotation(annotation.ranges[0].startOffset, annotation.ranges[0].endOffset);
-                            if (offset !== null) {
-                                json[offset].comment = annotation.text;
-                            }
-
                             sendDeletedTextAnnnotation(annotation);
                         }
                     });
