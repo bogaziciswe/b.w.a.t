@@ -48,12 +48,12 @@ window.onload = function () {
                             current.quote = annotation.quote;
                         }
                         current.comment = annotation.text;
-                        json.push(current);
+                        json.push(annotation);
                         if (annotation.hasOwnProperty('src')) {
-                            sendCreatedAnnnotation(current.comment, annotation.shapes[0], "");
+                            sendCreatedAnnnotation(current.comment, annotation.shapes[0], "", current);
                         }
                         else {
-                            sendCreatedAnnnotation(current.comment, annotation.ranges[0], current.quote);
+                            sendCreatedAnnnotation(current.comment, annotation.ranges[0], current.quote, current);
                         }
                         console.log(JSON.stringify(json));
                     })

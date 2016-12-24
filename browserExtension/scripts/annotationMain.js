@@ -240,7 +240,7 @@ function getAnnotationsForUrl(pageUrl) {
  * @param {string} currentAnnotation - The annotation specifier fields to be set
  */
 function createFieldsForHighlighter(currentAnnotation) {
-    if (!currentAnnotation.target.selector.hasOwnProperty('type')) {
+    if (currentAnnotation.target.hasOwnProperty('selector'))  {
         var range = {
             start: currentAnnotation.target.selector[0].startSelector.value,
             end: currentAnnotation.target.selector[0].endSelector.value,
@@ -257,6 +257,31 @@ function createFieldsForHighlighter(currentAnnotation) {
         currentAnnotation.text = text;
         currentAnnotation.quote = quote;
     }
+
+    else if (currentAnnotation.target.hasOwnProperty('id')) {
+        var xywh = currentAnnotation.target.id.split('=');
+        var xywharray = xywh[1].split(',');
+        var shapes = [];
+        shapes[0] = {
+            type: "rect",
+            geometry:
+            {
+                x: parseInt(xywharray[0]),
+                y: parseInt(xywharray[1]),
+                width: parseInt(xywharray[2]),
+                height: parseInt(xywharray[3])
+            }
+        };
+
+        var src = xywh[0].split('#');
+        currentAnnotation["text"] = currentAnnotation.body.value;
+        currentAnnotation["src"] = src[0];
+        currentAnnotation["ranges"] = [];
+        currentAnnotation["quote"] = "asd";
+        currentAnnotation["shapes"] = shapes;
+        currentAnnotation["highlights"] = [];
+    }
+
 }
 
 
@@ -559,7 +584,7 @@ function registerUser(name, lName, pw, mail, callback) {
  * @return {}
  *
  */
-function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote) {
+function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote, current) {
 
     var tabUrl = window.location.href;
     try {
@@ -578,7 +603,7 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote) {
                     },
                     "target": {
                         "source": tabUrl,
-                        "id": "http://example.com/image1#xywh=" + xpathSelectorData.geometry.x + "," + xpathSelectorData.geometry.y + "," + xpathSelectorData.geometry.width + "," + xpathSelectorData.geometry.height,
+                        "id": current.url + "#xywh=" + xpathSelectorData.geometry.x + "," + xpathSelectorData.geometry.y + "," + xpathSelectorData.geometry.width + "," + xpathSelectorData.geometry.height,
                         "type": "Image",
                         "format": "image/jpeg"
                     }
