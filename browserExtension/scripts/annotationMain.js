@@ -30,17 +30,6 @@ function setCredentials(username, password) {
     });
 }
 
-//old address 
-//var protocol = "http://";
-//var serverRootUrl = "46.196.100.145";
-//var serverRootUrl = "192.168.0.103";
-//var loginPostUri = ":8080/healthTracker/auth";
-//var loginPostUri = "/healthTracker/auth";
-//var registerPostUri = ":8080/healthTracker//registerAuth";
-//var registerPostUri = "/healthTracker//registerAuth";
-//var annotationStorePostUri = ":8080/healthTracker";
-//var annotationStorePostUri = "/healthTracker";
-
 /**
  * Hardcoded annotation store options
  * create - /annotations -
@@ -441,29 +430,6 @@ function loginUser(username, password, callback) {
     }
 }
 
-
-function startAnnotatorJS() {
-    //console.log("Processing annotation request");
-    //if (!window.jQuery) {
-    //    alert("JQ does NOT work!!");
-    //}
-    //console.log("Starting annotations...");
-    //var app = new annotator.App();
-    //app.include(annotator.ui.main);
-    //app.include(annotator.storage.http, {
-    //    prefix: protocol + "46.196.100.145" + "/healthTracker"
-    //});
-    //app.start().then(function () {
-    //    app.annotations.load();
-    //});
-    //if (app != null) {
-    //    alert("Please select something and click on annotate Icon");
-    //} else {
-    //    alert("Something is wrong with annotation selector");
-    //}
-}
-
-
 /**
  * Entrance point
  */
@@ -751,7 +717,7 @@ function sendUpdatedTextAnnnotation(updatedAnnotation) {
             },
             success: function (data) {
                 //callback(new ServiceResponse(null, data));
-                console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
+                console.log("Completed updated annotation:" + JSON.stringify(data) + " ---");
                 loadAnnotationsForExtension();
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -787,7 +753,7 @@ function sendDeletedTextAnnnotation(deletedAnnotation) {
          },
          success: function (data) {
          //callback(new ServiceResponse(null, data));
-         console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
+         console.log("Completed deleted annotation:" + JSON.stringify(data) + " ---");
              loadAnnotationsForExtension();
          },
          error: function (xhr, ajaxOptions, thrownError) {
@@ -843,7 +809,7 @@ function sendUpdatedImageAnnnotation(updatedAnnotation) {
             },
             success: function (data) {
                 //callback(new ServiceResponse(null, data));
-                console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
+                console.log("Completed updated annotation:" + JSON.stringify(data) + " ---");
                 loadAnnotationsForExtension();
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -879,7 +845,7 @@ function sendDeletedImageAnnnotation(deletedAnnotation) {
         },
         success: function (data) {
             //callback(new ServiceResponse(null, data));
-            console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
+            console.log("Completed deleted annotation:" + JSON.stringify(data) + " ---");
             loadAnnotationsForExtension();
         },
         error: function (xhr, ajaxOptions, thrownError) {
