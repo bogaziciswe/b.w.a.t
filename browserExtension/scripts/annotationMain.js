@@ -119,11 +119,18 @@ function AnnotationListResponse(serverResponse, errorMsg) {
     }
 }
 
+/**
+ * Returns dummy annotation string
+ * @ return {string} Dummy response string
+ */
 function getDummyAnnotationResponseString() {
     var dummyResponseString = "[{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}},{\"@context\":\"http://www.w3.org/ns/anno.jsonld\",\"id\":\"http://www.hurriyet.com.tr/trump-secimi-kazandi-diye-ulkeyi-terk-ediyor-40275330\",\"type\":\"Annotation\",\"body\":\"test\",\"target\":{\"selector\":[{\"type\":\"RangeSelector\",\"startSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"},\"endSelector\":{\"type\":\"XPathSelector\",\"value\":\"/div[13]/div[6]/div[2]/div/div/div/div/div[3]/div/div/div[4]/div[2]/p[2]\"}},{\"type\":\"DataPositionSelector\",\"start\":267,\"end\":283}]}}]";
     return dummyResponseString;
 }
 
+/**
+ * Test method for Annotation List Object Creation
+ */
 function testAnnotationListObjectCreation() {
     var annotationResponse = getAnnotationsForUrl("gokhanTest");
     console.log("error = " + annotationResponse.errorMsg);
@@ -228,6 +235,10 @@ function getAnnotationsForUrl(pageUrl) {
     });
 }
 
+/**
+ * Creates specifier fields in given Annotation for highlighter
+ * @ param {string} currentAnnotation - The annotation specifier fields to be set
+ */
 function createFieldsForHighlighter(currentAnnotation) {
     if (!currentAnnotation.target.selector.hasOwnProperty('type')) {
         var range = {
@@ -248,6 +259,10 @@ function createFieldsForHighlighter(currentAnnotation) {
     }
 }
 
+
+/**
+ * Loads annotations for the current URL
+ */
 function loadAnnotationsForExtension() {
     getAnnotationsForCurrentUrl().then(function (response) {
         var annotationListResponse = response;
@@ -258,6 +273,11 @@ function loadAnnotationsForExtension() {
 
 }
 
+
+/**
+ * Loads annotations for the current URL on to given object
+ * @ param {string} contentAnnotatorBM
+ */
 function loadAnnotationsForPage(contentAnnotatorBM) {
     getAnnotationsForCurrentUrl().then(function (response) {
         var annotationListResponse = response;
@@ -317,12 +337,22 @@ function preProcess() {
     // document.body.appendChild(selectDiv);
 }
 
+/**
+ * Creates and returns hash value for user and password tuple
+ * @ param {string} user - Username as string
+ * @ param {string} password - Password as string
+ * @ return {string} hash of username and string
+ */
 function make_base_auth(user, password) {
     var tok = user + ':' + password;
     var hash = btoa(tok);
     return "Basic " + hash;
 }
 
+
+/**
+ * Gets username and string from browsers storage in to storedCredentials object
+ */
 function readCredentials() {
     var keys = ["username", "password"];
 
@@ -333,6 +363,13 @@ function readCredentials() {
     chrome.storage.sync.get(keys, storedCredentials);
 }
 
+
+/**
+ * Logs user in with given parameters
+ * @ param {string} username - Username as string
+ * @ param {string} password - Password as string
+ * @ param {string} callback
+ */
 function loginUser(username, password, callback) {
     try {
         $.ajax
