@@ -13,6 +13,12 @@ var allowHttpsProtocol = false; //SSL required
 // Annotation List for update and delete operations
 var annotationListOfPage = [];
 
+/**
+ * Stores user credentials
+ * @ param {string} username
+ * @ param {string} password
+ * @ return {null}
+ */
 function setCredentials(username, password) {
     //FIXME Storing user credentials locally is not secure.
     var credentials = {
@@ -56,6 +62,12 @@ function processRequest(request, sender, sendResponse) {
     chrome.runtime.onMessage.removeListener(processRequest);
 }
 
+/**
+ * Processes service response
+ * @ param {string} errorMessage
+ * @ param {string} data
+ * @ return {string} response
+ */
 function ServiceResponse(errorMessage, data) {
     this.errMsg = errorMessage;
     if (this.errMsg != null && this.errMsg.length > 0) {
@@ -70,6 +82,14 @@ function ServiceResponse(errorMessage, data) {
     }
 }
 
+
+/**
+ * Processes Annotation List Response
+ * Depending on the response returns error code or JSON of Annotation
+ * @ param {string} serverResponse
+ * @ param {string} data
+ * @ return {string} response
+ */
 function AnnotationListResponse(serverResponse, errorMsg) {
     this.errorMsg = errorMsg;
     if (this.errorMsg != null && this.errorMsg.length > 0) {
