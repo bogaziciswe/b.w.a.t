@@ -291,7 +291,6 @@ function loadAnnotationsForExtension() {
  * Loads annotations for the current URL on to given object
  * @param {string} contentAnnotatorBM
  */
-var textAnnotations = {} ;
 function loadAnnotationsForPage(contentAnnotatorBM) {
     getAnnotationsForCurrentUrl().then(function (response) {
         var annotationListResponse = response;
@@ -301,21 +300,16 @@ function loadAnnotationsForPage(contentAnnotatorBM) {
             // Now we have responseObject , time to get annotationList.
             var annotationList = [];
 
-            var someList = [] ;
             for (anno in annotationListResponse.annotations){
                 annotationList.push(annotationListResponse.annotations[anno].annotation);
             }
-            var stringified = JSON.stringify(annotationListResponse.annotations);
-
             if (annotationList != null && annotationList.length > 0) {
                 // Annotation List for update and delete operations
                 annotationListOfPage = annotationList.slice(0);
                 var annotationListLen = annotationList.length;
                 if (annotationList != null && annotationList.length > 0) {
-                    //cardsList = stringified;
                     for (var i = 0; i < annotationList.length; i++) {
                         createFieldsForHighlighter(annotationList[i]);
-                        someList.push(textAnnotations);
                     }
                     contentAnnotatorBM.annotator("loadAnnotations", annotationList);
                     if (annotationList != null && annotationListLen > 0) {
@@ -323,7 +317,6 @@ function loadAnnotationsForPage(contentAnnotatorBM) {
                     } else {
                         console.log("No annotations to show.");
                     }
-                   // cardsList = JSON.stringify(someList);
                     loadAnnotationsForExtension();
                 }
             } else {
@@ -336,25 +329,9 @@ function loadAnnotationsForPage(contentAnnotatorBM) {
             console.log("ERROR ENCOUNTERED WHILE FETCHING ANNOTATIONS:" + errorMessage);
         }
     }, function (rejection) {
-        //console.log("Protocol rejected.");
     });
 }
 
-
-function preProcess() {
-    // while (document.body.firstChild) {
-    //     document.body.firstChild.remove();
-    // }
-    var canvas = document.createElement("canvas");
-    canvas.class = 'selectionBox';
-    canvas.id = 'selectionBox';
-    canvas.style = 'position: absolute; top: 0; left: 0; height: 0; width: 0; border: 1px solid red;';
-    document.body.appendChild(canvas);
-    // var selectDiv = document.createElement("div");
-    // selectDiv.class = 'selectionBox';
-    // selectDiv.style = 'position: absolute; top: 0; left: 0; height: 300; width: 300; border: 1px solid red;';
-    // document.body.appendChild(selectDiv);
-}
 
 /**
  * Creates and returns hash value for user and password tuple
