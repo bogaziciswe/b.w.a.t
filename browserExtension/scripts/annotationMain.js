@@ -561,8 +561,6 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote, current,
 
     function readStoredCredentials(items) {
 
-        console.log("motivation is: " + motivation);
-
         var tabUrl = window.location.href;
         try {
 
