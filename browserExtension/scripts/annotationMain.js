@@ -641,9 +641,7 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote, current)
             callback(new ServiceResponse("BWAT006 => " + err.message, null));
         }
     }
-
     chrome.storage.sync.get(keys, readStoredCredentials);
-
 }
 
 /**
@@ -731,9 +729,7 @@ function sendUpdatedTextAnnnotation(updatedAnnotation) {
             callback(new ServiceResponse("BWAT006 => " + err.message, null));
         }
     }
-
     chrome.storage.sync.get(keys, readStoredCredentials);
-
 }
 
 /**
@@ -744,27 +740,32 @@ function sendUpdatedTextAnnnotation(updatedAnnotation) {
  * */
 function sendDeletedTextAnnnotation(deletedAnnotation) {
 
-    var annotation = findAnnotationInList(deletedAnnotation.ranges[0].startOffset, deletedAnnotation.ranges[0].endOffset);
+    var keys = ["username", "password"];
 
-     $.ajax({
-         type: "GET",
-         url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/delete",
-         dataType: 'json',
-         async: true,
-         beforeSend: function (xhr) {
-         userAuthToken = make_base_auth("abc@gmail.com", "123456");
-         xhr.setRequestHeader('Authorization', userAuthToken);
-         },
-         success: function (data) {
-         //callback(new ServiceResponse(null, data));
-         console.log("Completed deleted annotation:" + JSON.stringify(data) + " ---");
-             loadAnnotationsForExtension();
-         },
-         error: function (xhr, ajaxOptions, thrownError) {
-         //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
-         console.log(xhr.responseText);
-         }
-     });
+    function readStoredCredentials(items) {
+        var annotation = findAnnotationInList(deletedAnnotation.ranges[0].startOffset, deletedAnnotation.ranges[0].endOffset);
+
+        $.ajax({
+            type: "GET",
+            url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/delete",
+            dataType: 'json',
+            async: true,
+            beforeSend: function (xhr) {
+                userAuthToken = make_base_auth(items.username, items.password);
+                xhr.setRequestHeader('Authorization', userAuthToken);
+            },
+            success: function (data) {
+                //callback(new ServiceResponse(null, data));
+                console.log("Completed deleted annotation:" + JSON.stringify(data) + " ---");
+                loadAnnotationsForExtension();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
+                console.log(xhr.responseText);
+            }
+        });
+    }
+    chrome.storage.sync.get(keys, readStoredCredentials);
 }
 
 /**
@@ -830,7 +831,6 @@ function sendUpdatedImageAnnnotation(updatedAnnotation) {
             callback(new ServiceResponse("BWAT006 => " + err.message, null));
         }
     }
-
     chrome.storage.sync.get(keys, readStoredCredentials);
 }
 
@@ -842,27 +842,32 @@ function sendUpdatedImageAnnnotation(updatedAnnotation) {
  * */
 function sendDeletedImageAnnnotation(deletedAnnotation) {
 
-    var annotation = findImageAnnotationInList(deletedAnnotation);
+    var keys = ["username", "password"];
 
-    $.ajax({
-        type: "GET",
-        url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/delete",
-        dataType: 'json',
-        async: true,
-        beforeSend: function (xhr) {
-            userAuthToken = make_base_auth("abc@gmail.com", "123456");
-            xhr.setRequestHeader('Authorization', userAuthToken);
-        },
-        success: function (data) {
-            //callback(new ServiceResponse(null, data));
-            console.log("Completed deleted annotation:" + JSON.stringify(data) + " ---");
-            loadAnnotationsForExtension();
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
-            console.log(xhr.responseText);
-        }
-    });
+    function readStoredCredentials(items) {
+        var annotation = findImageAnnotationInList(deletedAnnotation);
+
+        $.ajax({
+            type: "GET",
+            url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/delete",
+            dataType: 'json',
+            async: true,
+            beforeSend: function (xhr) {
+                userAuthToken = make_base_auth(items.username, items.password);
+                xhr.setRequestHeader('Authorization', userAuthToken);
+            },
+            success: function (data) {
+                //callback(new ServiceResponse(null, data));
+                console.log("Completed deleted annotation:" + JSON.stringify(data) + " ---");
+                loadAnnotationsForExtension();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
+                console.log(xhr.responseText);
+            }
+        });
+    }
+    chrome.storage.sync.get(keys, readStoredCredentials);
 }
 
 /**
