@@ -782,12 +782,14 @@ function sendUpdatedImageAnnnotation(updatedAnnotation) {
 
     function readStoredCredentials(items) {
         var annotation = findImageAnnotationInList(updatedAnnotation);
+        var idForReqArray = annotation.id.split('//');
+        var idForReq = idForReqArray[1].split('/');
 
         try {
             var annotationPostData = {
                 "annotation": {
                     "@context": "http://www.w3.org/ns/anno.jsonld",
-                    "id": annotation.annotationId,
+                    "id": annotation.id,
                     "type": annotation.type,
                     "body": {
                         "type": annotation.body.type,
@@ -808,7 +810,7 @@ function sendUpdatedImageAnnnotation(updatedAnnotation) {
 
             $.ajax({
                 type: "POST",
-                url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/update",
+                url: protocol + serverRootUrl + "/api/annotation/" + idForReq[1] + "/update",
                 dataType: 'json',
                 contentType: "application/json; charset=utf8",
                 async: true,
