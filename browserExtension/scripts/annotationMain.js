@@ -41,16 +41,6 @@ function setCredentials(username, password) {
 var userAuthToken = "DEFAULT"; // leave this as DEFAULT
 
 
-function processRequest(request, sender, sendResponse) {
-
-    console.log("Processing request");
-    //preProcess();
-
-    startAnnotatorJS();
-
-    chrome.runtime.onMessage.removeListener(processRequest);
-}
-
 /**
  * Processes service response
  * @param {string} errorMessage
@@ -897,6 +887,3 @@ function findImageAnnotationInList(deletedAnnotation) {
     }
     return null;
 }
-
-chrome.runtime.onMessage.addListener(processRequest);
-

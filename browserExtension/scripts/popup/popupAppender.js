@@ -1,6 +1,5 @@
 
 var globalInfo;
-var geekMode = false;
 function setDOMInfo(info) {
     console.log(info);
     globalInfo = info;
