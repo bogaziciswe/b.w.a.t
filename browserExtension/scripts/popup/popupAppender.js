@@ -59,7 +59,14 @@ function setDOMInfo(info) {
 
         //add Comment
         var divMotivation = document.createElement('p');
-        divMotivation.innerHTML = "<b>Motivation:</b> "+ dt.motivation;
+      var motivationString = "";
+        if (dt.motivation == "")
+        {
+motivationString = "Comment";}
+            else{
+            motivationString = dt.motivation;
+        }
+        divMotivation.innerHTML = "<b>Motivation:</b> "+ motivationString;
         divBody.appendChild(divMotivation);
 
         cardsList.appendChild(newCard);
