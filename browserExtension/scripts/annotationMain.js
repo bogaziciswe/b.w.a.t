@@ -657,12 +657,14 @@ function sendUpdatedTextAnnnotation(updatedAnnotation) {
     function readStoredCredentials(items) {
 
         var annotation = findAnnotationInList(updatedAnnotation.ranges[0].startOffset, updatedAnnotation.ranges[0].endOffset);
+        var idForReqArray = annotation.id.split('//');
+        var idForReq = idForReqArray[1].split('/');
 
         try {
             var annotationPostData = {
                 "annotation": {
                     "@context": "http://www.w3.org/ns/anno.jsonld",
-                    "id": annotation.annotationId,
+                    "id": annotation.id,
                     "type": annotation.type,
                     "body": {
                         "type": annotation.body.type,
@@ -704,7 +706,7 @@ function sendUpdatedTextAnnnotation(updatedAnnotation) {
 
             $.ajax({
                 type: "POST",
-                url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/update",
+                url: protocol + serverRootUrl + "/api/annotation/" + idForReq[1] + "/update",
                 dataType: 'json',
                 contentType: "application/json; charset=utf8",
                 async: true,
