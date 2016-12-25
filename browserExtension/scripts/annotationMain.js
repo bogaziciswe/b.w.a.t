@@ -542,102 +542,108 @@ function registerUser(name, lName, pw, mail, callback) {
  */
 function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote, current) {
 
-    var tabUrl = window.location.href;
-    try {
+    var keys = ["username", "password"];
 
-        // Todo: Defult public annotation
-        if (xpathSelectorData.hasOwnProperty('type')) {
-            var annotationPostData = {
-                "annotation": {
-                    "@context": "http://www.w3.org/ns/anno.jsonld",
-                    "id": tabUrl,
-                    "type": "Annotation",
-                    "body": {
-                        "type": "TextualBody",
-                        "value": commentValue,
-                        "format": "text/plain"
+    function readStoredCredentials(items) {
+
+        var tabUrl = window.location.href;
+        try {
+
+            if (xpathSelectorData.hasOwnProperty('type')) {
+                var annotationPostData = {
+                    "annotation": {
+                        "@context": "http://www.w3.org/ns/anno.jsonld",
+                        "id": tabUrl,
+                        "type": "Annotation",
+                        "body": {
+                            "type": "TextualBody",
+                            "value": commentValue,
+                            "format": "text/plain"
+                        },
+                        "target": {
+                            "source": tabUrl,
+                            "id": current.url + "#xywh=" + xpathSelectorData.geometry.x + "," + xpathSelectorData.geometry.y + "," + xpathSelectorData.geometry.width + "," + xpathSelectorData.geometry.height,
+                            "type": "Image",
+                            "format": "image/jpeg"
+                        }
                     },
-                    "target": {
-                        "source": tabUrl,
-                        "id": current.url + "#xywh=" + xpathSelectorData.geometry.x + "," + xpathSelectorData.geometry.y + "," + xpathSelectorData.geometry.width + "," + xpathSelectorData.geometry.height,
-                        "type": "Image",
-                        "format": "image/jpeg"
-                    }
-                },
-                "publicAnnotation": true
-            };
-        }
-
-        // Todo: Defult public annotation
-        else {
-            var annotationPostData = {
-                "annotation": {
-                    "@context": "http://www.w3.org/ns/anno.jsonld",
-                    "id": tabUrl,
-                    "type": "Annotation",
-                    "body": {
-                        "type": "TextualBody",
-                        "value": commentValue,
-                        "format": "text/plain"
-                    },
-                    "target": {
-                        "source": tabUrl,
-                        "selector": [
-                            {
-                                "type": "RangeSelector",
-                                "startSelector": {
-                                    "type": "XPathSelector",
-                                    "value": xpathSelectorData.start
-                                },
-                                "endSelector": {
-                                    "type": "XPathSelector",
-                                    "value": xpathSelectorData.end
-                                }
-                            },
-                            {
-                                "type": "DataPositionSelector",
-                                "start": xpathSelectorData.startOffset,
-                                "end": xpathSelectorData.endOffset
-                            }
-                            ,
-                            {
-                                "type": "TextQuoteSelector",
-                                "exact": quote
-                            }
-
-                        ]
-                    }
-                },
-                "publicAnnotation": true
-            };
-        }
-
-        console.log(JSON.stringify(annotationPostData));
-        $.ajax({
-            type: "POST",
-            url: protocol + serverRootUrl + annotationStorePostUri,
-            dataType: 'json',
-            contentType: "application/json; charset=utf8",
-            async: true,
-            data: JSON.stringify(annotationPostData),
-            beforeSend: function (xhr) {
-                userAuthToken = make_base_auth("abc@gmail.com", "123456");
-                xhr.setRequestHeader('Authorization', userAuthToken);
-            },
-            success: function (data) {
-                //callback(new ServiceResponse(null, data));
-                console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
-                annotationListOfPage.push(data);
-                loadAnnotationsForExtension();
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
-                console.log(xhr.responseText);
+                    "publicAnnotation": true
+                };
             }
-        });
-    } catch (err) {
-        callback(new ServiceResponse("BWAT006 => " + err.message, null));
+
+            else {
+                var annotationPostData = {
+                    "annotation": {
+                        "@context": "http://www.w3.org/ns/anno.jsonld",
+                        "id": tabUrl,
+                        "type": "Annotation",
+                        "body": {
+                            "type": "TextualBody",
+                            "value": commentValue,
+                            "format": "text/plain"
+                        },
+                        "target": {
+                            "source": tabUrl,
+                            "selector": [
+                                {
+                                    "type": "RangeSelector",
+                                    "startSelector": {
+                                        "type": "XPathSelector",
+                                        "value": xpathSelectorData.start
+                                    },
+                                    "endSelector": {
+                                        "type": "XPathSelector",
+                                        "value": xpathSelectorData.end
+                                    }
+                                },
+                                {
+                                    "type": "DataPositionSelector",
+                                    "start": xpathSelectorData.startOffset,
+                                    "end": xpathSelectorData.endOffset
+                                }
+                                ,
+                                {
+                                    "type": "TextQuoteSelector",
+                                    "exact": quote
+                                }
+
+                            ]
+                        }
+                    },
+                    "publicAnnotation": true
+                };
+            }
+
+            console.log(JSON.stringify(annotationPostData));
+            $.ajax({
+                type: "POST",
+                url: protocol + serverRootUrl + annotationStorePostUri,
+                dataType: 'json',
+                contentType: "application/json; charset=utf8",
+                async: true,
+                data: JSON.stringify(annotationPostData),
+                beforeSend: function (xhr) {
+                    userAuthToken = make_base_auth(items.username, items.password);
+                    xhr.setRequestHeader('Authorization', userAuthToken);
+                },
+                success: function (data) {
+                    //callback(new ServiceResponse(null, data));
+                    console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
+                    annotationListOfPage.push(data);
+                    loadAnnotationsForExtension();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
+                    console.log(xhr.responseText);
+                }
+            });
+        } catch (err) {
+            callback(new ServiceResponse("BWAT006 => " + err.message, null));
+        }
     }
+
+    chrome.storage.sync.get(keys, readStoredCredentials);
+
 }
 
 /**
@@ -648,78 +654,86 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote, current)
  * */
 function sendUpdatedTextAnnnotation(updatedAnnotation) {
 
-    var annotation = findAnnotationInList(updatedAnnotation.ranges[0].startOffset, updatedAnnotation.ranges[0].endOffset);
+    var keys = ["username", "password"];
 
-    try {
-        var annotationPostData = {
-            "annotation": {
-                "@context": "http://www.w3.org/ns/anno.jsonld",
-                "id": annotation.annotationId,
-                "type": annotation.type,
-                "body": {
-                    "type": annotation.body.type,
-                    "value": annotation.text,
-                    "format": annotation.body.format
-                },
-                "target": {
-                    "source": annotation.target.source,
-                    "selector": [
-                        {
-                            "type": annotation.target.selector[0].type,
-                            "startSelector": {
-                                "type": annotation.target.selector[0].startSelector.type,
-                                "value": annotation.target.selector[0].startSelector.value,
+    function readStoredCredentials(items) {
+
+        var annotation = findAnnotationInList(updatedAnnotation.ranges[0].startOffset, updatedAnnotation.ranges[0].endOffset);
+
+        try {
+            var annotationPostData = {
+                "annotation": {
+                    "@context": "http://www.w3.org/ns/anno.jsonld",
+                    "id": annotation.annotationId,
+                    "type": annotation.type,
+                    "body": {
+                        "type": annotation.body.type,
+                        "value": annotation.text,
+                        "format": annotation.body.format
+                    },
+                    "target": {
+                        "source": annotation.target.source,
+                        "selector": [
+                            {
+                                "type": annotation.target.selector[0].type,
+                                "startSelector": {
+                                    "type": annotation.target.selector[0].startSelector.type,
+                                    "value": annotation.target.selector[0].startSelector.value,
+                                },
+                                "endSelector": {
+                                    "type": annotation.target.selector[0].endSelector.type,
+                                    "value": annotation.target.selector[0].endSelector.value,
+                                }
                             },
-                            "endSelector": {
-                                "type": annotation.target.selector[0].endSelector.type,
-                                "value": annotation.target.selector[0].endSelector.value,
+                            {
+                                "type": annotation.target.selector[1].type,
+                                "start": annotation.target.selector[1].start,
+                                "end": annotation.target.selector[1].end,
                             }
-                        },
-                        {
-                            "type": annotation.target.selector[1].type,
-                            "start": annotation.target.selector[1].start,
-                            "end": annotation.target.selector[1].end,
-                        }
-                        ,
-                        {
-                            "type": annotation.target.selector[2].type,
-                            "exact": annotation.target.selector[2].quote
-                        }
+                            ,
+                            {
+                                "type": annotation.target.selector[2].type,
+                                "exact": annotation.target.selector[2].quote
+                            }
 
-                    ]
+                        ]
+                    }
+                },
+                "publicAnnotation": true
+            };
+
+            console.log(JSON.stringify(annotationPostData));
+
+            $.ajax({
+                type: "POST",
+                url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/update",
+                dataType: 'json',
+                contentType: "application/json; charset=utf8",
+                async: true,
+                data: JSON.stringify(annotationPostData),
+                beforeSend: function (xhr) {
+                    userAuthToken = make_base_auth(items.username, items.password);
+                    xhr.setRequestHeader('Authorization', userAuthToken);
+                },
+                success: function (data) {
+                    //callback(new ServiceResponse(null, data));
+                    console.log("Completed updated annotation:" + JSON.stringify(data) + " ---");
+                    loadAnnotationsForExtension();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
+                    console.log(xhr.responseText);
                 }
-            },
-            "publicAnnotation": true
-        };
-
-        console.log(JSON.stringify(annotationPostData));
-        
-        $.ajax({
-            type: "POST",
-            url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/update",
-            dataType: 'json',
-            contentType: "application/json; charset=utf8",
-            async: true,
-            data: JSON.stringify(annotationPostData),
-            beforeSend: function (xhr) {
-                userAuthToken = make_base_auth("abc@gmail.com", "123456");
-                xhr.setRequestHeader('Authorization', userAuthToken);
-            },
-            success: function (data) {
-                //callback(new ServiceResponse(null, data));
-                console.log("Completed updated annotation:" + JSON.stringify(data) + " ---");
-                loadAnnotationsForExtension();
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
-                console.log(xhr.responseText);
-            }
-        });
+            });
 
 
-    } catch (err) {
-        callback(new ServiceResponse("BWAT006 => " + err.message, null));
+        } catch (err) {
+            callback(new ServiceResponse("BWAT006 => " + err.message, null));
+        }
     }
+
+    chrome.storage.sync.get(keys, readStoredCredentials);
+
 }
 
 /**
@@ -761,57 +775,63 @@ function sendDeletedTextAnnnotation(deletedAnnotation) {
  * */
 function sendUpdatedImageAnnnotation(updatedAnnotation) {
 
-    var annotation = findImageAnnotationInList(updatedAnnotation);
+    var keys = ["username", "password"];
 
-    try {
-        var annotationPostData = {
-            "annotation": {
-                "@context": "http://www.w3.org/ns/anno.jsonld",
-                "id": annotation.annotationId,
-                "type": annotation.type,
-                "body": {
-                    "type": annotation.body.type,
-                    "value": annotation.text,
-                    "format": annotation.body.format
+    function readStoredCredentials(items) {
+        var annotation = findImageAnnotationInList(updatedAnnotation);
+
+        try {
+            var annotationPostData = {
+                "annotation": {
+                    "@context": "http://www.w3.org/ns/anno.jsonld",
+                    "id": annotation.annotationId,
+                    "type": annotation.type,
+                    "body": {
+                        "type": annotation.body.type,
+                        "value": annotation.text,
+                        "format": annotation.body.format
+                    },
+                    "target": {
+                        "source": annotation.target.source,
+                        "id": annotation.target.id,
+                        "type": annotation.target.type,
+                        "format": annotation.target.format
+                    }
                 },
-                "target": {
-                    "source": annotation.target.source,
-                    "id": annotation.target.id,
-                    "type": annotation.target.type,
-                    "format": annotation.target.format
+                "publicAnnotation": true
+            };
+
+            console.log(JSON.stringify(annotationPostData));
+
+            $.ajax({
+                type: "POST",
+                url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/update",
+                dataType: 'json',
+                contentType: "application/json; charset=utf8",
+                async: true,
+                data: JSON.stringify(annotationPostData),
+                beforeSend: function (xhr) {
+                    userAuthToken = make_base_auth(items.username, items.password);
+                    xhr.setRequestHeader('Authorization', userAuthToken);
+                },
+                success: function (data) {
+                    //callback(new ServiceResponse(null, data));
+                    console.log("Completed updated annotation:" + JSON.stringify(data) + " ---");
+                    loadAnnotationsForExtension();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
+                    console.log(xhr.responseText);
                 }
-            },
-            "publicAnnotation": true
-        };
-
-        console.log(JSON.stringify(annotationPostData));
-
-        $.ajax({
-            type: "POST",
-            url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/update",
-            dataType: 'json',
-            contentType: "application/json; charset=utf8",
-            async: true,
-            data: JSON.stringify(annotationPostData),
-            beforeSend: function (xhr) {
-                userAuthToken = make_base_auth("abc@gmail.com", "123456");
-                xhr.setRequestHeader('Authorization', userAuthToken);
-            },
-            success: function (data) {
-                //callback(new ServiceResponse(null, data));
-                console.log("Completed updated annotation:" + JSON.stringify(data) + " ---");
-                loadAnnotationsForExtension();
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
-                console.log(xhr.responseText);
-            }
-        });
+            });
 
 
-    } catch (err) {
-        callback(new ServiceResponse("BWAT006 => " + err.message, null));
+        } catch (err) {
+            callback(new ServiceResponse("BWAT006 => " + err.message, null));
+        }
     }
+
+    chrome.storage.sync.get(keys, readStoredCredentials);
 }
 
 /**
