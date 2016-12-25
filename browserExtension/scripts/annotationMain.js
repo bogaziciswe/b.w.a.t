@@ -235,6 +235,7 @@ function createFieldsForHighlighter(currentAnnotation) {
         currentAnnotation.ranges = ranges;
         currentAnnotation.text = text;
         currentAnnotation.quote = quote;
+        textAnnotations= currentAnnotation;
     }
 
     else if (currentAnnotation.target.hasOwnProperty('id')) {
@@ -271,7 +272,15 @@ function loadAnnotationsForExtension() {
     getAnnotationsForCurrentUrl().then(function (response) {
         var annotationListResponse = response;
         if (annotationListResponse.success) { // success = true if server responds with a valid JSON with annotations in it.
-            cardsList = JSON.stringify(annotationListResponse.annotations);
+           var annotationList = [];
+            for (anno in annotationListResponse.annotations){
+                if (annotationListResponse.annotations[anno].annotation.target.hasOwnProperty('selector'))
+                {
+                    annotationList.push(annotationListResponse.annotations[anno]);
+                }
+
+            }
+                cardsList = JSON.stringify(annotationList);
         }
     });
 
@@ -282,6 +291,7 @@ function loadAnnotationsForExtension() {
  * Loads annotations for the current URL on to given object
  * @param {string} contentAnnotatorBM
  */
+var textAnnotations = {} ;
 function loadAnnotationsForPage(contentAnnotatorBM) {
     getAnnotationsForCurrentUrl().then(function (response) {
         var annotationListResponse = response;
@@ -291,19 +301,21 @@ function loadAnnotationsForPage(contentAnnotatorBM) {
             // Now we have responseObject , time to get annotationList.
             var annotationList = [];
 
+            var someList = [] ;
             for (anno in annotationListResponse.annotations){
                 annotationList.push(annotationListResponse.annotations[anno].annotation);
             }
             var stringified = JSON.stringify(annotationListResponse.annotations);
-            cardsList = stringified;
+
             if (annotationList != null && annotationList.length > 0) {
                 // Annotation List for update and delete operations
                 annotationListOfPage = annotationList.slice(0);
                 var annotationListLen = annotationList.length;
                 if (annotationList != null && annotationList.length > 0) {
-
+                    //cardsList = stringified;
                     for (var i = 0; i < annotationList.length; i++) {
                         createFieldsForHighlighter(annotationList[i]);
+                        someList.push(textAnnotations);
                     }
                     contentAnnotatorBM.annotator("loadAnnotations", annotationList);
                     if (annotationList != null && annotationListLen > 0) {
@@ -311,10 +323,13 @@ function loadAnnotationsForPage(contentAnnotatorBM) {
                     } else {
                         console.log("No annotations to show.");
                     }
+                   // cardsList = JSON.stringify(someList);
+                    loadAnnotationsForExtension();
                 }
             } else {
                 console.log("No annotations to show.");
             }
+
         } else { // Any other errors cause success == false . Network error, empty response, timeout, invalid json etc...
             var errorMessage = annotationListResponse.errorMsg; // if something bad happened, brief details will be stored as errorMsg. Remember to check console.log as well.
             // TODO something to do with errorMessage, alert(errorMessage) may be.
@@ -828,7 +843,7 @@ function sendUpdatedImageAnnnotation(updatedAnnotation) {
                 success: function (data) {
                     //callback(new ServiceResponse(null, data));
                     console.log("Completed updated annotation:" + JSON.stringify(data) + " ---");
-                    loadAnnotationsForExtension();
+                   // loadAnnotationsForExtension();
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
@@ -871,7 +886,7 @@ function sendDeletedImageAnnnotation(deletedAnnotation) {
             success: function (data) {
                 //callback(new ServiceResponse(null, data));
                 console.log("Completed deleted annotation:" + JSON.stringify(data) + " ---");
-                loadAnnotationsForExtension();
+              //  loadAnnotationsForExtension();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 //callback(new ServiceResponse("BWAT005 => " + thrownError, null));
