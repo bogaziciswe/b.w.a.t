@@ -5,6 +5,7 @@ import com.bwat.repository.AnnotationDocument;
 import com.bwat.repository.AnnotationRepository;
 import com.bwat.representation.message.AnnotationRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,9 @@ public class AnnotationController {
     @Autowired
     private AnnotationValidator validator;
 
+    @Value("${server-url}")
+    private String serverUrl;
+
     @RequestMapping(value = "/annotation", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
     public
@@ -29,17 +33,17 @@ public class AnnotationController {
         LinkedHashMap annotation = validator.validateAndExtractRawAnnotation(object);
         AnnotationDocument s = new AnnotationDocument();
         AnnotationDocument savedAnnotation = repository.save(s.load(annotation));
-        return new AnnotationRepresentation(savedAnnotation);
+        return new AnnotationRepresentation(savedAnnotation, serverUrl);
     }
 
     @RequestMapping("/annotation/{id}")
     public AnnotationRepresentation greeting(@PathVariable String id) {
-        return new AnnotationRepresentation(repository.findOne(id));
+        return new AnnotationRepresentation(repository.findOne(id), serverUrl);
     }
 
     @RequestMapping("annotation/all")
     public List<AnnotationRepresentation> annotations() {
-        return repository.findAll().stream().map(AnnotationRepresentation::new).collect(Collectors.toList());
+        return repository.findAll().stream().map(annotationDocument -> new AnnotationRepresentation(annotationDocument, serverUrl)).collect(Collectors.toList());
     }
 
     @RequestMapping(value = "/annotation/{id}", method = RequestMethod.PUT)

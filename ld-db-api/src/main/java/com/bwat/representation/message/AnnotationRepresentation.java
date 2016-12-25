@@ -15,13 +15,13 @@ public class AnnotationRepresentation implements Response {
     private Object target;
     private Object body;
 
-    public AnnotationRepresentation(AnnotationDocument document) {
+    public AnnotationRepresentation(AnnotationDocument document, String serverUrl) {
         createdAt = document.createdAt;
         updatedAt = document.updatedAt;
         type = document.type;
         target = document.target;
         body = document.body;
         id = document.id.toString();
-        annotationId = "http://example.com/" + document.id.toString();
+        annotationId = serverUrl + document.id.toString();
     }
 }
