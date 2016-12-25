@@ -41,10 +41,10 @@ window.onload = function () {
                         current.comment = annotation.text;
                         json.push(annotation);
                         if (annotation.hasOwnProperty('src')) {
-                            sendCreatedAnnnotation(current.comment, annotation.shapes[0], "", current);
+                            sendCreatedAnnnotation(current.comment, annotation.shapes[0], "", current, motivation);
                         }
                         else {
-                            sendCreatedAnnnotation(current.comment, annotation.ranges[0], current.quote, current);
+                            sendCreatedAnnnotation(current.comment, annotation.ranges[0], current.quote, current, motivation);
                         }
                         console.log(JSON.stringify(json));
                     })

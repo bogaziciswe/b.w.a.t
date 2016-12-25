@@ -540,11 +540,13 @@ function registerUser(name, lName, pw, mail, callback) {
  * @return {}
  *
  */
-function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote, current) {
+function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote, current, motivation) {
 
     var keys = ["username", "password"];
 
     function readStoredCredentials(items) {
+
+        console.log("motivation is: " + motivation);
 
         var tabUrl = window.location.href;
         try {
@@ -567,7 +569,8 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote, current)
                             "format": "image/jpeg"
                         }
                     },
-                    "publicAnnotation": true
+                    "publicAnnotation": true,
+                    "motivation": motivation,
                 };
             }
 
@@ -610,7 +613,8 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote, current)
                             ]
                         }
                     },
-                    "publicAnnotation": true
+                    "publicAnnotation": true,
+                    "motivation": motivation,
                 };
             }
 
