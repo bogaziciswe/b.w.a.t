@@ -629,7 +629,7 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote, current)
                 success: function (data) {
                     //callback(new ServiceResponse(null, data));
                     console.log("Completed sending annotation:" + JSON.stringify(data) + " ---");
-                    annotationListOfPage.push(data);
+                    annotationListOfPage.push(data.data);
                     loadAnnotationsForExtension();
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -666,7 +666,7 @@ function sendUpdatedTextAnnnotation(updatedAnnotation) {
                     "type": annotation.type,
                     "body": {
                         "type": annotation.body.type,
-                        "value": annotation.text,
+                        "value": updatedAnnotation.text,
                         "format": annotation.body.format
                     },
                     "target": {
@@ -789,7 +789,7 @@ function sendUpdatedImageAnnnotation(updatedAnnotation) {
                     "type": annotation.type,
                     "body": {
                         "type": annotation.body.type,
-                        "value": annotation.text,
+                        "value": updatedAnnotation.text,
                         "format": annotation.body.format
                     },
                     "target": {
