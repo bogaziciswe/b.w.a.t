@@ -5,6 +5,14 @@ import lombok.Data;
 
 @Data
 public class AnnotationTransfer {
-    private AnnotationRaw annotation;
+    private AnnotationRawWrapper annotation;
     private User user;
+
+    public void setAnnotation(AnnotationRaw raw) {
+        this.annotation = new AnnotationRawWrapper(raw);
+    }
+
+    public void setAnnotation(AnnotationRawWrapper wrapper) {
+        this.annotation = wrapper;
+    }
 }

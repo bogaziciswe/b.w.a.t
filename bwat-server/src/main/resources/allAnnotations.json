@@ -1,7 +1,7 @@
 [
   {
     "id": "public1",
-    "annotationId": "http://example.com/582999353dc710544f608a92",
+    "annotationId": "http://example.com/public1",
     "createdAt": 1479121205621,
     "updatedAt": 1479121205621,
     "type": "Annotation",
@@ -34,7 +34,7 @@
   },
   {
     "id": "public2",
-    "annotationId": "http://example.com/58299e603dc710544f608a96",
+    "annotationId": "http://example.com/public2",
     "createdAt": 1479122528184,
     "updatedAt": 1479122528185,
     "type": "Annotation",
@@ -67,7 +67,7 @@
   },
   {
     "id": "private1",
-    "annotationId": "http://example.com/5829a6de3dc710544f608a98",
+    "annotationId": "http://example.com/private1",
     "createdAt": 1479124702040,
     "updatedAt": 1479124702040,
     "type": "Annotation",
@@ -100,7 +100,7 @@
   },
   {
     "id": "private2",
-    "annotationId": "http://example.com/5829b3133dc710544f608a9a",
+    "annotationId": "http://example.com/private2",
     "createdAt": 1479127827735,
     "updatedAt": 1479127827735,
     "type": "Annotation",
@@ -133,7 +133,7 @@
   },
   {
     "id": "public1OtherUser",
-    "annotationId": "http://example.com/58397d013dc710544f608a9c",
+    "annotationId": "http://example.com/public1OtherUser",
     "createdAt": 1480162561338,
     "updatedAt": 1480162561338,
     "type": "Annotation",
@@ -166,7 +166,7 @@
   },
   {
     "id": "private1OtherUser",
-    "annotationId": "http://example.com/58397d5a3dc710544f608a9e",
+    "annotationId": "http://example.com/private1OtherUser",
     "createdAt": 1480162650021,
     "updatedAt": 1480162650021,
     "type": "Annotation",
@@ -199,7 +199,7 @@
   },
   {
     "id": "public2OtherUser",
-    "annotationId": "http://example.com/58397dd43dc710544f608aa0",
+    "annotationId": "http://example.com/public2OtherUser",
     "createdAt": 1480162772215,
     "updatedAt": 1480162772215,
     "type": "Annotation",

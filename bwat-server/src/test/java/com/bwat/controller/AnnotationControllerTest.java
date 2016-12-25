@@ -32,6 +32,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -156,7 +157,7 @@ public class AnnotationControllerTest {
 
         //check it's annotation id
         String annotationId = JsonPath.read(jsonRes, "$.data.id");
-        Assert.assertEquals(annotationId, userAnnotations.get(4).getAnnotationId());
+        Assert.assertEquals(annotationId, "http://example.com/" + userAnnotations.get(4).getAnnotationId());
     }
 
     @Test
@@ -171,13 +172,13 @@ public class AnnotationControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
 //                .with(user(johnDoe.getMail())))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.data[0].annotation.id", is("public1")))
+                .andExpect(jsonPath("$.data[0].annotation.id", is("http://example.com/public1")))
                 .andExpect(jsonPath("$.data[0].user.mail", is(johnDoe.getMail())))
-                .andExpect(jsonPath("$.data[1].annotation.id", is("public2")))
+                .andExpect(jsonPath("$.data[1].annotation.id", is("http://example.com/public2")))
                 .andExpect(jsonPath("$.data[1].user.mail", is(johnDoe.getMail())))
-                .andExpect(jsonPath("$.data[2].annotation.id", is("public1OtherUser")))
+                .andExpect(jsonPath("$.data[2].annotation.id", is("http://example.com/public1OtherUser")))
                 .andExpect(jsonPath("$.data[2].user.mail", is(janeDoe.getMail())))
-                .andExpect(jsonPath("$.data[3].annotation.id", is("public2OtherUser")))
+                .andExpect(jsonPath("$.data[3].annotation.id", is("http://example.com/public2OtherUser")))
                 .andExpect(jsonPath("$.data[3].user.mail", is(janeDoe.getMail())))
 
                 .andReturn();
@@ -189,17 +190,18 @@ public class AnnotationControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user(johnDoe.getMail())))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.data[0].annotation.id", is("public1")))
+                .andDo(print())
+                .andExpect(jsonPath("$.data[0].annotation.id", is("http://example.com/public1")))
                 .andExpect(jsonPath("$.data[0].user.mail", is(johnDoe.getMail())))
-                .andExpect(jsonPath("$.data[1].annotation.id", is("public2")))
+                .andExpect(jsonPath("$.data[1].annotation.id", is("http://example.com/public2")))
                 .andExpect(jsonPath("$.data[1].user.mail", is(johnDoe.getMail())))
-                .andExpect(jsonPath("$.data[2].annotation.id", is("private1")))
+                .andExpect(jsonPath("$.data[2].annotation.id", is("http://example.com/private1")))
                 .andExpect(jsonPath("$.data[2].user.mail", is(johnDoe.getMail())))
-                .andExpect(jsonPath("$.data[3].annotation.id", is("private2")))
+                .andExpect(jsonPath("$.data[3].annotation.id", is("http://example.com/private2")))
                 .andExpect(jsonPath("$.data[3].user.mail", is(johnDoe.getMail())))
-                .andExpect(jsonPath("$.data[4].annotation.id", is("public1OtherUser")))
+                .andExpect(jsonPath("$.data[4].annotation.id", is("http://example.com/public1OtherUser")))
                 .andExpect(jsonPath("$.data[4].user.mail", is(janeDoe.getMail())))
-                .andExpect(jsonPath("$.data[5].annotation.id", is("public2OtherUser")))
+                .andExpect(jsonPath("$.data[5].annotation.id", is("http://example.com/public2OtherUser")))
                 .andExpect(jsonPath("$.data[5].user.mail", is(janeDoe.getMail())))
                 .andReturn();
     }

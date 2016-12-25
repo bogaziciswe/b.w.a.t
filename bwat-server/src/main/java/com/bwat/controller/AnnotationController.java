@@ -7,6 +7,7 @@ import com.bwat.core.service.ApiService;
 import com.bwat.core.service.UserAnnotationService;
 import com.bwat.core.service.UserService;
 import com.bwat.transfer.AnnotationRaw;
+import com.bwat.transfer.AnnotationRawWrapper;
 import com.bwat.transfer.AnnotationTransfer;
 import com.bwat.transfer.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class AnnotationController {
         User user = userService.findByMail(principal.getName());
         //save annotation id and user id to db.
         userAnnotationService.create(user, annotationRaw.getId(), req.isPublicAnnotation());
-        return Response.builder().data(annotationRaw).status("success").build();
+        return Response.builder().data(new AnnotationRawWrapper(annotationRaw)).status("success").build();
     }
 
     @RequestMapping(value = "", method = GET)
