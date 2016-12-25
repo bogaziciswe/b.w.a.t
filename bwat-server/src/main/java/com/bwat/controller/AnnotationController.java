@@ -44,7 +44,7 @@ public class AnnotationController {
         AnnotationRaw annotationRaw = apiService.createAnnotation(req.getAnnotation());
         User user = userService.findByMail(principal.getName());
         //save annotation id and user id to db.
-        userAnnotationService.create(user, annotationRaw.getId(), req.isPublicAnnotation());
+        userAnnotationService.create(user, annotationRaw.getId(), req.isPublicAnnotation(), req.getMotivation());
         return Response.builder().data(new AnnotationRawWrapper(annotationRaw)).status("success").build();
     }
 
@@ -80,7 +80,9 @@ public class AnnotationController {
         for (AnnotationRaw annotationRaw : annotationRawList) {
             AnnotationTransfer annotationTransfer = new AnnotationTransfer();
             annotationTransfer.setAnnotation(annotationRaw);
-            annotationTransfer.setUser(userAnnotationService.findByAnnotationId(annotationRaw.getId()).getUser());
+            UserAnnotation userAnnotation =userAnnotationService.findByAnnotationId(annotationRaw.getId());
+            annotationTransfer.setUser(userAnnotation.getUser());
+            annotationTransfer.setMotivation(userAnnotation.getMotivation());
             annotationTransferList.add(annotationTransfer);
         }
 

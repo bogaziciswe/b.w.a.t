@@ -16,11 +16,12 @@ public class UserAnnotationServiceImpl implements UserAnnotationService {
     private UserAnnotationRepository userAnnotationRepository;
 
     @Override
-    public UserAnnotation create(User user, String annotationId, boolean isPublic) {
+    public UserAnnotation create(User user, String annotationId, boolean isPublic, String motivation) {
         UserAnnotation userAnnotation = new UserAnnotation();
         userAnnotation.setUser(user);
         userAnnotation.setAnnotationId(annotationId);
         userAnnotation.setPublicAnnotation(isPublic);
+        userAnnotation.setMotivation(motivation);
         userAnnotationRepository.save(userAnnotation);
         return userAnnotation;
     }

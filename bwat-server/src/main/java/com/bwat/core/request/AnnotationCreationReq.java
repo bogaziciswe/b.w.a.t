@@ -6,4 +6,5 @@ import lombok.Data;
 public class AnnotationCreationReq {
     private Object annotation;
     private boolean publicAnnotation;
+    private String motivation;
 }

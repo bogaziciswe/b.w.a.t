@@ -20,4 +20,6 @@ public class UserAnnotation {
     private User user;
 
     private boolean publicAnnotation;
+
+    private String motivation;
 }
