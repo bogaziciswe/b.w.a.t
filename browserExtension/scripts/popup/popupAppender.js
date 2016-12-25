@@ -82,9 +82,9 @@ function setGeekMode(info) {
 
         //data
         var jsonSpan =  document.createElement('span');
-        var data = JSON.stringify(dt.annotation);
+        var data = dt.annotation;
         var geekString = data.replace('{','{"@context":"http://www.w3.org/ns/anno.jsonld",');
-        jsonSpan.innerHTML = geekString;
+        jsonSpan.innerHTML = JSON.stringify(geekString);
         newCard.appendChild(jsonSpan);
 
         cardsList.appendChild(newCard);
