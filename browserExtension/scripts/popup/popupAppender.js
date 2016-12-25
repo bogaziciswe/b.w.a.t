@@ -57,6 +57,11 @@ function setDOMInfo(info) {
         divComment.innerHTML = "<b>Comment:</b> "+ dt.annotation.body.value;
         divBody.appendChild(divComment);
 
+        //add Comment
+        var divMotivation = document.createElement('p');
+        divMotivation.innerHTML = "<b>Motivation:</b> "+ dt.motivation;
+        divBody.appendChild(divMotivation);
+
         cardsList.appendChild(newCard);
     }
 }
