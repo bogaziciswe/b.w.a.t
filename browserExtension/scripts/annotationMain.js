@@ -376,8 +376,7 @@ function readCredentials() {
  */
 function loginUser(username, password, callback) {
     try {
-        $.ajax
-        ({
+        $.ajax({
             type: "GET",
             url: protocol + serverRootUrl + loginPostUri,
             dataType: 'json',
@@ -487,8 +486,7 @@ function registerUser(name, lName, pw, mail, callback) {
         };
         console.log(JSON.stringify(userPostData));
         userPostData.password = pw;
-        $.ajax
-        ({
+        $.ajax({
             type: "POST",
             url: protocol + serverRootUrl + registerPostUri,
             dataType: 'json',
@@ -507,6 +505,8 @@ function registerUser(name, lName, pw, mail, callback) {
                 } else if (data.data.enabled) {
                     console.log("Register success for username:" + mail);
                     setCredentials(mail, password);
+                    data.uname = mail;
+                    data.password = pw;
                     callback(new ServiceResponse(null, data));
                 } else {
                     console.log("Unknown problem, response:" + JSON.stringify(data));
