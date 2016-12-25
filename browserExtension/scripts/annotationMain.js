@@ -746,10 +746,12 @@ function sendDeletedTextAnnnotation(deletedAnnotation) {
 
     function readStoredCredentials(items) {
         var annotation = findAnnotationInList(deletedAnnotation.ranges[0].startOffset, deletedAnnotation.ranges[0].endOffset);
+        var idForReqArray = annotation.id.split('//');
+        var idForReq = idForReqArray[1].split('/');
 
         $.ajax({
             type: "GET",
-            url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/delete",
+            url: protocol + serverRootUrl + "/api/annotation/" + idForReq[1] + "/delete",
             dataType: 'json',
             async: true,
             beforeSend: function (xhr) {
@@ -850,10 +852,12 @@ function sendDeletedImageAnnnotation(deletedAnnotation) {
 
     function readStoredCredentials(items) {
         var annotation = findImageAnnotationInList(deletedAnnotation);
+        var idForReqArray = annotation.id.split('//');
+        var idForReq = idForReqArray[1].split('/');
 
         $.ajax({
             type: "GET",
-            url: protocol + serverRootUrl + "/api/annotation/" + annotation.id + "/delete",
+            url: protocol + serverRootUrl + "/api/annotation/" + idForReq[1] + "/delete",
             dataType: 'json',
             async: true,
             beforeSend: function (xhr) {
