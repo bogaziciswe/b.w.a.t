@@ -4,6 +4,12 @@ window.onload = function () {
 
     readCredentials();
 
+    /**
+     * create annotator plugin for crud operations
+     * @param  {element}
+     * @return {plugin}
+     *
+     * */
     Annotator.Plugin.StoreLogger = function (element) {
         var singleAnnotation = {
             startOffset: 0,
@@ -22,7 +28,6 @@ window.onload = function () {
             pluginInit: function () {
                 this.annotator
                     .subscribe("annotationCreated", function (annotation) {
-                        console.info("The annotation: %o has just been created!", JSON.stringify(annotation));
                         var current = $.extend(true, {}, singleAnnotation);
                         var motivation = window.prompt("Could you define your motivation for this annotation?", "Stating my opinion");
                         //current.motivation = motivation;
@@ -46,10 +51,8 @@ window.onload = function () {
                         else {
                             sendCreatedAnnnotation(current.comment, annotation.ranges[0], current.quote, current, motivation);
                         }
-                        console.log(JSON.stringify(json));
                     })
                     .subscribe("annotationUpdated", function (annotation) {
-                        console.info("The annotation: %o has just been updated!", annotation);
                         if (annotation.hasOwnProperty('src')) {
                             sendUpdatedImageAnnnotation(annotation);
                         }
@@ -58,7 +61,6 @@ window.onload = function () {
                         }
                     })
                     .subscribe("annotationDeleted", function (annotation) {
-                        console.info("The annotation: %o has just been deleted!", annotation);
                         if (annotation.hasOwnProperty('src')) {
                             sendDeletedImageAnnnotation(annotation);
                         }
@@ -70,6 +72,7 @@ window.onload = function () {
         }
     };
 
+    // New Plugin created for text and image annotation
     var contentAnnotatorBM;
     contentAnnotatorBM = $('body').annotator();
     contentAnnotatorBM.annotator('addPlugin', 'StoreLogger');
