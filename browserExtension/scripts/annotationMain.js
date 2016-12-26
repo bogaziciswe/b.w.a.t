@@ -476,7 +476,6 @@ function registerUser(name, lName, pw, mail, callback) {
             mail: mail,
             password: "**********"
         };
-        console.log(JSON.stringify(userPostData));
         userPostData.password = pw;
         $.ajax({
             type: "POST",
@@ -608,7 +607,6 @@ function sendCreatedAnnnotation(commentValue, xpathSelectorData, quote, current,
                 };
             }
 
-            console.log(JSON.stringify(annotationPostData));
             $.ajax({
                 type: "POST",
                 url: protocol + serverRootUrl + annotationStorePostUri,
@@ -695,8 +693,6 @@ function sendUpdatedTextAnnnotation(updatedAnnotation) {
                 },
                 "publicAnnotation": true
             };
-
-            console.log(JSON.stringify(annotationPostData));
 
             $.ajax({
                 type: "POST",
@@ -801,8 +797,6 @@ function sendUpdatedImageAnnnotation(updatedAnnotation) {
                 },
                 "publicAnnotation": true
             };
-
-            console.log(JSON.stringify(annotationPostData));
 
             $.ajax({
                 type: "POST",
