@@ -1,1 +1,1 @@
-
+Integrating image annotation plugin
