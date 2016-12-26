@@ -1,1 +1,1 @@
-
+Debugging image annotation
