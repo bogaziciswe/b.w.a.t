@@ -176,8 +176,11 @@ function getAnnotationsForUrl(pageUrl) {
                     dataType: 'json',
                     async: true,
                     beforeSend: function (xhr) {
-                        userAuthToken = make_base_auth(items.username, items.password);
-                        xhr.setRequestHeader('Authorization', userAuthToken);
+                        // Getting public annotations without credentials
+                        if(items.username && items.password){
+                            userAuthToken = make_base_auth(items.username, items.password);
+                            xhr.setRequestHeader('Authorization', userAuthToken);
+                        }
                     },
                     success: function (data) {
                         //console.log("Get annotation by source response:" + JSON.stringify(data));
