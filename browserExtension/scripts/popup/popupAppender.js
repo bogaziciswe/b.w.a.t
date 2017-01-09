@@ -22,11 +22,13 @@ function setDOMInfo(info) {
 
         //add date
         var spanDate = document.createElement('span');
-        var date = new Date(dt.annotation.createdAt);
-        var day = date.getDate();
-        var month = date.getMonth() +1;
-        var year = date.getFullYear();
-        var convertedDate =day+'/'+month+'/'+year;
+        //var date = new Date(dt.annotation.created);
+        //var day = date.getDate();
+        //var month = date.getMonth() +1;
+        //var year = date.getFullYear();
+        //var convertedDate =day+'/'+month+'/'+year;
+        var dateArr = dt.annotation.created.split('T');
+        var convertedDate = dateArr[0];
         spanDate.innerHTML = convertedDate;
         var spanAttr = document.createAttribute('class');
         spanAttr.value = 'pull-right';
