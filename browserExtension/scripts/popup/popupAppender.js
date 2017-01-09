@@ -20,58 +20,120 @@ function setDOMInfo(info) {
         cardAttr.value = 'panel panel-default';
         newCard.setAttributeNode(cardAttr);
 
-        //add date
-        var spanDate = document.createElement('span');
-        //var date = new Date(dt.annotation.created);
-        //var day = date.getDate();
-        //var month = date.getMonth() +1;
-        //var year = date.getFullYear();
-        //var convertedDate =day+'/'+month+'/'+year;
-        var dateArr = dt.annotation.created.split('T');
-        var convertedDate = dateArr[0];
-        spanDate.innerHTML = convertedDate;
-        var spanAttr = document.createAttribute('class');
-        spanAttr.value = 'pull-right';
-        spanDate.setAttributeNode(spanAttr);
-        newCard.appendChild(spanDate);
+        if (myData[i].annotation.target.hasOwnProperty('selector')){
+            //add date
+            var spanDate = document.createElement('span');
+            //var date = new Date(dt.annotation.created);
+            //var day = date.getDate();
+            //var month = date.getMonth() +1;
+            //var year = date.getFullYear();
+            //var convertedDate =day+'/'+month+'/'+year;
+            var dateArr = dt.annotation.created.split('T');
+            var convertedDate = dateArr[0];
+            spanDate.innerHTML = convertedDate;
+            var spanAttr = document.createAttribute('class');
+            spanAttr.value = 'pull-right';
+            spanDate.setAttributeNode(spanAttr);
+            newCard.appendChild(spanDate);
 
-        //add panel body
-        var divBody = document.createElement('div');
-        var bodyAttr = document.createAttribute('class');
-        bodyAttr.value = 'panel-body';
-        divBody.setAttributeNode(bodyAttr);
-        newCard.appendChild(divBody);
+            //add panel body
+            var divBody = document.createElement('div');
+            var bodyAttr = document.createAttribute('class');
+            bodyAttr.value = 'panel-body';
+            divBody.setAttributeNode(bodyAttr);
+            newCard.appendChild(divBody);
 
-        //add author tag
-        var divAuthor = document.createElement('h5');
-        divAuthor.innerHTML = "<b>Author: </b>" + dt.user.firstName + " " + dt.user.lastName;//dt.authorName;
-        divBody.appendChild(divAuthor);
+            //add author tag
+            var divAuthor = document.createElement('h5');
+            divAuthor.innerHTML = "<b>Author: </b>" + dt.user.firstName + " " + dt.user.lastName;//dt.authorName;
+            divBody.appendChild(divAuthor);
 
-        //add selected text tag
-        var divSelectedText = document.createElement('p');
-        divSelectedText.innerHTML = "<b>Annotation:</b> "+dt.annotation.target.selector[2].exact;
-        console.log("something");
-        console.log(dt.annotation.target.selector[2].exact);
-        divBody.appendChild(divSelectedText);
+            //add selected text tag
+            var divSelectedText = document.createElement('p');
+            divSelectedText.innerHTML = "<b>Annotation:</b> "+dt.annotation.target.selector[2].exact;
+            console.log("something");
+            console.log(dt.annotation.target.selector[2].exact);
+            divBody.appendChild(divSelectedText);
 
-        //add Comment
-        var divComment = document.createElement('p');
-        divComment.innerHTML = "<b>Comment:</b> "+ dt.annotation.body.value;
-        divBody.appendChild(divComment);
+            //add Comment
+            var divComment = document.createElement('p');
+            divComment.innerHTML = "<b>Comment:</b> "+ dt.annotation.body.value;
+            divBody.appendChild(divComment);
 
-        //add Comment
-        var divMotivation = document.createElement('p');
-      var motivationString = "";
-        if (dt.motivation == "")
-        {
-motivationString = "Comment";}
+            //add Comment
+            var divMotivation = document.createElement('p');
+            var motivationString = "";
+            if (dt.motivation == ""){
+                motivationString = "Comment";
+            }
             else{
-            motivationString = dt.motivation;
-        }
-        divMotivation.innerHTML = "<b>Motivation:</b> "+ motivationString;
-        divBody.appendChild(divMotivation);
+                motivationString = dt.motivation;
+            }
+            divMotivation.innerHTML = "<b>Motivation:</b> "+ motivationString;
+            divBody.appendChild(divMotivation);
 
-        cardsList.appendChild(newCard);
+            cardsList.appendChild(newCard);
+        }
+
+        else if(myData[i].annotation.target.hasOwnProperty('id')){
+            //add date
+            var spanDate = document.createElement('span');
+            //var date = new Date(dt.annotation.created);
+            //var day = date.getDate();
+            //var month = date.getMonth() +1;
+            //var year = date.getFullYear();
+            //var convertedDate =day+'/'+month+'/'+year;
+            var dateArr = dt.annotation.created.split('T');
+            var convertedDate = dateArr[0];
+            spanDate.innerHTML = convertedDate;
+            var spanAttr = document.createAttribute('class');
+            spanAttr.value = 'pull-right';
+            spanDate.setAttributeNode(spanAttr);
+            newCard.appendChild(spanDate);
+
+            //add panel body
+            var divBody = document.createElement('div');
+            var bodyAttr = document.createAttribute('class');
+            bodyAttr.value = 'panel-body';
+            divBody.setAttributeNode(bodyAttr);
+            newCard.appendChild(divBody);
+
+            //add author tag
+            var divAuthor = document.createElement('h5');
+            divAuthor.innerHTML = "<b>Author: </b>" + dt.user.firstName + " " + dt.user.lastName;//dt.authorName;
+            divBody.appendChild(divAuthor);
+
+            //Todo: Crop image source
+            //add selected image tag
+            var xywh = myData[i].annotation.target.id.split('=');
+            var xywharray = xywh[1].split(',');
+            var divImageExp = document.createElement('p');
+            divImageExp.innerHTML = "<b>Image Source X-Y-Width-Height: </b>";
+            divImageExp.innerHTML += xywharray[0] + '-' + xywharray[1] + '-' + xywharray[2] + '-' + xywharray[3];
+            divBody.appendChild(divImageExp);
+            var divSelectedImage = document.createElement('img');
+            divSelectedImage.src = myData[i].annotation.target.id;
+            divBody.appendChild(divSelectedImage);
+
+            //add Comment
+            var divComment = document.createElement('p');
+            divComment.innerHTML = "<b>Comment:</b> "+ dt.annotation.body.value;
+            divBody.appendChild(divComment);
+
+            //add Comment
+            var divMotivation = document.createElement('p');
+            var motivationString = "";
+            if (dt.motivation == ""){
+                motivationString = "Comment";
+            }
+            else{
+                motivationString = dt.motivation;
+            }
+            divMotivation.innerHTML = "<b>Motivation:</b> "+ motivationString;
+            divBody.appendChild(divMotivation);
+
+            cardsList.appendChild(newCard);
+        }
     }
 }
 

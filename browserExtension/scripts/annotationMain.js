@@ -284,6 +284,9 @@ function loadAnnotationsForExtension() {
                 {
                     annotationList.push(annotationListResponse.annotations[anno]);
                 }
+                else{
+                    annotationList.push(annotationListResponse.annotations[anno]);
+                }
 
             }
                 cardsList = JSON.stringify(annotationList);
