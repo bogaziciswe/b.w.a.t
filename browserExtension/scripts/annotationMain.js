@@ -80,6 +80,9 @@ function AnnotationListResponse(serverResponse, errorMsg) {
                 this.annotations = JSON.parse(serverResponse); // Parsing may fail.
                 for (var i = 0; i < this.annotations.length; i++) {
                     var currentAnnotation = this.annotations[i];
+                    var urlOfUser = "https://ec2-35-162-70-40.us-west-2.compute.amazonaws.com/user/";
+                    urlOfUser += currentAnnotation.user.id;
+                    currentAnnotation.annotation["creator"] = urlOfUser;
                     this.annotations[i].getGeekString = function () {
                         return JSON.stringify(currentAnnotation);
                     }
