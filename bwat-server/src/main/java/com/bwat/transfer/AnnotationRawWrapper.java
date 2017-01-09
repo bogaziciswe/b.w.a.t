@@ -1,5 +1,6 @@
 package com.bwat.transfer;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -25,8 +26,16 @@ public class AnnotationRawWrapper {
     }
 
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssz")
     @JsonProperty("created")
     public Date getCreatedAt() {
         return createdAt;
     }
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssz")
+    @JsonProperty("modified")
+    public Date getUpdatedAt() {
+        return createdAt;
+    }
+
 }
